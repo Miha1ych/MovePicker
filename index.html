@@ -6,9 +6,16 @@
 
     <title>Movie Picker — Скачать</title>
 
+    <link rel="icon" type="image/png" href="favicon.png">
+
     <style>
         * {
             box-sizing: border-box;
+        }
+
+        html {
+            min-height: 100%;
+            background: #080808;
         }
 
         body {
@@ -34,41 +41,99 @@
                 sans-serif;
         }
 
+        button,
+        select {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
         .page {
             width: min(850px, calc(100% - 32px));
             margin: 0 auto;
-            padding: 70px 0;
+            padding: 55px 0 60px;
         }
+
+
+        /* =========================
+           HEADER
+           ========================= */
+
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            margin-bottom: 75px;
+        }
+
+        .headerIcon {
+            width: 42px;
+            height: 42px;
+
+            object-fit: contain;
+
+            border-radius: 11px;
+
+            background: rgba(255,255,255,.05);
+        }
+
+        .headerText {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .headerText strong {
+            font-size: 16px;
+            font-weight: 750;
+            letter-spacing: -.3px;
+        }
+
+        .headerText span {
+            color: #666;
+            font-size: 11px;
+        }
+
+
+        /* =========================
+           HERO
+           ========================= */
 
         .hero {
             text-align: center;
-            margin-bottom: 45px;
         }
 
         .hero h1 {
             margin: 0;
 
-            font-size: clamp(34px, 6vw, 56px);
-            line-height: 1.05;
-            letter-spacing: -2px;
+            font-size: clamp(38px, 7vw, 64px);
+            line-height: 1;
+            letter-spacing: -2.8px;
+            font-weight: 800;
         }
 
-        .hero p {
+        .hero > p {
             max-width: 600px;
-            margin: 18px auto 28px;
+
+            margin: 18px auto 35px;
 
             color: #888;
+
             font-size: 15px;
             line-height: 23px;
         }
 
-        /* BROWSER SELECTOR */
+
+        /* =========================
+           BROWSER SELECTOR
+           ========================= */
 
         .browserSelector {
-            width: min(500px, 100%);
-            margin: 32px auto 0;
-
-            text-align: left;
+            width: min(520px, 100%);
+            margin: 0 auto;
         }
 
         .browserSelector label {
@@ -77,18 +142,21 @@
             margin-bottom: 10px;
 
             color: #aaa;
+
             font-size: 13px;
             font-weight: 600;
+
+            text-align: left;
         }
 
         .browserSelector select {
             width: 100%;
-            height: 56px;
+            height: 58px;
 
-            padding: 0 16px;
+            padding: 0 17px;
 
             border: 1px solid rgba(255,255,255,.12);
-            border-radius: 13px;
+            border-radius: 14px;
 
             outline: none;
 
@@ -118,105 +186,156 @@
             color: #fff;
         }
 
-        /* DOWNLOAD */
 
-        .downloadWrap {
+        /* =========================
+           INSTALLATION BOX
+           ========================= */
+
+        .installBox {
+            width: min(650px, 100%);
+
+            margin: 32px auto 0;
+
+            padding: 28px;
+
+            border: 1px solid rgba(255,255,255,.09);
+            border-radius: 20px;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    rgba(255,255,255,.045),
+                    rgba(255,255,255,.025)
+                );
+
+            box-shadow:
+                0 20px 60px rgba(0,0,0,.25);
+        }
+
+        .installBox.hidden {
+            display: none;
+        }
+
+
+        /* =========================
+           STEP HEADER
+           ========================= */
+
+        .stepHeader {
             display: flex;
-            justify-content: center;
-
-            margin-top: 16px;
-        }
-
-        .download {
-            display: inline-flex;
             align-items: center;
-            justify-content: center;
+            justify-content: space-between;
 
-            min-height: 52px;
-            padding: 0 25px;
-
-            border-radius: 13px;
-
-            background: #fff;
-            color: #080808;
-
-            font-size: 14px;
-            font-weight: 700;
-
-            text-decoration: none;
-
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-5px);
-
-            pointer-events: none;
-
-            transition:
-                opacity .18s ease,
-                transform .18s ease;
+            margin-bottom: 24px;
         }
 
-        .download.visible {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-            pointer-events: auto;
-        }
-
-        .download:hover {
-            transform: translateY(-2px);
-            opacity: .9;
-        }
-
-        .instructions {
-            display: grid;
-            gap: 12px;
-        }
-
-        .step {
-            padding: 22px 24px;
-
-            border: 1px solid rgba(255,255,255,.08);
-            border-radius: 15px;
-
-            background: rgba(255,255,255,.025);
-        }
-
-        .stepNumber {
-            margin-bottom: 8px;
-
+        .stepLabel {
             color: #666;
+
             font-size: 11px;
             font-weight: 700;
-            letter-spacing: .7px;
+
+            letter-spacing: .8px;
             text-transform: uppercase;
         }
 
-        .step h2 {
-            margin: 0 0 8px;
+        .stepProgress {
+            color: #555;
 
-            font-size: 17px;
-            letter-spacing: -.2px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+
+        /* =========================
+           STEP CONTENT
+           ========================= */
+
+        .step {
+            display: none;
+
+            min-height: 190px;
+        }
+
+        .step.active {
+            display: block;
+        }
+
+        .step h2 {
+            margin: 0 0 11px;
+
+            font-size: 25px;
+            line-height: 1.2;
+
+            letter-spacing: -.7px;
         }
 
         .step p {
             margin: 0;
 
             color: #888;
-            font-size: 13px;
-            line-height: 21px;
+
+            font-size: 14px;
+            line-height: 23px;
         }
 
-        code {
+        .step strong {
+            color: #ddd;
+        }
+
+
+        /* =========================
+           DOWNLOAD BUTTON
+           ========================= */
+
+        .downloadButton {
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            min-height: 48px;
+
+            margin-top: 23px;
+            padding: 0 21px;
+
+            border: 0;
+            border-radius: 11px;
+
+            background: #fff;
+            color: #080808;
+
+            font-size: 13px;
+            font-weight: 700;
+
+            text-decoration: none;
+
+            transition:
+                transform .18s ease,
+                opacity .18s ease;
+        }
+
+        .downloadButton:hover {
+            transform: translateY(-2px);
+            opacity: .88;
+        }
+
+
+        /* =========================
+           BROWSER ADDRESS
+           ========================= */
+
+        .browserAddress {
             display: inline-block;
 
-            margin-top: 8px;
-            padding: 6px 9px;
+            margin-top: 19px;
+            padding: 10px 12px;
 
             border: 1px solid rgba(255,255,255,.08);
-            border-radius: 7px;
+            border-radius: 9px;
 
-            background: #111;
+            background: #0b0b0b;
+
             color: #ddd;
 
             font-family:
@@ -225,38 +344,160 @@
                 monospace;
 
             font-size: 12px;
+
+            user-select: all;
         }
 
-        .browserInfo {
-            margin-top: 12px;
-            color: #aaa;
-            font-size: 12px;
-        }
+        .browserName {
+            margin-top: 14px;
 
-        .browserInfo p {
-            margin: 10px 0 0;
-        }
+            color: #555;
 
-        .footer {
-            margin-top: 35px;
-
-            text-align: center;
-
-            color: #444;
             font-size: 11px;
         }
 
+
+        /* =========================
+           NAVIGATION
+           ========================= */
+
+        .stepNavigation {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 10px;
+
+            margin-top: 25px;
+            padding-top: 20px;
+
+            border-top: 1px solid rgba(255,255,255,.07);
+        }
+
+        .navLeft,
+        .navRight {
+            display: flex;
+            gap: 9px;
+        }
+
+        .navButton {
+            min-height: 42px;
+
+            padding: 0 16px;
+
+            border: 1px solid rgba(255,255,255,.1);
+            border-radius: 10px;
+
+            background: rgba(255,255,255,.045);
+            color: #aaa;
+
+            font-size: 12px;
+            font-weight: 600;
+
+            transition:
+                background .18s ease,
+                border-color .18s ease,
+                color .18s ease,
+                transform .18s ease;
+        }
+
+        .navButton:hover {
+            background: rgba(255,255,255,.09);
+            border-color: rgba(255,255,255,.17);
+            color: #fff;
+
+            transform: translateY(-1px);
+        }
+
+        .navButton.primary {
+            border-color: rgba(255,255,255,.2);
+
+            background: #fff;
+            color: #080808;
+        }
+
+        .navButton.primary:hover {
+            background: #eee;
+            color: #080808;
+        }
+
+        .navButton.hidden {
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+
+        /* =========================
+           FOOTER
+           ========================= */
+
+        .footer {
+            margin-top: 45px;
+
+            color: #444;
+
+            font-size: 11px;
+
+            text-align: center;
+        }
+
+
+        /* =========================
+           RESPONSIVE
+           ========================= */
+
         @media (max-width: 600px) {
+
             .page {
-                padding: 45px 0;
+                width: calc(100% - 22px);
+                padding: 30px 0 45px;
+            }
+
+            .header {
+                margin-bottom: 55px;
+            }
+
+            .hero h1 {
+                font-size: 39px;
+                letter-spacing: -1.8px;
+            }
+
+            .hero > p {
+                font-size: 13px;
+                line-height: 21px;
+            }
+
+            .installBox {
+                padding: 22px;
+                border-radius: 17px;
             }
 
             .step {
-                padding: 19px;
+                min-height: 210px;
             }
 
-            .browserSelector select {
-                height: 52px;
+            .step h2 {
+                font-size: 22px;
+            }
+
+            .step p {
+                font-size: 13px;
+                line-height: 21px;
+            }
+
+            .stepNavigation {
+                margin-top: 20px;
+                padding-top: 17px;
+            }
+
+            .navButton {
+                min-height: 40px;
+                padding: 0 13px;
+            }
+
+            .browserAddress {
+                max-width: 100%;
+                overflow-x: auto;
             }
         }
     </style>
@@ -266,196 +507,278 @@
 
 <div class="page">
 
-    <section class="hero">
+    <header class="header">
 
-        <h1>Movie Picker</h1>
+        <img
+            class="headerIcon"
+            src="favicon.png"
+            alt="Movie Picker"
+        >
 
-        <p>
-            Фильмы и сериалы, которые действительно хочется посмотреть.
-            Установи расширение и получай подборки прямо в браузере.
-        </p>
+        <div class="headerText">
+            <strong>Movie Picker</strong>
+            <span>Установка расширения</span>
+        </div>
 
-        <div class="browserSelector">
+    </header>
 
-            <label for="browserSelect">
-                Выберите свой браузер:
-            </label>
 
-            <select id="browserSelect">
+    <main>
 
-                <option value="" selected disabled>
-                    Выберите браузер
-                </option>
+        <section class="hero">
 
-                <optgroup label="Chromium">
-                    <option value="chrome">
-                        Google Chrome
+            <h1>Movie Picker</h1>
+
+            <p>
+                Фильмы и сериалы, которые действительно хочется посмотреть.
+                Установи расширение и получай подборки прямо в браузере.
+            </p>
+
+
+            <div class="browserSelector">
+
+                <label for="browserSelect">
+                    Выберите свой браузер
+                </label>
+
+                <select id="browserSelect">
+
+                    <option value="" selected disabled>
+                        Выберите браузер
                     </option>
 
-                    <option value="opera">
-                        Opera
-                    </option>
 
-                    <option value="edge">
-                        Microsoft Edge
-                    </option>
+                    <optgroup label="Chromium">
 
-                    <option value="brave">
-                        Brave
-                    </option>
+                        <option value="chrome">
+                            Google Chrome
+                        </option>
 
-                    <option value="vivaldi">
-                        Vivaldi
-                    </option>
+                        <option value="opera">
+                            Opera
+                        </option>
 
-                    <option value="yandex">
-                        Яндекс Браузер
-                    </option>
-                </optgroup>
+                        <option value="edge">
+                            Microsoft Edge
+                        </option>
 
-                <optgroup label="Firefox">
-                    <option value="firefox">
-                        Mozilla Firefox
-                    </option>
+                        <option value="brave">
+                            Brave
+                        </option>
 
-                    <option value="firefox-dev">
-                        Firefox Developer Edition
-                    </option>
+                        <option value="vivaldi">
+                            Vivaldi
+                        </option>
 
-                    <option value="firefox-nightly">
-                        Firefox Nightly
-                    </option>
+                        <option value="yandex">
+                            Яндекс Браузер
+                        </option>
 
-                    <option value="zen">
-                        Zen Browser
-                    </option>
+                    </optgroup>
 
-                    <option value="librewolf">
-                        LibreWolf
-                    </option>
 
-                    <option value="waterfox">
-                        Waterfox
-                    </option>
-                </optgroup>
+                    <optgroup label="Firefox">
 
-            </select>
+                        <option value="firefox">
+                            Mozilla Firefox
+                        </option>
 
-            <div class="downloadWrap">
+                        <option value="firefox-dev">
+                            Firefox Developer Edition
+                        </option>
 
-                <a
-                    class="download"
-                    id="downloadButton"
-                    href="#"
-                    download
+                        <option value="firefox-nightly">
+                            Firefox Nightly
+                        </option>
+
+                        <option value="zen">
+                            Zen Browser
+                        </option>
+
+                        <option value="librewolf">
+                            LibreWolf
+                        </option>
+
+                        <option value="waterfox">
+                            Waterfox
+                        </option>
+
+                    </optgroup>
+
+                </select>
+
+            </div>
+
+
+            <!-- INSTALLATION -->
+
+            <div
+                class="installBox hidden"
+                id="installBox"
+            >
+
+                <div class="stepHeader">
+
+                    <div class="stepLabel">
+                        Установка Movie Picker
+                    </div>
+
+                    <div
+                        class="stepProgress"
+                        id="stepProgress"
+                    >
+                        1 / 4
+                    </div>
+
+                </div>
+
+
+                <!-- STEP 1 -->
+
+                <div
+                    class="step active"
+                    data-step="1"
                 >
-                    Скачать расширение
-                </a>
+
+                    <h2>
+                        Скачайте расширение
+                    </h2>
+
+                    <p>
+                        Нажмите кнопку ниже и скачайте архив
+                        с версией Movie Picker для вашего браузера.
+                        После скачивания <strong>распакуйте ZIP-архив</strong>
+                        в удобное место.
+                    </p>
+
+                    <a
+                        class="downloadButton"
+                        id="downloadButton"
+                        href="#"
+                        download
+                    >
+                        Скачать расширение
+                    </a>
+
+                </div>
+
+
+                <!-- STEP 2 -->
+
+                <div
+                    class="step"
+                    data-step="2"
+                >
+
+                    <h2>
+                        Откройте страницу расширений
+                    </h2>
+
+                    <p>
+                        Откройте страницу управления расширениями
+                        в вашем браузере.
+                        Можно просто вставить этот адрес
+                        в адресную строку.
+                    </p>
+
+                    <div
+                        class="browserAddress"
+                        id="browserAddress"
+                    >
+                        chrome://extensions/
+                    </div>
+
+                    <div
+                        class="browserName"
+                        id="browserName"
+                    >
+                        Google Chrome
+                    </div>
+
+                </div>
+
+
+                <!-- STEP 3 -->
+
+                <div
+                    class="step"
+                    data-step="3"
+                >
+
+                    <h2>
+                        Включите режим разработчика
+                    </h2>
+
+                    <p>
+                        Найдите переключатель
+                        <strong>Developer mode</strong>
+                        или
+                        <strong>«Режим разработчика»</strong>
+                        и включите его.
+                    </p>
+
+                </div>
+
+
+                <!-- STEP 4 -->
+
+                <div
+                    class="step"
+                    data-step="4"
+                >
+
+                    <h2>
+                        Загрузите расширение
+                    </h2>
+
+                    <p>
+                        Нажмите
+                        <strong>Load unpacked</strong>
+                        / «Загрузить распакованное расширение».
+                        Затем выберите распакованную папку
+                        Movie Picker, внутри которой находится
+                        файл <strong>manifest.json</strong>.
+                    </p>
+
+                </div>
+
+
+                <!-- NAVIGATION -->
+
+                <div class="stepNavigation">
+
+                    <div class="navLeft">
+
+                        <button
+                            class="navButton"
+                            id="backButton"
+                            type="button"
+                        >
+                            ← Назад
+                        </button>
+
+                    </div>
+
+
+                    <div class="navRight">
+
+                        <button
+                            class="navButton primary"
+                            id="nextButton"
+                            type="button"
+                        >
+                            Далее →
+                        </button>
+
+                    </div>
+
+                </div>
 
             </div>
 
-        </div>
+        </section>
 
-    </section>
-
-
-    <section class="instructions">
-
-        <div class="step">
-
-            <div class="stepNumber">
-                Шаг 1
-            </div>
-
-            <h2>
-                Скачайте расширение
-            </h2>
-
-            <p>
-                Выберите свой браузер выше и нажмите
-                кнопку «Скачать расширение».
-                После этого распакуйте ZIP-архив в удобное место.
-            </p>
-
-        </div>
-
-
-        <div class="step">
-
-            <div class="stepNumber">
-                Шаг 2
-            </div>
-
-            <h2>
-                Откройте страницу расширений
-            </h2>
-
-            <div class="browserInfo" id="browserInfo">
-
-                Сначала выберите свой браузер выше.
-
-            </div>
-
-        </div>
-
-
-        <div class="step">
-
-            <div class="stepNumber">
-                Шаг 3
-            </div>
-
-            <h2>
-                Включите режим разработчика
-            </h2>
-
-            <p>
-                Найдите переключатель
-                <b>Developer mode</b> / «Режим разработчика»
-                и включите его.
-            </p>
-
-        </div>
-
-
-        <div class="step">
-
-            <div class="stepNumber">
-                Шаг 4
-            </div>
-
-            <h2>
-                Загрузите расширение
-            </h2>
-
-            <p>
-                Нажмите <b>Load unpacked</b> /
-                «Загрузить распакованное расширение».
-                Затем выберите распакованную папку Movie Picker,
-                внутри которой находится файл <b>manifest.json</b>.
-            </p>
-
-        </div>
-
-
-        <div class="step">
-
-            <div class="stepNumber">
-                Готово
-            </div>
-
-            <h2>
-                Movie Picker установлен
-            </h2>
-
-            <p>
-                Расширение сразу появится в браузере.
-                Теперь можно пользоваться Movie Picker.
-            </p>
-
-        </div>
-
-    </section>
+    </main>
 
 
     <div class="footer">
@@ -470,11 +793,33 @@
     const browserSelect =
         document.getElementById("browserSelect");
 
+    const installBox =
+        document.getElementById("installBox");
+
     const downloadButton =
         document.getElementById("downloadButton");
 
-    const browserInfo =
-        document.getElementById("browserInfo");
+    const browserAddress =
+        document.getElementById("browserAddress");
+
+    const browserName =
+        document.getElementById("browserName");
+
+    const stepProgress =
+        document.getElementById("stepProgress");
+
+    const backButton =
+        document.getElementById("backButton");
+
+    const nextButton =
+        document.getElementById("nextButton");
+
+
+    const steps =
+        document.querySelectorAll(".step");
+
+
+    let currentStep = 1;
 
 
     const browsers = {
@@ -575,12 +920,7 @@
 
         if (!selected) {
 
-            downloadButton.classList.remove("visible");
-
-            downloadButton.href = "#";
-
-            browserInfo.innerHTML =
-                "Сначала выберите свой браузер выше.";
+            installBox.classList.add("hidden");
 
             return;
         }
@@ -589,17 +929,110 @@
         downloadButton.href =
             selected.file;
 
-        downloadButton.classList.add("visible");
+
+        browserAddress.textContent =
+            selected.url;
 
 
-        browserInfo.innerHTML =
-            selected.name +
-            ":" +
-            '<p>Просто вставьте этот адрес в поисковую строку браузера:</p>' +
-            '<code>' +
-            selected.url +
-            '</code>';
+        browserName.textContent =
+            selected.name;
+
+
+        currentStep = 1;
+
+        updateStep();
+
+        installBox.classList.remove("hidden");
+
     }
+
+
+    function updateStep() {
+
+        steps.forEach(step => {
+
+            const stepNumber =
+                Number(step.dataset.step);
+
+            step.classList.toggle(
+                "active",
+                stepNumber === currentStep
+            );
+
+        });
+
+
+        stepProgress.textContent =
+            currentStep + " / " + steps.length;
+
+
+        if (currentStep === 1) {
+
+            backButton.classList.add("hidden");
+
+        } else {
+
+            backButton.classList.remove("hidden");
+
+        }
+
+
+        if (currentStep === steps.length) {
+
+            nextButton.textContent =
+                "Готово";
+
+        } else {
+
+            nextButton.textContent =
+                "Далее →";
+
+        }
+
+    }
+
+
+    nextButton.addEventListener(
+        "click",
+        () => {
+
+            if (currentStep < steps.length) {
+
+                currentStep++;
+
+                updateStep();
+
+                return;
+            }
+
+
+            currentStep = 1;
+
+            updateStep();
+
+            installBox.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+
+        }
+    );
+
+
+    backButton.addEventListener(
+        "click",
+        () => {
+
+            if (currentStep <= 1) {
+                return;
+            }
+
+            currentStep--;
+
+            updateStep();
+
+        }
+    );
 
 
     browserSelect.addEventListener(
@@ -608,7 +1041,7 @@
     );
 
 
-    updateBrowser();
+    updateStep();
 
 </script>
 
