@@ -540,6 +540,79 @@
 
 
         /* =========================
+           OPEN GUIDE
+           ========================= */
+
+        .openGuide {
+            width: min(650px, 100%);
+
+            margin: 18px auto 0;
+
+            padding: 22px 28px;
+
+            border: 1px solid rgba(255,255,255,.07);
+            border-radius: 17px;
+
+            background:
+                rgba(255,255,255,.025);
+
+            text-align: left;
+
+            display: none;
+        }
+
+        .openGuide.visible {
+            display: block;
+        }
+
+        .openGuide h2 {
+            margin: 0 0 8px;
+
+            font-size: 17px;
+            line-height: 1.3;
+
+            letter-spacing: -.3px;
+        }
+
+        .openGuide p {
+            margin: 0;
+
+            color: #888;
+
+            font-size: 14px;
+            line-height: 23px;
+        }
+
+        .openGuide strong {
+            color: #ddd;
+        }
+
+        .shortcut {
+            display: inline-flex;
+
+            align-items: center;
+
+            margin: 11px 0 8px;
+            padding: 7px 10px;
+
+            border: 1px solid rgba(255,255,255,.1);
+            border-radius: 8px;
+
+            background: #0c0c0c;
+
+            color: #ddd;
+
+            font-family:
+                Consolas,
+                "Courier New",
+                monospace;
+
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+
+        /* =========================
            FIREWORKS
            ========================= */
 
@@ -668,6 +741,15 @@
 
             .browserAddress {
                 max-width: 100%;
+            }
+
+            .openGuide {
+                padding: 20px 22px;
+            }
+
+            .openGuide p {
+                font-size: 13px;
+                line-height: 21px;
             }
         }
     </style>
@@ -875,7 +957,7 @@
                         Откройте страницу расширений
                     </h2>
 
-                    <p>
+                    <p id="step2Text">
                         Откройте страницу управления расширениями
                         в вашем браузере.
                         Можно просто вставить этот адрес
@@ -908,11 +990,11 @@
                     data-step="3"
                 >
 
-                    <h2>
+                    <h2 id="step3Title">
                         Включите режим разработчика
                     </h2>
 
-                    <p>
+                    <p id="step3Text">
                         Найдите переключатель
                         <strong>Developer mode</strong>
                         или
@@ -930,11 +1012,11 @@
                     data-step="4"
                 >
 
-                    <h2>
+                    <h2 id="step4Title">
                         Загрузите расширение
                     </h2>
 
-                    <p>
+                    <p id="step4Text">
                         Нажмите
                         <strong>Load unpacked</strong>
                         / «Загрузить распакованное расширение».
@@ -979,6 +1061,39 @@
 
             </div>
 
+
+            <!-- OPEN GUIDE -->
+
+            <div
+                class="openGuide"
+                id="openGuide"
+            >
+
+                <h2>
+                    Как открыть Movie Picker
+                </h2>
+
+                <p>
+                    После установки расширение можно открыть
+                    сочетанием клавиш
+                    <strong>Ctrl + Shift + Y</strong>.
+                </p>
+
+                <div class="shortcut">
+                    Ctrl + Shift + Y
+                </div>
+
+                <p>
+                    Также можно закрепить Movie Picker
+                    на панели браузера через меню
+                    <strong>«Расширения»</strong>
+                    или значок 🧩.
+                    После этого расширение можно открывать
+                    <strong>одним кликом по его иконке</strong>.
+                </p>
+
+            </div>
+
         </section>
 
     </main>
@@ -1003,6 +1118,9 @@
     const installBox =
         document.getElementById("installBox");
 
+    const openGuide =
+        document.getElementById("openGuide");
+
     const downloadButton =
         document.getElementById("downloadButton");
 
@@ -1020,6 +1138,21 @@
 
     const nextButton =
         document.getElementById("nextButton");
+
+    const step2Text =
+        document.getElementById("step2Text");
+
+    const step3Title =
+        document.getElementById("step3Title");
+
+    const step3Text =
+        document.getElementById("step3Text");
+
+    const step4Title =
+        document.getElementById("step4Title");
+
+    const step4Text =
+        document.getElementById("step4Text");
 
     const steps =
         document.querySelectorAll(".step");
@@ -1080,46 +1213,113 @@
         firefox: {
             name: "Mozilla Firefox",
             engine: "Firefox",
-            url: "about:addons",
+            url: "about:debugging#/runtime/this-firefox",
             file: "MovePicker%20FireFox.zip"
         },
 
         "firefox-dev": {
             name: "Firefox Developer Edition",
             engine: "Firefox",
-            url: "about:addons",
+            url: "about:debugging#/runtime/this-firefox",
             file: "MovePicker%20FireFox.zip"
         },
 
         "firefox-nightly": {
             name: "Firefox Nightly",
             engine: "Firefox",
-            url: "about:addons",
+            url: "about:debugging#/runtime/this-firefox",
             file: "MovePicker%20FireFox.zip"
         },
 
         zen: {
             name: "Zen Browser",
             engine: "Firefox",
-            url: "about:addons",
+            url: "about:debugging#/runtime/this-firefox",
             file: "MovePicker%20FireFox.zip"
         },
 
         librewolf: {
             name: "LibreWolf",
             engine: "Firefox",
-            url: "about:addons",
+            url: "about:debugging#/runtime/this-firefox",
             file: "MovePicker%20FireFox.zip"
         },
 
         waterfox: {
             name: "Waterfox",
             engine: "Firefox",
-            url: "about:addons",
+            url: "about:debugging#/runtime/this-firefox",
             file: "MovePicker%20FireFox.zip"
         }
 
     };
+
+
+    /* =========================
+       UPDATE FIREFOX GUIDE
+       ========================= */
+
+    function updateFirefoxGuide() {
+
+        step2Text.innerHTML =
+            "Откройте страницу отладки расширений " +
+            "в вашем браузере. Можно просто вставить " +
+            "этот адрес в адресную строку.";
+
+        step3Title.textContent =
+            "Загрузите временное расширение";
+
+        step3Text.innerHTML =
+            "На странице <strong>This Firefox</strong> " +
+            "найдите кнопку " +
+            "<strong>Load Temporary Add-on…</strong> " +
+            "и нажмите её.";
+
+        step4Title.textContent =
+            "Выберите manifest.json";
+
+        step4Text.innerHTML =
+            "Откройте распакованную папку " +
+            "<strong>Movie Picker</strong> " +
+            "и выберите файл " +
+            "<strong>manifest.json</strong>. " +
+            "Расширение сразу появится в браузере.";
+
+    }
+
+
+    /* =========================
+       UPDATE CHROMIUM GUIDE
+       ========================= */
+
+    function updateChromiumGuide() {
+
+        step2Text.innerHTML =
+            "Откройте страницу управления расширениями " +
+            "в вашем браузере. Можно просто вставить " +
+            "этот адрес в адресную строку.";
+
+        step3Title.textContent =
+            "Включите режим разработчика";
+
+        step3Text.innerHTML =
+            "Найдите переключатель " +
+            "<strong>Developer mode</strong> " +
+            "или <strong>«Режим разработчика»</strong> " +
+            "и включите его.";
+
+        step4Title.textContent =
+            "Загрузите расширение";
+
+        step4Text.innerHTML =
+            "Нажмите <strong>Load unpacked</strong> " +
+            "/ «Загрузить распакованное расширение». " +
+            "Затем выберите распакованную папку " +
+            "<strong>Movie Picker</strong>, " +
+            "внутри которой находится файл " +
+            "<strong>manifest.json</strong>.";
+
+    }
 
 
     /* =========================
@@ -1138,6 +1338,10 @@
                 "hidden"
             );
 
+            openGuide.classList.remove(
+                "visible"
+            );
+
             return;
         }
 
@@ -1154,12 +1358,30 @@
             selected.name;
 
 
+        if (
+            selected.engine ===
+            "Firefox"
+        ) {
+
+            updateFirefoxGuide();
+
+        } else {
+
+            updateChromiumGuide();
+
+        }
+
+
         currentStep = 1;
 
         updateStep();
 
         installBox.classList.remove(
             "hidden"
+        );
+
+        openGuide.classList.add(
+            "visible"
         );
 
 
