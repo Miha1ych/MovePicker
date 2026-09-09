@@ -50,9 +50,108 @@
             cursor: pointer;
         }
 
+        /* =========================
+           FLOATING HEARTS
+           ========================= */
+
+        .hearts {
+            position: fixed;
+            inset: 0;
+
+            z-index: 0;
+
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .heart {
+            position: absolute;
+
+            bottom: -40px;
+
+            color: rgba(255,105,135,.15);
+
+            font-size: 18px;
+            line-height: 1;
+
+            opacity: 0;
+
+            filter: blur(.2px);
+
+            animation:
+                heartFloat var(--duration) linear forwards;
+
+            will-change:
+                transform,
+                opacity;
+        }
+
+        @keyframes heartFloat {
+
+            0% {
+                opacity: 0;
+
+                transform:
+                    translate3d(0, 0, 0)
+                    rotate(0deg)
+                    scale(.75);
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            45% {
+                transform:
+                    translate3d(
+                        var(--sway),
+                        -50vh,
+                        0
+                    )
+                    rotate(8deg)
+                    scale(1);
+            }
+
+            75% {
+                opacity: .65;
+
+                transform:
+                    translate3d(
+                        calc(var(--sway) * -0.5),
+                        -80vh,
+                        0
+                    )
+                    rotate(-7deg)
+                    scale(.9);
+            }
+
+            100% {
+                opacity: 0;
+
+                transform:
+                    translate3d(
+                        var(--sway),
+                        -115vh,
+                        0
+                    )
+                    rotate(10deg)
+                    scale(.8);
+            }
+        }
+
+
+        /* =========================
+           PAGE
+           ========================= */
+
         .page {
+            position: relative;
+            z-index: 1;
+
             width: min(850px, calc(100% - 32px));
+
             margin: 0 auto;
+
             padding: 55px 0 60px;
         }
 
@@ -111,7 +210,9 @@
 
             font-size: clamp(38px, 7vw, 64px);
             line-height: 1;
+
             letter-spacing: -2.8px;
+
             font-weight: 800;
         }
 
@@ -133,6 +234,7 @@
 
         .browserSelector {
             width: min(520px, 100%);
+
             margin: 0 auto;
         }
 
@@ -238,6 +340,7 @@
             font-weight: 700;
 
             letter-spacing: .8px;
+
             text-transform: uppercase;
         }
 
@@ -252,7 +355,7 @@
 
 
         /* =========================
-           STEP CONTENT
+           STEP
            ========================= */
 
         .step {
@@ -289,7 +392,7 @@
 
 
         /* =========================
-           DOWNLOAD BUTTON
+           DOWNLOAD
            ========================= */
 
         .downloadButton {
@@ -431,6 +534,7 @@
 
         .navButton.hidden {
             visibility: hidden;
+
             pointer-events: none;
         }
 
@@ -509,7 +613,7 @@
 
 
         /* =========================
-           RESPONSIVE
+           MOBILE
            ========================= */
 
         @media (max-width: 600px) {
@@ -575,7 +679,16 @@
 
 <body>
 
+<!-- FLOATING HEARTS -->
+
+<div
+    class="hearts"
+    id="hearts"
+></div>
+
+
 <div class="page">
+
 
     <!-- HEADER -->
 
@@ -602,15 +715,17 @@
     </header>
 
 
-    <!-- MAIN -->
-
     <main>
 
         <section class="hero">
 
+
+            <!-- TITLE -->
+
             <h1>
                 Movie Picker
             </h1>
+
 
             <p>
                 Фильмы и сериалы, которые действительно хочется посмотреть.
@@ -618,7 +733,7 @@
             </p>
 
 
-            <!-- BROWSER -->
+            <!-- BROWSER SELECTOR -->
 
             <div class="browserSelector">
 
@@ -700,7 +815,7 @@
             </div>
 
 
-            <!-- INSTALLATION BOX -->
+            <!-- INSTALLATION -->
 
             <div
                 class="installBox hidden"
@@ -708,7 +823,7 @@
             >
 
 
-                <!-- HEADER -->
+                <!-- STEP HEADER -->
 
                 <div class="stepHeader">
 
@@ -887,6 +1002,10 @@
 
 <script>
 
+    /* =========================
+       ELEMENTS
+       ========================= */
+
     const browserSelect =
         document.getElementById("browserSelect");
 
@@ -1013,7 +1132,7 @@
 
 
     /* =========================
-       UPDATE BROWSER
+       BROWSER CHANGE
        ========================= */
 
     function updateBrowser() {
@@ -1062,7 +1181,7 @@
 
 
     /* =========================
-       UPDATE STEP
+       STEP UPDATE
        ========================= */
 
     function updateStep() {
@@ -1071,6 +1190,7 @@
 
             const stepNumber =
                 Number(step.dataset.step);
+
 
             step.classList.toggle(
                 "active",
@@ -1088,11 +1208,15 @@
 
         if (currentStep === 1) {
 
-            backButton.classList.add("hidden");
+            backButton.classList.add(
+                "hidden"
+            );
 
         } else {
 
-            backButton.classList.remove("hidden");
+            backButton.classList.remove(
+                "hidden"
+            );
 
         }
 
@@ -1113,14 +1237,17 @@
 
 
     /* =========================
-       NEXT
+       NEXT BUTTON
        ========================= */
 
     nextButton.addEventListener(
         "click",
         () => {
 
-            if (currentStep < steps.length) {
+            if (
+                currentStep <
+                steps.length
+            ) {
 
                 currentStep++;
 
@@ -1142,7 +1269,7 @@
 
 
     /* =========================
-       BACK
+       BACK BUTTON
        ========================= */
 
     backButton.addEventListener(
@@ -1170,6 +1297,7 @@
 
         const container =
             document.createElement("div");
+
 
         container.className =
             "celebration";
@@ -1202,14 +1330,16 @@
         ) {
 
             const centerX =
-                12 + Math.random() * 76;
+                12 +
+                Math.random() * 76;
+
 
             const centerY =
-                18 + Math.random() * 48;
+                18 +
+                Math.random() * 48;
 
 
-            const particles =
-                32;
+            const particles = 32;
 
 
             for (
@@ -1311,6 +1441,96 @@
         );
 
     }
+
+
+    /* =========================
+       FLOATING HEARTS
+       ========================= */
+
+    const heartsContainer =
+        document.getElementById("hearts");
+
+
+    function createHeart() {
+
+        const heart =
+            document.createElement("div");
+
+
+        heart.className =
+            "heart";
+
+
+        heart.textContent =
+            "♥";
+
+
+        heart.style.left =
+            Math.random() * 100 + "%";
+
+
+        heart.style.setProperty(
+            "--duration",
+            8 + Math.random() * 7 + "s"
+        );
+
+
+        heart.style.setProperty(
+            "--sway",
+            -50 + Math.random() * 100 + "px"
+        );
+
+
+        heart.style.fontSize =
+            11 + Math.random() * 13 + "px";
+
+
+        heart.style.color =
+            `rgba(
+                255,
+                ${85 + Math.random() * 45},
+                ${115 + Math.random() * 35},
+                ${.08 + Math.random() * .13}
+            )`;
+
+
+        heartsContainer.appendChild(
+            heart
+        );
+
+
+        heart.addEventListener(
+            "animationend",
+            () => {
+                heart.remove();
+            }
+        );
+
+    }
+
+
+    /* Initial hearts */
+
+    for (
+        let i = 0;
+        i < 8;
+        i++
+    ) {
+
+        setTimeout(
+            createHeart,
+            i * 900
+        );
+
+    }
+
+
+    /* New hearts */
+
+    setInterval(
+        createHeart,
+        1100
+    );
 
 
     /* =========================
