@@ -106,7 +106,7 @@ Movie Picker использует **The Movie Database (TMDB)** для полу�
 ---
 
 ## 📁 
-
+```text
 Movie Picker
 ├── background.js
 ├── manifest.json
