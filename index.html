@@ -50,6 +50,7 @@
             cursor: pointer;
         }
 
+
         /* =========================
            FLOATING HEARTS
            ========================= */
@@ -69,9 +70,9 @@
 
             bottom: -40px;
 
-            color: rgba(255,105,135,.15);
+            color: rgba(255,105,135,.22);
 
-            font-size: 18px;
+            font-size: 22px;
             line-height: 1;
 
             opacity: 0;
@@ -113,7 +114,7 @@
             }
 
             75% {
-                opacity: .65;
+                opacity: .7;
 
                 transform:
                     translate3d(
@@ -355,7 +356,7 @@
 
 
         /* =========================
-           STEP
+           STEP CONTENT
            ========================= */
 
         .step {
@@ -534,7 +535,6 @@
 
         .navButton.hidden {
             visibility: hidden;
-
             pointer-events: none;
         }
 
@@ -630,7 +630,6 @@
 
             .hero h1 {
                 font-size: 39px;
-
                 letter-spacing: -1.8px;
             }
 
@@ -641,7 +640,6 @@
 
             .installBox {
                 padding: 22px;
-
                 border-radius: 17px;
             }
 
@@ -665,7 +663,6 @@
 
             .navButton {
                 min-height: 40px;
-
                 padding: 0 13px;
             }
 
@@ -678,8 +675,6 @@
 
 
 <body>
-
-<!-- FLOATING HEARTS -->
 
 <div
     class="hearts"
@@ -719,8 +714,6 @@
 
         <section class="hero">
 
-
-            <!-- TITLE -->
 
             <h1>
                 Movie Picker
@@ -815,15 +808,13 @@
             </div>
 
 
-            <!-- INSTALLATION -->
+            <!-- INSTALLATION BOX -->
 
             <div
                 class="installBox hidden"
                 id="installBox"
             >
 
-
-                <!-- STEP HEADER -->
 
                 <div class="stepHeader">
 
@@ -1143,7 +1134,9 @@
 
         if (!selected) {
 
-            installBox.classList.add("hidden");
+            installBox.classList.add(
+                "hidden"
+            );
 
             return;
         }
@@ -1165,7 +1158,9 @@
 
         updateStep();
 
-        installBox.classList.remove("hidden");
+        installBox.classList.remove(
+            "hidden"
+        );
 
 
         setTimeout(() => {
@@ -1181,7 +1176,7 @@
 
 
     /* =========================
-       STEP UPDATE
+       UPDATE STEP
        ========================= */
 
     function updateStep() {
@@ -1221,7 +1216,10 @@
         }
 
 
-        if (currentStep === steps.length) {
+        if (
+            currentStep ===
+            steps.length
+        ) {
 
             nextButton.textContent =
                 "🎉 Готово";
@@ -1237,7 +1235,7 @@
 
 
     /* =========================
-       NEXT BUTTON
+       NEXT
        ========================= */
 
     nextButton.addEventListener(
@@ -1269,7 +1267,7 @@
 
 
     /* =========================
-       BACK BUTTON
+       BACK
        ========================= */
 
     backButton.addEventListener(
@@ -1471,18 +1469,24 @@
 
         heart.style.setProperty(
             "--duration",
-            8 + Math.random() * 7 + "s"
+            8 +
+            Math.random() * 7 +
+            "s"
         );
 
 
         heart.style.setProperty(
             "--sway",
-            -50 + Math.random() * 100 + "px"
+            -50 +
+            Math.random() * 100 +
+            "px"
         );
 
 
         heart.style.fontSize =
-            11 + Math.random() * 13 + "px";
+            15 +
+            Math.random() * 16 +
+            "px";
 
 
         heart.style.color =
@@ -1490,7 +1494,7 @@
                 255,
                 ${85 + Math.random() * 45},
                 ${115 + Math.random() * 35},
-                ${.08 + Math.random() * .13}
+                ${.14 + Math.random() * .16}
             )`;
 
 
@@ -1502,7 +1506,9 @@
         heart.addEventListener(
             "animationend",
             () => {
+
                 heart.remove();
+
             }
         );
 
