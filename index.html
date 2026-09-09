@@ -210,6 +210,8 @@
 
             box-shadow:
                 0 20px 60px rgba(0,0,0,.25);
+
+            text-align: left;
         }
 
         .installBox.hidden {
@@ -240,10 +242,12 @@
         }
 
         .stepProgress {
-            color: #555;
+            color: #666;
 
-            font-size: 11px;
+            font-size: 13px;
             font-weight: 600;
+
+            letter-spacing: .2px;
         }
 
 
@@ -328,6 +332,8 @@
         .browserAddress {
             display: inline-block;
 
+            max-width: 100%;
+
             margin-top: 19px;
             padding: 10px 12px;
 
@@ -346,6 +352,8 @@
             font-size: 12px;
 
             user-select: all;
+
+            overflow-x: auto;
         }
 
         .browserName {
@@ -428,6 +436,64 @@
 
 
         /* =========================
+           FIREWORKS
+           ========================= */
+
+        .celebration {
+            position: fixed;
+            inset: 0;
+
+            z-index: 9999;
+
+            pointer-events: none;
+
+            overflow: hidden;
+        }
+
+        .firework {
+            position: absolute;
+
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+
+            opacity: 0;
+
+            animation:
+                firework 1.25s
+                cubic-bezier(.1,.7,.2,1)
+                forwards;
+        }
+
+        @keyframes firework {
+
+            0% {
+                opacity: 1;
+
+                transform:
+                    translate(-50%, -50%)
+                    scale(.3);
+            }
+
+            15% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+
+                transform:
+                    translate(
+                        calc(-50% + var(--x)),
+                        calc(-50% + var(--y))
+                    )
+                    scale(.85);
+            }
+        }
+
+
+        /* =========================
            FOOTER
            ========================= */
 
@@ -450,6 +516,7 @@
 
             .page {
                 width: calc(100% - 22px);
+
                 padding: 30px 0 45px;
             }
 
@@ -459,6 +526,7 @@
 
             .hero h1 {
                 font-size: 39px;
+
                 letter-spacing: -1.8px;
             }
 
@@ -469,6 +537,7 @@
 
             .installBox {
                 padding: 22px;
+
                 border-radius: 17px;
             }
 
@@ -492,20 +561,23 @@
 
             .navButton {
                 min-height: 40px;
+
                 padding: 0 13px;
             }
 
             .browserAddress {
                 max-width: 100%;
-                overflow-x: auto;
             }
         }
     </style>
 </head>
 
+
 <body>
 
 <div class="page">
+
+    <!-- HEADER -->
 
     <header class="header">
 
@@ -516,18 +588,29 @@
         >
 
         <div class="headerText">
-            <strong>Movie Picker</strong>
-            <span>Установка расширения</span>
+
+            <strong>
+                Movie Picker
+            </strong>
+
+            <span>
+                Установка расширения
+            </span>
+
         </div>
 
     </header>
 
 
+    <!-- MAIN -->
+
     <main>
 
         <section class="hero">
 
-            <h1>Movie Picker</h1>
+            <h1>
+                Movie Picker
+            </h1>
 
             <p>
                 Фильмы и сериалы, которые действительно хочется посмотреть.
@@ -535,15 +618,22 @@
             </p>
 
 
+            <!-- BROWSER -->
+
             <div class="browserSelector">
 
                 <label for="browserSelect">
                     Выберите свой браузер
                 </label>
 
+
                 <select id="browserSelect">
 
-                    <option value="" selected disabled>
+                    <option
+                        value=""
+                        selected
+                        disabled
+                    >
                         Выберите браузер
                     </option>
 
@@ -610,12 +700,15 @@
             </div>
 
 
-            <!-- INSTALLATION -->
+            <!-- INSTALLATION BOX -->
 
             <div
                 class="installBox hidden"
                 id="installBox"
             >
+
+
+                <!-- HEADER -->
 
                 <div class="stepHeader">
 
@@ -647,9 +740,11 @@
                     <p>
                         Нажмите кнопку ниже и скачайте архив
                         с версией Movie Picker для вашего браузера.
-                        После скачивания <strong>распакуйте ZIP-архив</strong>
+                        После скачивания
+                        <strong>распакуйте ZIP-архив</strong>
                         в удобное место.
                     </p>
+
 
                     <a
                         class="downloadButton"
@@ -681,12 +776,14 @@
                         в адресную строку.
                     </p>
 
+
                     <div
                         class="browserAddress"
                         id="browserAddress"
                     >
                         chrome://extensions/
                     </div>
+
 
                     <div
                         class="browserName"
@@ -814,13 +911,16 @@
     const nextButton =
         document.getElementById("nextButton");
 
-
     const steps =
         document.querySelectorAll(".step");
 
 
     let currentStep = 1;
 
+
+    /* =========================
+       BROWSERS
+       ========================= */
 
     const browsers = {
 
@@ -912,6 +1012,10 @@
     };
 
 
+    /* =========================
+       UPDATE BROWSER
+       ========================= */
+
     function updateBrowser() {
 
         const selected =
@@ -944,8 +1048,22 @@
 
         installBox.classList.remove("hidden");
 
+
+        setTimeout(() => {
+
+            installBox.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+
+        }, 50);
+
     }
 
+
+    /* =========================
+       UPDATE STEP
+       ========================= */
 
     function updateStep() {
 
@@ -963,7 +1081,9 @@
 
 
         stepProgress.textContent =
-            currentStep + " / " + steps.length;
+            currentStep +
+            " / " +
+            steps.length;
 
 
         if (currentStep === 1) {
@@ -980,7 +1100,7 @@
         if (currentStep === steps.length) {
 
             nextButton.textContent =
-                "Готово";
+                "🎉 Готово";
 
         } else {
 
@@ -991,6 +1111,10 @@
 
     }
 
+
+    /* =========================
+       NEXT
+       ========================= */
 
     nextButton.addEventListener(
         "click",
@@ -1006,18 +1130,20 @@
             }
 
 
+            celebrate();
+
+
             currentStep = 1;
 
             updateStep();
 
-            installBox.scrollIntoView({
-                behavior: "smooth",
-                block: "center"
-            });
-
         }
     );
 
+
+    /* =========================
+       BACK
+       ========================= */
 
     backButton.addEventListener(
         "click",
@@ -1027,6 +1153,7 @@
                 return;
             }
 
+
             currentStep--;
 
             updateStep();
@@ -1034,6 +1161,161 @@
         }
     );
 
+
+    /* =========================
+       FIREWORKS
+       ========================= */
+
+    function celebrate() {
+
+        const container =
+            document.createElement("div");
+
+        container.className =
+            "celebration";
+
+
+        document.body.appendChild(
+            container
+        );
+
+
+        const colors = [
+
+            "#ffffff",
+            "#ff4d67",
+            "#ffd84d",
+            "#5cff8d",
+            "#5cc8ff",
+            "#b56cff"
+
+        ];
+
+
+        const fireworks = 9;
+
+
+        for (
+            let f = 0;
+            f < fireworks;
+            f++
+        ) {
+
+            const centerX =
+                12 + Math.random() * 76;
+
+            const centerY =
+                18 + Math.random() * 48;
+
+
+            const particles =
+                32;
+
+
+            for (
+                let i = 0;
+                i < particles;
+                i++
+            ) {
+
+                const particle =
+                    document.createElement("div");
+
+
+                particle.className =
+                    "firework";
+
+
+                const angle =
+                    (
+                        Math.PI * 2 /
+                        particles
+                    ) * i;
+
+
+                const distance =
+                    65 +
+                    Math.random() * 145;
+
+
+                const x =
+                    Math.cos(angle) *
+                    distance;
+
+
+                const y =
+                    Math.sin(angle) *
+                    distance;
+
+
+                particle.style.left =
+                    centerX + "%";
+
+
+                particle.style.top =
+                    centerY + "%";
+
+
+                particle.style.setProperty(
+                    "--x",
+                    x + "px"
+                );
+
+
+                particle.style.setProperty(
+                    "--y",
+                    y + "px"
+                );
+
+
+                const color =
+                    colors[
+                        Math.floor(
+                            Math.random() *
+                            colors.length
+                        )
+                    ];
+
+
+                particle.style.background =
+                    color;
+
+
+                particle.style.boxShadow =
+                    "0 0 10px " +
+                    color;
+
+
+                particle.style.animationDelay =
+                    (
+                        Math.random() * .35
+                    ) + "s";
+
+
+                container.appendChild(
+                    particle
+                );
+
+            }
+
+        }
+
+
+        setTimeout(
+            () => {
+
+                container.remove();
+
+            },
+            2300
+        );
+
+    }
+
+
+    /* =========================
+       INIT
+       ========================= */
 
     browserSelect.addEventListener(
         "change",
