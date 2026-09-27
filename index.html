@@ -4166,7 +4166,7 @@
 
     // Ссылка на установщик на GitHub (Releases). Если задана —
     // кнопки «Скачать» ведут туда, а не на файл рядом со страницей.
-    const DOWNLOAD_URL = "";
+    const DOWNLOAD_URL = "https://github.com/Miha1ych/MovePicker/releases/download/one/Movie.Picker.Setup.3.2.0.exe";
 
     // Страница установки расширения (для тех, кто не на Windows).
     // Пусто — ссылка не показывается.
@@ -4196,7 +4196,10 @@
 
     document.getElementById("metaVersion").textContent = "Версия " + APP_VERSION;
     document.getElementById("metaSize").textContent = APP_SIZE;
-    document.getElementById("step1FileName").textContent = APP_FILE;
+    document.getElementById("step1FileName").textContent =
+        DOWNLOAD_URL
+            ? decodeURIComponent(DOWNLOAD_URL.split("/").pop())
+            : APP_FILE;
     document.getElementById("footer").textContent = "Movie Picker " + APP_VERSION;
 
     const platform =
