@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Movie Picker — Скачать</title>
+    <title>Movie Picker — Скачать для Windows</title>
 
     <link rel="icon" type="image/png" href="favicon.png">
 
@@ -16,9 +16,14 @@
         html {
             min-height: 100%;
             background: #080808;
+            scroll-behavior: smooth;
         }
 
         body {
+            --accent: #b392ff;
+            --accent-rgb: 179, 146, 255;
+            --ease: cubic-bezier(.2, .8, .2, 1);
+
             margin: 0;
             min-height: 100vh;
 
@@ -41,12 +46,8 @@
                 sans-serif;
         }
 
-        button,
-        select {
-            font: inherit;
-        }
-
         button {
+            font: inherit;
             cursor: pointer;
         }
 
@@ -58,86 +59,28 @@
         .hearts {
             position: fixed;
             inset: 0;
-
             z-index: 0;
-
             overflow: hidden;
             pointer-events: none;
         }
 
         .heart {
             position: absolute;
-
             bottom: -40px;
-
             color: rgba(255,105,135,.22);
-
             font-size: 22px;
             line-height: 1;
-
             opacity: 0;
-
-            filter: blur(.2px);
-
-            animation:
-                heartFloat var(--duration) linear forwards;
-
-            will-change:
-                transform,
-                opacity;
+            animation: heartFloat var(--duration) linear forwards;
+            will-change: transform, opacity;
         }
 
         @keyframes heartFloat {
-
-            0% {
-                opacity: 0;
-
-                transform:
-                    translate3d(0, 0, 0)
-                    rotate(0deg)
-                    scale(.75);
-            }
-
-            10% {
-                opacity: 1;
-            }
-
-            45% {
-                transform:
-                    translate3d(
-                        var(--sway),
-                        -50vh,
-                        0
-                    )
-                    rotate(8deg)
-                    scale(1);
-            }
-
-            75% {
-                opacity: .7;
-
-                transform:
-                    translate3d(
-                        calc(var(--sway) * -0.5),
-                        -80vh,
-                        0
-                    )
-                    rotate(-7deg)
-                    scale(.9);
-            }
-
-            100% {
-                opacity: 0;
-
-                transform:
-                    translate3d(
-                        var(--sway),
-                        -115vh,
-                        0
-                    )
-                    rotate(10deg)
-                    scale(.8);
-            }
+            0%   { opacity: 0; transform: translate3d(0, 0, 0) rotate(0deg) scale(.75); }
+            10%  { opacity: 1; }
+            45%  { transform: translate3d(var(--sway), -50vh, 0) rotate(8deg) scale(1); }
+            75%  { opacity: .7; transform: translate3d(calc(var(--sway) * -0.5), -80vh, 0) rotate(-7deg) scale(.9); }
+            100% { opacity: 0; transform: translate3d(var(--sway), -115vh, 0) rotate(10deg) scale(.8); }
         }
 
 
@@ -148,35 +91,23 @@
         .page {
             position: relative;
             z-index: 1;
-
-            width: min(850px, calc(100% - 32px));
-
+            width: min(1060px, calc(100% - 32px));
             margin: 0 auto;
-
             padding: 55px 0 60px;
         }
-
-
-        /* =========================
-           HEADER
-           ========================= */
 
         .header {
             display: flex;
             align-items: center;
             gap: 12px;
-
             margin-bottom: 75px;
         }
 
         .headerIcon {
             width: 42px;
             height: 42px;
-
             object-fit: contain;
-
             border-radius: 11px;
-
             background: rgba(255,255,255,.05);
         }
 
@@ -208,219 +139,2366 @@
 
         .hero h1 {
             margin: 0;
-
             font-size: clamp(38px, 7vw, 64px);
             line-height: 1;
-
             letter-spacing: -2.8px;
-
             font-weight: 800;
         }
 
         .hero > p {
             max-width: 600px;
-
             margin: 18px auto 35px;
-
             color: #888;
-
             font-size: 15px;
             line-height: 23px;
         }
 
-
-        /* =========================
-           BROWSER SELECTOR
-           ========================= */
-
-        .browserSelector {
-            width: min(520px, 100%);
-
-            margin: 0 auto;
+        .hero > p strong {
+            color: #ddd;
         }
 
-        .browserSelector label {
-            display: block;
+        .downloadCard {
+            width: min(520px, 100%);
+            margin: 0 auto;
+            padding: 26px;
+            border: 1px solid rgba(255,255,255,.1);
+            border-radius: 20px;
+            background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.025));
+            box-shadow: 0 20px 60px rgba(0,0,0,.3);
+        }
 
-            margin-bottom: 10px;
+        .downloadMain {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 11px;
+            width: 100%;
+            min-height: 58px;
+            border: 0;
+            border-radius: 14px;
+            background: #fff;
+            color: #080808;
+            font-size: 16px;
+            font-weight: 750;
+            text-decoration: none;
+            box-shadow: 0 12px 34px rgba(255,255,255,.12);
+            transition: transform .18s ease, box-shadow .2s ease;
+        }
 
-            color: #aaa;
+        .downloadMain:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 16px 40px rgba(255,255,255,.18);
+        }
 
+        .downloadMain:active {
+            transform: translateY(0) scale(.98);
+        }
+
+        .windowsLogo {
+            width: 18px;
+            height: 18px;
+        }
+
+        .downloadMeta {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 6px 14px;
+            margin-top: 14px;
+            color: #666;
+            font-size: 12px;
+        }
+
+        .downloadMeta span {
+            white-space: nowrap;
+        }
+
+        .downloadMeta a {
+            color: #888;
+        }
+
+        .osNotice {
+            display: none;
+            margin-top: 16px;
+            padding: 12px 14px;
+            border: 1px solid rgba(255,216,77,.25);
+            border-radius: 12px;
+            background: rgba(255,216,77,.06);
+            color: #d8c690;
             font-size: 13px;
-            font-weight: 600;
-
+            line-height: 20px;
             text-align: left;
         }
 
-        .browserSelector select {
-            width: 100%;
-            height: 58px;
+        .osNotice.visible {
+            display: block;
+        }
 
-            padding: 0 17px;
+        .osNotice a {
+            color: #ffe28a;
+        }
 
-            border: 1px solid rgba(255,255,255,.12);
-            border-radius: 14px;
 
-            outline: none;
+        /* =========================
+           SHOWCASE — БЛОКИ ВОЗМОЖНОСТЕЙ
+           ========================= */
 
-            background: #121212;
-            color: #eee;
+        .showcase {
+            display: grid;
+            grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+            align-items: center;
+            gap: 56px;
+            margin-top: 130px;
+        }
 
+        .showcase.reverse .showcaseText {
+            order: 2;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 5px 11px;
+            border: 1px solid rgba(var(--accent-rgb), .28);
+            border-radius: 999px;
+            background: rgba(var(--accent-rgb), .08);
+            color: var(--accent);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .6px;
+            text-transform: uppercase;
+        }
+
+        .showcaseText h2 {
+            margin: 16px 0 0;
+            font-size: clamp(28px, 4vw, 40px);
+            line-height: 1.08;
+            letter-spacing: -1.4px;
+        }
+
+        .showcaseText > p {
+            margin: 16px 0 0;
+            color: #8a8a8a;
             font-size: 15px;
+            line-height: 24px;
+        }
 
-            cursor: pointer;
+        .showcaseText > p strong {
+            color: #e8e8e8;
+        }
 
+        .points {
+            display: grid;
+            gap: 10px;
+            margin: 22px 0 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .points li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            color: #9a9a9a;
+            font-size: 14px;
+            line-height: 21px;
+        }
+
+        .points li b {
+            color: #eee;
+            font-weight: 650;
+        }
+
+        .pointIcon {
+            flex: 0 0 auto;
+            display: grid;
+            place-items: center;
+            width: 30px;
+            height: 30px;
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 9px;
+            background: rgba(255,255,255,.04);
+            font-size: 15px;
+        }
+
+        /*
+         * ПОЯВЛЕНИЕ ПРИ ПРОКРУТКЕ — каскадом.
+         * JS помечает части блока классом .reveal и
+         * задаёт каждой задержку --d; когда блок
+         * доезжает до экрана, он получает .revealed.
+         * Окно с демо только поднимается (без scale),
+         * чтобы курсор в анимациях не сбивался.
+         */
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
             transition:
-                border-color .18s ease,
-                background .18s ease;
+                opacity .4s ease var(--d, 0s),
+                transform .5s var(--ease) var(--d, 0s);
         }
 
-        .browserSelector select:hover {
-            border-color: rgba(255,255,255,.2);
-            background: #151515;
+        .revealed .reveal {
+            opacity: 1;
+            transform: none;
         }
 
-        .browserSelector select:focus {
-            border-color: rgba(255,255,255,.28);
+        .appWindow.reveal {
+            transform: translateY(40px);
+            transition:
+                opacity .45s ease var(--d, 0s),
+                transform .6s var(--ease) var(--d, 0s);
         }
 
-        .browserSelector option {
-            background: #121212;
+        /* Заголовок: каждое слово выезжает из-под «маски» */
+
+        .word {
+            display: inline-block;
+            overflow: hidden;
+            padding-bottom: .12em;
+            margin-bottom: -.12em;
+            vertical-align: top;
+        }
+
+        .word > span {
+            display: inline-block;
+            transform: translateY(105%);
+            transition: transform .5s var(--ease) var(--d, 0s);
+        }
+
+        .revealed .word > span {
+            transform: none;
+        }
+
+        .points li.reveal {
+            transform: translateY(24px) scale(.97);
+        }
+
+        .revealed .points li.reveal {
+            transform: none;
+        }
+
+
+        /* =========================
+           ЛЕНТА ФИЛЬМОВ (как «Популярное» в программе)
+           ========================= */
+
+        .strip {
+            margin-top: 110px;
+        }
+
+        .stripHead {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 17px;
+        }
+
+        .stripHead h3 {
+            margin: 0;
+            font-size: 22px;
+            line-height: 1.2;
+            letter-spacing: -.5px;
+        }
+
+        .stripCount {
+            padding: 4px 11px;
+            border: 1px solid rgba(255,255,255,.07);
+            border-radius: 999px;
+            background: rgba(255,255,255,.035);
+            color: #666;
+            font-size: 11.5px;
+        }
+
+        .stripViewport {
+            overflow: hidden;
+            padding: 10px 0 14px;
+            margin: -10px 0 -14px;
+
+            -webkit-mask-image: linear-gradient(90deg, #000 0, #000 88%, transparent);
+            mask-image: linear-gradient(90deg, #000 0, #000 88%, transparent);
+        }
+
+        .stripTrack {
+            display: flex;
+            gap: 17px;
+            will-change: transform;
+        }
+
+        .stripTrack.moving {
+            transition: transform .75s var(--ease);
+        }
+
+        .mpCard {
+            flex: 0 0 176px;
+            min-width: 0;
+            cursor: default;
+            user-select: none;
+            transition: transform .22s var(--ease);
+        }
+
+        .mpCard:hover {
+            transform: translateY(-7px);
+        }
+
+        .mpPosterWrap {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 2 / 3;
+            border-radius: 12px;
+            background: linear-gradient(160deg, rgba(255,255,255,.06), rgba(255,255,255,.015) 60%);
+            transition: box-shadow .3s ease;
+        }
+
+        .mpPosterWrap::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background: linear-gradient(to top, rgba(0,0,0,.28), transparent 38%);
+            opacity: 0;
+            transition: opacity .22s ease;
+        }
+
+        .mpCard:hover .mpPosterWrap {
+            box-shadow:
+                0 20px 44px rgba(0,0,0,.45),
+                0 0 0 1px rgba(var(--accent-rgb), .38),
+                0 14px 44px -12px rgba(var(--accent-rgb), .5);
+        }
+
+        .mpCard:hover .mpPosterWrap::after {
+            opacity: 1;
+        }
+
+        .mpPoster {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform .6s var(--ease);
+        }
+
+        .mpPoster.fallback {
+            display: grid;
+            place-items: center;
+            background: linear-gradient(135deg, #111, #1b1b1b);
+            color: #444;
+            font-size: 36px;
+        }
+
+        .mpCard:hover .mpPoster {
+            transform: scale(1.045);
+        }
+
+        .mpBtn {
+            position: absolute;
+            z-index: 2;
+            display: grid;
+            place-items: center;
+            width: 34px;
+            height: 34px;
+            border: 1px solid rgba(255,255,255,.12);
+            border-radius: 50%;
+            background: rgba(0,0,0,.65);
+            color: #fff;
+            font-size: 16px;
+            line-height: 1;
+            padding: 0;
+            font-family: inherit;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(6px) scale(.9);
+            transition:
+                opacity .18s ease,
+                transform .2s var(--ease),
+                background .2s ease,
+                color .2s ease,
+                border-color .2s ease;
+        }
+
+        .mpBtn.trailer { left: 8px; bottom: 8px; font-size: 13px; }
+        .mpBtn.fav     { right: 48px; bottom: 8px; }
+        .mpBtn.like    { right: 8px; bottom: 8px; font-size: 18px; }
+
+        .mpCard:hover .mpBtn,
+        .mpBtn.on {
+            opacity: 1;
+            transform: none;
+        }
+
+        .mpCard:hover .mpBtn:hover {
+            transform: scale(1.12);
+            border-color: rgba(255,255,255,.35);
+        }
+
+        .mpBtn:active {
+            transform: scale(.85) !important;
+        }
+
+        /* Отмечено — как в программе: красное сердце, жёлтая звезда */
+
+        .mpBtn.like.on {
+            color: #ff4d67;
+            text-shadow: 0 0 12px rgba(255,77,103,.45);
+        }
+
+        .mpBtn.fav.on {
+            color: #ffd84d;
+            text-shadow: 0 0 12px rgba(255,216,77,.4);
+        }
+
+        .mpBurst {
+            position: fixed;
+            z-index: 60;
+            pointer-events: none;
+            font-size: 15px;
+            animation: burst .75s ease-out forwards;
+        }
+
+        .mpCard:hover .mpBtn.trailer { transition-delay: .03s; }
+        .mpCard:hover .mpBtn.fav     { transition-delay: .06s; }
+        .mpCard:hover .mpBtn.like    { transition-delay: .09s; }
+
+        .mpTitle {
+            margin-top: 10px;
+            overflow: hidden;
+            color: #eee;
+            font-size: 13px;
+            line-height: 18px;
+            font-weight: 600;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            transition: color .2s ease;
+        }
+
+        .mpCard:hover .mpTitle {
+            color: var(--accent);
+        }
+
+        .mpMeta {
+            margin-top: 3px;
+            color: #666;
+            font-size: 11px;
+        }
+
+        .mpRating {
+            margin-top: 4px;
+            color: #ffd76a;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .mpRating span {
+            color: rgba(255,255,255,.45);
+            font-weight: 500;
+        }
+
+        @media (max-width: 600px) {
+            .mpCard {
+                flex-basis: 128px;
+            }
+
+            .stripTrack {
+                gap: 12px;
+            }
+
+            .stripHead h3 {
+                font-size: 19px;
+            }
+        }
+
+
+        /* =========================
+           ОКНО-ДЕМО
+           ========================= */
+
+        .appWindow {
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,.1);
+            border-radius: 18px;
+            background:
+                radial-gradient(circle at 20% 0%, rgba(var(--accent-rgb), .12), transparent 45%),
+                #0d0d11;
+            box-shadow:
+                0 30px 80px rgba(0,0,0,.5),
+                inset 0 1px 0 rgba(255,255,255,.05);
+        }
+
+        .windowBar {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            height: 38px;
+            padding: 0 14px;
+            border-bottom: 1px solid rgba(255,255,255,.06);
+            background: rgba(255,255,255,.02);
+        }
+
+        .windowBar i {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255,255,255,.12);
+        }
+
+        .windowBar span {
+            margin-left: 8px;
+            color: #666;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .windowBar .barRight {
+            margin-left: auto;
+        }
+
+        .stage {
+            position: relative;
+            height: 420px;
+            padding: 18px;
+        }
+
+        .rowLabel {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            color: #ddd;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .rowLabel small {
+            color: #666;
+            font-size: 10.5px;
+            font-weight: 500;
+        }
+
+        .miniRow {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 104px));
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+
+        /* ПОСТЕРЫ-МАКЕТЫ */
+
+        .fakeCard {
+            position: relative;
+            transition:
+                transform .45s var(--ease),
+                opacity .45s ease,
+                filter .45s ease;
+        }
+
+        .fakePoster {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 2 / 3;
+            border-radius: 10px;
+            background: linear-gradient(160deg, var(--c1), var(--c2));
+            box-shadow: 0 10px 24px rgba(0,0,0,.35);
+            transition: box-shadow .35s ease, transform .35s var(--ease);
+        }
+
+        .fakePoster::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,.55), transparent 55%);
+        }
+
+        .fakePoster .emoji {
+            position: absolute;
+            top: 42%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 30px;
+            filter: drop-shadow(0 6px 12px rgba(0,0,0,.4));
+        }
+
+        .fakePoster .posterTitle {
+            position: absolute;
+            left: 8px;
+            right: 8px;
+            bottom: 7px;
+            z-index: 1;
+            color: #fff;
+            font-size: 10.5px;
+            font-weight: 750;
+            line-height: 1.15;
+            text-shadow: 0 2px 6px rgba(0,0,0,.6);
+        }
+
+        .fakeCard.liked .fakePoster {
+            box-shadow:
+                0 0 0 2px rgba(255,77,103,.9),
+                0 12px 30px rgba(255,77,103,.35);
+        }
+
+        .fakeCard.disliked {
+            transform: scale(.82);
+            opacity: 0;
+            filter: grayscale(1);
+        }
+
+        .cardBtns {
+            position: absolute;
+            right: 6px;
+            bottom: 28px;
+            z-index: 2;
+            display: flex;
+            gap: 5px;
+        }
+
+        .cardBtn {
+            display: grid;
+            place-items: center;
+            width: 26px;
+            height: 26px;
+            border: 1px solid rgba(255,255,255,.18);
+            border-radius: 50%;
+            background: rgba(10,10,14,.78);
+            color: #fff;
+            font-size: 12px;
+            line-height: 1;
+            transition: transform .2s var(--ease), background .2s ease, color .2s ease;
+        }
+
+        .cardBtn.on.like {
+            background: #ff4d67;
             color: #fff;
         }
 
-
-        /* =========================
-           INSTALLATION BOX
-           ========================= */
-
-        .installBox {
-            width: min(650px, 100%);
-
-            margin: 32px auto 0;
-
-            padding: 28px;
-
-            border: 1px solid rgba(255,255,255,.09);
-            border-radius: 20px;
-
-            background:
-                linear-gradient(
-                    180deg,
-                    rgba(255,255,255,.045),
-                    rgba(255,255,255,.025)
-                );
-
-            box-shadow:
-                0 20px 60px rgba(0,0,0,.25);
-
-            text-align: left;
+        .cardBtn.on.fav {
+            background: #ffd84d;
+            color: #1a1400;
         }
 
-        .installBox.hidden {
+        .cardBtn.on.dislike {
+            background: #dc3737;
+        }
+
+        .cardBtn.pressed {
+            transform: scale(.8);
+        }
+
+        .skeleton .fakePoster {
+            background: linear-gradient(160deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+            box-shadow: none;
+        }
+
+        .skeleton .fakePoster::after {
+            display: none;
+        }
+
+        .popIn {
+            animation: popIn .5s var(--ease) backwards;
+        }
+
+        @keyframes popIn {
+            from {
+                opacity: 0;
+                transform: translateY(14px) scale(.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+
+        /* КУРСОР */
+
+        .cursor {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 20;
+            width: 22px;
+            height: 22px;
+            pointer-events: none;
+            transform: translate(300px, 300px);
+            transition: transform .75s var(--ease);
+            filter: drop-shadow(0 3px 6px rgba(0,0,0,.6));
+        }
+
+        .cursor svg {
+            width: 100%;
+            height: 100%;
+            transition: transform .15s ease;
+        }
+
+        .cursor.press svg {
+            transform: scale(.82);
+        }
+
+        .ripple {
+            position: absolute;
+            z-index: 19;
+            width: 34px;
+            height: 34px;
+            margin: -17px 0 0 -17px;
+            border: 2px solid rgba(255,255,255,.8);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: ripple .5s ease-out forwards;
+        }
+
+        @keyframes ripple {
+            from { opacity: .9; transform: scale(.3); }
+            to   { opacity: 0; transform: scale(1.4); }
+        }
+
+
+        /* ВСПЛЫВАШКИ */
+
+        .toast {
+            position: absolute;
+            left: 50%;
+            bottom: 16px;
+            z-index: 15;
+            padding: 9px 14px;
+            border: 1px solid rgba(255,255,255,.12);
+            border-radius: 11px;
+            background: rgba(20,20,26,.96);
+            box-shadow: 0 12px 30px rgba(0,0,0,.5);
+            color: #eee;
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+            opacity: 0;
+            transform: translate(-50%, 12px);
+            transition: opacity .35s ease, transform .35s var(--ease);
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translate(-50%, 0);
+        }
+
+        .burst {
+            position: absolute;
+            z-index: 18;
+            pointer-events: none;
+            font-size: 14px;
+            animation: burst .8s ease-out forwards;
+        }
+
+        @keyframes burst {
+            from { opacity: 1; transform: translate(0, 0) scale(.6); }
+            to   { opacity: 0; transform: translate(var(--bx), var(--by)) scale(1.2); }
+        }
+
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 3px 9px;
+            border: 1px solid rgba(var(--accent-rgb), .3);
+            border-radius: 999px;
+            background: rgba(var(--accent-rgb), .1);
+            color: var(--accent);
+            font-size: 10px;
+            font-weight: 700;
+            opacity: 0;
+            transform: translateY(4px);
+            transition: opacity .35s ease, transform .35s var(--ease);
+        }
+
+        .tag.show {
+            opacity: 1;
+            transform: none;
+        }
+
+
+        /* =========================
+           ДЕМО: ИЗБРАННОЕ
+           ========================= */
+
+        .favHeaderBtn {
+            position: relative;
+            display: grid;
+            place-items: center;
+            width: 28px;
+            height: 24px;
+            border: 1px solid rgba(255,255,255,.12);
+            border-radius: 7px;
+            color: #ddd;
+            font-size: 13px;
+            transition: transform .25s var(--ease), border-color .25s ease;
+        }
+
+        .favHeaderBtn.bump {
+            transform: scale(1.25);
+            border-color: #ffd84d;
+            color: #ffd84d;
+        }
+
+        .favCount {
+            position: absolute;
+            top: -7px;
+            right: -8px;
+            min-width: 16px;
+            height: 16px;
+            padding: 0 4px;
+            border-radius: 999px;
+            background: #ffd84d;
+            color: #1a1400;
+            font-size: 9.5px;
+            font-weight: 800;
+            line-height: 16px;
+            text-align: center;
+            transform: scale(0);
+            transition: transform .3s var(--ease);
+        }
+
+        .favCount.show {
+            transform: scale(1);
+        }
+
+        .flyStar {
+            position: absolute;
+            z-index: 18;
+            color: #ffd84d;
+            font-size: 18px;
+            pointer-events: none;
+            text-shadow: 0 0 12px rgba(255,216,77,.7);
+            transition: transform .7s cubic-bezier(.5, -0.2, .3, 1), opacity .7s ease;
+        }
+
+        .favDrawer {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 12;
+            width: 58%;
+            padding: 16px;
+            border-left: 1px solid rgba(255,255,255,.08);
+            background: rgba(16,16,21,.98);
+            box-shadow: -20px 0 40px rgba(0,0,0,.45);
+            transform: translateX(105%);
+            transition: transform .55s var(--ease);
+        }
+
+        .favDrawer.open {
+            transform: none;
+        }
+
+        .favDrawer h4 {
+            margin: 0 0 12px;
+            font-size: 14px;
+        }
+
+        .favItem {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            padding: 8px;
+            border: 1px solid rgba(255,255,255,.06);
+            border-radius: 10px;
+            background: rgba(255,255,255,.03);
+        }
+
+        .favItem .fakePoster {
+            width: 34px;
+            flex: 0 0 auto;
+            border-radius: 6px;
+        }
+
+        .favItem .fakePoster .emoji {
+            font-size: 14px;
+        }
+
+        .favItem .fakePoster .posterTitle {
+            display: none;
+        }
+
+        .favItem b {
+            display: block;
+            font-size: 12px;
+        }
+
+        .favItem small {
+            color: #777;
+            font-size: 10.5px;
+        }
+
+
+        /* =========================
+           ДЕМО: ПОДБОР
+           ========================= */
+
+        .pickTabs {
+            display: flex;
+            gap: 6px;
+            padding: 4px;
+            border: 1px solid rgba(255,255,255,.07);
+            border-radius: 11px;
+            background: rgba(255,255,255,.025);
+        }
+
+        .pickTab {
+            flex: 1;
+            height: 30px;
+            border: 1px solid transparent;
+            border-radius: 8px;
+            background: transparent;
+            color: #888;
+            font-size: 11.5px;
+            font-weight: 650;
+            transition: background .25s ease, color .25s ease, border-color .25s ease;
+        }
+
+        .pickTab.active {
+            border-color: rgba(var(--accent-rgb), .45);
+            background: linear-gradient(135deg, rgba(var(--accent-rgb), .22), rgba(var(--accent-rgb), .07));
+            color: #fff;
+        }
+
+        .pickPane {
+            position: absolute;
+            left: 18px;
+            right: 18px;
+            top: 70px;
+            bottom: 18px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(10px);
+            pointer-events: none;
+            transition: opacity .35s ease, transform .35s var(--ease);
+        }
+
+        .pickPane.active {
+            opacity: 1;
+            transform: none;
+        }
+
+        /* Случайное — барабан */
+
+        .slot {
+            display: grid;
+            grid-template-columns: 118px 1fr;
+            gap: 18px;
+            align-items: center;
+            height: 100%;
+        }
+
+        .slotWindow {
+            position: relative;
+            overflow: hidden;
+            width: 118px;
+            aspect-ratio: 2 / 3;
+            border-radius: 12px;
+            box-shadow: 0 0 0 1px rgba(255,255,255,.08);
+        }
+
+        .slotWindow.win {
+            animation: winGlow 1.2s ease;
+        }
+
+        @keyframes winGlow {
+            0%   { box-shadow: 0 0 0 1px rgba(255,255,255,.08); }
+            35%  { box-shadow: 0 0 0 3px var(--accent), 0 0 40px rgba(var(--accent-rgb), .6); }
+            100% { box-shadow: 0 0 0 2px rgba(var(--accent-rgb), .6), 0 0 22px rgba(var(--accent-rgb), .25); }
+        }
+
+        .slotWindow .fakePoster {
+            position: absolute;
+            inset: 0;
+            border-radius: 0;
+        }
+
+        .dice {
+            display: inline-block;
+            font-size: 28px;
+        }
+
+        .dice.roll {
+            animation: roll .9s var(--ease);
+        }
+
+        @keyframes roll {
+            from { transform: rotate(0) scale(1); }
+            50%  { transform: rotate(360deg) scale(1.25); }
+            to   { transform: rotate(720deg) scale(1); }
+        }
+
+        .slotInfo b {
+            display: block;
+            font-size: 18px;
+            letter-spacing: -.4px;
+        }
+
+        .slotInfo small {
+            display: block;
+            margin-top: 6px;
+            color: #888;
+            font-size: 12px;
+        }
+
+        .fakeButton {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 34px;
+            margin-top: 14px;
+            padding: 0 16px;
+            border-radius: 9px;
+            background: #fff;
+            color: #0a0a0a;
+            font-size: 12px;
+            font-weight: 750;
+            transition: transform .15s ease;
+        }
+
+        .fakeButton.pressed {
+            transform: scale(.94);
+        }
+
+        /* По настроению */
+
+        .chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .chip {
+            height: 27px;
+            padding: 0 11px;
+            border: 1px solid rgba(255,255,255,.12);
+            border-radius: 999px;
+            background: rgba(255,255,255,.04);
+            color: #bbb;
+            font-size: 11px;
+            line-height: 25px;
+            transition: background .25s ease, color .25s ease, border-color .25s ease, transform .25s var(--ease);
+        }
+
+        .chip.on {
+            border-color: var(--accent);
+            background: var(--accent);
+            color: #0b0b10;
+            font-weight: 700;
+            transform: scale(1.06);
+        }
+
+        .moodResult {
+            display: grid;
+            grid-template-columns: 70px 1fr;
+            gap: 14px;
+            align-items: center;
+            margin-top: 16px;
+            padding: 12px;
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 12px;
+            background: rgba(255,255,255,.03);
+            opacity: 0;
+            transform: translateY(12px);
+            transition: opacity .45s ease, transform .45s var(--ease);
+        }
+
+        .moodResult.show {
+            opacity: 1;
+            transform: none;
+        }
+
+        .moodResult b {
+            display: block;
+            font-size: 15px;
+        }
+
+        .moodResult small {
+            display: block;
+            margin-top: 4px;
+            color: #888;
+            font-size: 11px;
+        }
+
+        .moodResult .tag {
+            margin-top: 8px;
+        }
+
+        /* На двоих */
+
+        .duo {
+            display: grid;
+            grid-template-columns: 1fr 40px 1fr;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .person {
+            padding: 12px;
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 12px;
+            background: rgba(255,255,255,.03);
+            opacity: 0;
+            transform: translateY(8px);
+            transition: opacity .4s ease, transform .4s var(--ease);
+        }
+
+        .person.show {
+            opacity: 1;
+            transform: none;
+        }
+
+        .person b {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 12.5px;
+        }
+
+        .duoJoin {
+            display: grid;
+            place-items: center;
+            color: var(--accent);
+            font-size: 20px;
+            opacity: 0;
+            transform: scale(.5);
+            transition: opacity .35s ease, transform .45s var(--ease-back, var(--ease));
+        }
+
+        .duoJoin.show {
+            opacity: 1;
+            transform: none;
+        }
+
+        .duoResult {
+            margin-top: 16px;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity .45s ease, transform .45s var(--ease);
+        }
+
+        .duoResult.show {
+            opacity: 1;
+            transform: none;
+        }
+
+        .duoResult b {
+            font-size: 15px;
+        }
+
+        .duoResult .count {
+            color: var(--accent);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .duoPosters {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .duoPosters .fakePoster {
+            width: 54px;
+        }
+
+        .duoPosters .fakePoster .emoji {
+            font-size: 20px;
+        }
+
+        .duoPosters .fakePoster .posterTitle {
             display: none;
         }
 
 
         /* =========================
-           STEP HEADER
+           ДЕМО: ПРОКСИ (схема)
            ========================= */
+
+        .proxyStage {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 420px;
+            padding: 22px 18px 20px;
+        }
+
+        .modeSwitch {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .modeBtn {
+            height: 30px;
+            padding: 0 14px;
+            border: 1px solid rgba(255,255,255,.1);
+            border-radius: 999px;
+            background: rgba(255,255,255,.03);
+            color: #888;
+            font-size: 11.5px;
+            font-weight: 650;
+            transition: all .25s ease;
+        }
+
+        .modeBtn.active {
+            border-color: rgba(var(--accent-rgb), .5);
+            background: rgba(var(--accent-rgb), .15);
+            color: #fff;
+        }
+
+        .modeBtn.bad.active {
+            border-color: rgba(255,90,90,.5);
+            background: rgba(255,90,90,.12);
+        }
+
+        .diagram {
+            position: relative;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 30px minmax(0, 1.3fr) 30px minmax(0, 1fr);
+            align-items: center;
+            margin-top: 100px;
+        }
+
+        .node {
+            position: relative;
+            z-index: 2;
+            min-width: 0;
+            padding: 11px 11px;
+            border: 1px solid rgba(255,255,255,.1);
+            border-radius: 13px;
+            background: #14141a;
+            box-shadow: 0 12px 30px rgba(0,0,0,.35);
+            transition: opacity .35s ease, border-color .35s ease, box-shadow .35s ease;
+        }
+
+        .nodeHead {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 0;
+        }
+
+        .nodeHead > div {
+            min-width: 0;
+        }
+
+        .nodeIcon {
+            flex: 0 0 auto;
+            display: grid;
+            place-items: center;
+            width: 26px;
+            height: 26px;
+            border: 1px solid rgba(255,255,255,.1);
+            border-radius: 8px;
+            color: #bbb;
+        }
+
+        .nodeIcon svg {
+            width: 15px;
+            height: 15px;
+        }
+
+        .node b {
+            display: block;
+            font-size: 11.5px;
+            line-height: 1.2;
+        }
+
+        .node small {
+            display: block;
+            margin-top: 2px;
+            color: #777;
+            font-size: 10px;
+            line-height: 1.25;
+        }
+
+        .nodeFoot {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin: 10px -11px -11px;
+            padding: 8px 11px;
+            border-top: 1px solid rgba(255,255,255,.07);
+            color: #888;
+            font-size: 10.5px;
+        }
+
+        .statusPill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 3px 9px;
+            border: 1px solid rgba(46,204,113,.35);
+            border-radius: 999px;
+            background: rgba(46,204,113,.1);
+            color: #4ade80;
+            font-size: 10.5px;
+            font-weight: 700;
+            white-space: nowrap;
+            transition: all .3s ease;
+        }
+
+        .statusPill::before {
+            content: "";
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: currentColor;
+        }
+
+        .statusPill.off {
+            border-color: rgba(255,255,255,.12);
+            background: rgba(255,255,255,.04);
+            color: #777;
+        }
+
+        .link {
+            position: relative;
+            height: 2px;
+            background: rgba(255,255,255,.14);
+            transition: opacity .35s ease;
+        }
+
+        .link::after {
+            content: "";
+            position: absolute;
+            right: -2px;
+            top: -4px;
+            border: 5px solid transparent;
+            border-left: 7px solid rgba(255,255,255,.3);
+        }
+
+        .packet {
+            position: absolute;
+            top: -3px;
+            left: 0;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 10px var(--accent);
+            opacity: 0;
+        }
+
+        .proxyStage.via .link .packet {
+            animation: packet 1.1s linear infinite;
+        }
+
+        .proxyStage.via .link .packet:nth-child(2) {
+            animation-delay: .55s;
+        }
+
+        .proxyStage.via .link.second .packet {
+            animation-delay: .35s;
+        }
+
+        .proxyStage.via .link.second .packet:nth-child(2) {
+            animation-delay: .9s;
+        }
+
+        @keyframes packet {
+            0%   { opacity: 0; left: 0; }
+            15%  { opacity: 1; }
+            85%  { opacity: 1; }
+            100% { opacity: 0; left: calc(100% - 8px); }
+        }
+
+        /* Прямой путь — поверху, с «баррикадой» */
+
+        .directLane {
+            position: absolute;
+            left: 12%;
+            right: 12%;
+            top: -40px;
+            height: 30px;
+            border: 2px dashed rgba(255,255,255,.14);
+            border-bottom: 0;
+            border-radius: 14px 14px 0 0;
+            transition: border-color .35s ease, opacity .35s ease;
+        }
+
+        .directLabel {
+            position: absolute;
+            left: 50%;
+            top: -30px;
+            transform: translateX(-50%);
+            color: #666;
+            font-size: 10.5px;
+            font-weight: 600;
+            white-space: nowrap;
+            transition: color .35s ease;
+        }
+
+        .blocker {
+            position: absolute;
+            left: 50%;
+            top: -13px;
+            display: grid;
+            place-items: center;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #2a1111;
+            color: #ff6b6b;
+            font-size: 13px;
+            font-weight: 800;
+            transform: translateX(-50%) scale(.8);
+            opacity: .35;
+            transition: all .35s var(--ease);
+        }
+
+        .directPacket {
+            position: absolute;
+            top: -5px;
+            left: 0;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #ff6b6b;
+            box-shadow: 0 0 10px #ff6b6b;
+            opacity: 0;
+        }
+
+        .proxyStage.direct .directLane {
+            border-color: rgba(255,90,90,.45);
+        }
+
+        .proxyStage.direct .directLabel {
+            color: #ff8a8a;
+        }
+
+        .proxyStage.direct .blocker {
+            opacity: 1;
+            transform: translateX(-50%) scale(1.1);
+            box-shadow: 0 0 0 4px rgba(255,90,90,.15);
+        }
+
+        .proxyStage.direct .directPacket {
+            animation: blocked 1.3s ease-in infinite;
+        }
+
+        @keyframes blocked {
+            0%   { opacity: 0; left: 0; }
+            15%  { opacity: 1; }
+            70%  { opacity: 1; left: calc(50% - 16px); }
+            80%  { opacity: 1; left: calc(50% - 22px); }
+            100% { opacity: 0; left: calc(50% - 26px); }
+        }
+
+        .proxyStage.direct .node.proxyNode,
+        .proxyStage.direct .link {
+            opacity: .35;
+        }
+
+        .proxyStage.via .node.proxyNode {
+            border-color: rgba(var(--accent-rgb), .45);
+            box-shadow: 0 0 0 1px rgba(var(--accent-rgb), .2), 0 16px 40px rgba(var(--accent-rgb), .18);
+        }
+
+        .proxyResult {
+            margin-top: 34px;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 650;
+            transition: color .3s ease;
+        }
+
+        .proxyStage.direct .proxyResult {
+            color: #ff8a8a;
+        }
+
+        .proxyStage.via .proxyResult {
+            color: #4ade80;
+        }
+
+
+
+        /* =========================
+           ДЕМО: АНОНИМНОСТЬ
+           ========================= */
+
+        .anonStage {
+            display: grid;
+            place-items: center;
+            height: 500px;
+        }
+
+        .signupCard,
+        .anonApp {
+            position: absolute;
+            width: min(420px, 86%);
+            transition: opacity .6s ease, transform .7s var(--ease);
+        }
+
+        .signupCard {
+            padding: 26px;
+            border: 1px solid rgba(255,255,255,.1);
+            border-radius: 18px;
+            background: #15151b;
+            box-shadow: 0 24px 60px rgba(0,0,0,.45);
+        }
+
+        .signupCard.away {
+            opacity: 0;
+            transform: translateX(-60px) rotate(-4deg) scale(.94);
+        }
+
+        .signupCard h4 {
+            margin: 0 0 18px;
+            font-size: 20px;
+        }
+
+        .field {
+            position: relative;
+            height: 46px;
+            margin-bottom: 11px;
+            padding: 0 14px;
+            border: 1px solid rgba(255,255,255,.1);
+            border-radius: 11px;
+            background: rgba(255,255,255,.03);
+            color: #777;
+            font-size: 14px;
+            line-height: 44px;
+        }
+
+        .field::after {
+            content: "";
+            position: absolute;
+            left: 10px;
+            right: 10px;
+            top: 50%;
+            height: 2px;
+            border-radius: 2px;
+            background: #ff5a6e;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform .45s var(--ease);
+        }
+
+        .field.struck::after {
+            transform: scaleX(1);
+        }
+
+        .field.struck {
+            color: #555;
+        }
+
+        .signupBtn {
+            height: 46px;
+            margin-top: 6px;
+            border-radius: 11px;
+            background: rgba(255,255,255,.1);
+            color: #888;
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 46px;
+            text-align: center;
+        }
+
+        .stamp {
+            position: absolute;
+            top: 42%;
+            left: 50%;
+            padding: 8px 18px;
+            border: 3px solid #ff5a6e;
+            border-radius: 10px;
+            color: #ff5a6e;
+            font-size: 22px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            white-space: nowrap;
+            opacity: 0;
+            transform: translate(-50%, -50%) rotate(-12deg) scale(1.8);
+            transition: opacity .25s ease, transform .35s cubic-bezier(.3, 1.6, .5, 1);
+        }
+
+        .stamp.on {
+            opacity: .95;
+            transform: translate(-50%, -50%) rotate(-12deg) scale(1);
+        }
+
+        .anonApp {
+            padding: 28px 26px;
+            border: 1px solid rgba(var(--accent-rgb), .35);
+            border-radius: 18px;
+            background:
+                radial-gradient(circle at 30% 0%, rgba(var(--accent-rgb), .22), transparent 60%),
+                #121218;
+            box-shadow: 0 24px 60px rgba(0,0,0,.45), 0 0 50px rgba(var(--accent-rgb), .15);
+            text-align: center;
+            opacity: 0;
+            transform: translateX(60px) scale(.94);
+        }
+
+        .anonApp.show {
+            opacity: 1;
+            transform: none;
+        }
+
+        .anonApp .badge {
+            display: inline-flex;
+            gap: 7px;
+            padding: 6px 13px;
+            border: 1px solid rgba(74,222,128,.35);
+            border-radius: 999px;
+            background: rgba(74,222,128,.1);
+            color: #4ade80;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .anonApp b {
+            display: block;
+            margin-top: 16px;
+            font-size: 24px;
+            letter-spacing: -.6px;
+        }
+
+        .anonApp small {
+            display: block;
+            margin-top: 8px;
+            color: #888;
+            font-size: 13.5px;
+        }
+
+        .anonPosters {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .anonPosters .fakePoster {
+            width: 70px;
+        }
+
+        .anonPosters .fakePoster .emoji {
+            font-size: 26px;
+        }
+
+        .anonPosters .fakePoster .posterTitle {
+            display: none;
+        }
+
+
+        /* =========================
+           ДЕМО: НИЧЕГО НЕ ЛОГИРУЕМ
+           ========================= */
+
+        .logsStage {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 500px;
+        }
+
+        .logsFlow {
+            display: grid;
+            grid-template-columns: minmax(0, 1.2fr) 150px minmax(0, 1fr);
+            align-items: center;
+        }
+
+        .vault,
+        .server {
+            position: relative;
+            padding: 20px;
+            border: 1px solid rgba(255,255,255,.1);
+            border-radius: 16px;
+            background: #14141a;
+            box-shadow: 0 16px 40px rgba(0,0,0,.4);
+        }
+
+        .vault {
+            border-color: rgba(74,222,128,.35);
+            box-shadow: 0 16px 40px rgba(0,0,0,.4), 0 0 40px rgba(74,222,128,.08);
+        }
+
+        .boxTitle {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 14px;
+            font-size: 16px;
+            font-weight: 750;
+        }
+
+        .boxTitle small {
+            margin-left: auto;
+            color: #4ade80;
+            font-size: 11.5px;
+            font-weight: 700;
+        }
+
+        .dataChips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            min-height: 84px;
+            align-content: flex-start;
+        }
+
+        .dataChip {
+            padding: 7px 12px;
+            border: 1px solid rgba(255,255,255,.1);
+            border-radius: 10px;
+            background: rgba(255,255,255,.05);
+            font-size: 13px;
+            font-weight: 600;
+            animation: popIn .45s var(--ease) backwards;
+        }
+
+        .dataChip.pulse {
+            animation: chipPulse .5s ease;
+        }
+
+        @keyframes chipPulse {
+            50% {
+                border-color: rgba(74,222,128,.6);
+                box-shadow: 0 0 16px rgba(74,222,128,.35);
+            }
+        }
+
+        .gate {
+            position: relative;
+            height: 2px;
+            margin: 0 10px;
+            border-top: 2px dashed rgba(255,255,255,.14);
+        }
+
+        .shield {
+            position: absolute;
+            left: 50%;
+            top: -21px;
+            display: grid;
+            place-items: center;
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(74,222,128,.4);
+            border-radius: 12px;
+            background: #0f1a13;
+            font-size: 19px;
+            transform: translateX(-50%);
+            transition: transform .2s ease, box-shadow .2s ease;
+        }
+
+        .shield.hit {
+            transform: translateX(-50%) scale(1.15);
+            box-shadow: 0 0 24px rgba(74,222,128,.45);
+        }
+
+        .dataPacket {
+            position: absolute;
+            top: -7px;
+            left: 0;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 10px var(--accent);
+            opacity: 0;
+        }
+
+        .dataPacket.go {
+            animation: bounceBack 1.1s var(--ease) forwards;
+        }
+
+        @keyframes bounceBack {
+            0%   { opacity: 0; left: 0; }
+            12%  { opacity: 1; }
+            48%  { opacity: 1; left: calc(50% - 30px); }
+            100% { opacity: 0; left: -6px; }
+        }
+
+        .server {
+            opacity: .75;
+        }
+
+        .logLines {
+            display: grid;
+            gap: 7px;
+        }
+
+        .logLines span {
+            height: 10px;
+            border-radius: 5px;
+            background: rgba(255,255,255,.05);
+        }
+
+        .logLines span:nth-child(2) { width: 80%; }
+        .logLines span:nth-child(3) { width: 60%; }
+
+        .logCounter {
+            margin-top: 14px;
+            color: #888;
+            font-family: Consolas, "Courier New", monospace;
+            font-size: 13px;
+        }
+
+        .logCounter b {
+            color: #4ade80;
+        }
+
+        .logsCaption {
+            margin-top: 40px;
+            color: #9a9a9a;
+            font-size: 15px;
+            text-align: center;
+        }
+
+        .logsCaption b {
+            color: #4ade80;
+        }
+
+
+        /* =========================
+           ДЕМО: ТЕМЫ
+           ========================= */
+
+        @property --tbg   { syntax: "<color>"; inherits: true; initial-value: #080808; }
+        @property --tglow { syntax: "<color>"; inherits: true; initial-value: rgba(255,255,255,.08); }
+        @property --tacc  { syntax: "<color>"; inherits: true; initial-value: #ffffff; }
+        @property --tpanel { syntax: "<color>"; inherits: true; initial-value: rgba(255,255,255,.04); }
+
+        .themeStage {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            height: 560px;
+        }
+
+        .themePreview {
+            flex: 1;
+            overflow: hidden;
+            padding: 18px 22px;
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 16px;
+            background:
+                radial-gradient(circle at 22% 0%, var(--tglow), transparent 58%),
+                radial-gradient(circle at 90% 90%, var(--tglow), transparent 45%),
+                var(--tbg);
+            transition: --tbg .9s ease, --tglow .9s ease, --tacc .9s ease, --tpanel .9s ease;
+        }
+
+        .tpHeader {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 14px;
+            border: 1px solid rgba(255,255,255,.07);
+            border-radius: 12px;
+            background: var(--tpanel);
+            font-size: 13px;
+            font-weight: 750;
+        }
+
+        .tpBtns {
+            display: flex;
+            gap: 6px;
+        }
+
+        .tpBtns i {
+            width: 24px;
+            height: 24px;
+            border: 1px solid rgba(255,255,255,.1);
+            border-radius: 7px;
+            background: var(--tpanel);
+        }
+
+        .tpHero {
+            margin: 26px 0 16px;
+            background: linear-gradient(180deg, #fff 30%, var(--tacc) 120%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-size: 30px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            text-align: center;
+        }
+
+        .tpSearch {
+            display: flex;
+            gap: 8px;
+            width: min(440px, 100%);
+            margin: 0 auto 22px;
+        }
+
+        .tpSearch span {
+            flex: 1;
+            height: 36px;
+            padding: 0 12px;
+            border: 1px solid rgba(255,255,255,.1);
+            border-radius: 10px;
+            background: var(--tpanel);
+            color: #777;
+            font-size: 12.5px;
+            line-height: 34px;
+        }
+
+        .tpSearch b {
+            height: 36px;
+            padding: 0 16px;
+            border-radius: 10px;
+            background: var(--tacc);
+            color: #0b0b10;
+            font-size: 12.5px;
+            line-height: 36px;
+        }
+
+        .tpRow {
+            display: grid;
+            grid-template-columns: repeat(6, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .tpRow .fakePoster {
+            box-shadow: 0 0 0 1px color-mix(in srgb, var(--tacc) 35%, transparent), 0 10px 24px rgba(0,0,0,.35);
+        }
+
+        .tpRow .fakePoster .emoji {
+            font-size: 26px;
+        }
+
+        .tpRow .fakePoster .posterTitle {
+            font-size: 10.5px;
+        }
+
+        .themeChips {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .themeChip {
+            height: 34px;
+            padding: 0 14px;
+            border: 1px solid rgba(255,255,255,.1);
+            border-radius: 999px;
+            background: rgba(255,255,255,.03);
+            color: #aaa;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all .3s ease;
+        }
+
+        .themeChip.active {
+            border-color: var(--chip);
+            background: color-mix(in srgb, var(--chip) 18%, transparent);
+            color: #fff;
+            box-shadow: 0 0 18px color-mix(in srgb, var(--chip) 30%, transparent);
+        }
+
+
+        /* =========================
+           ДЕМО: ВСЕГДА ПОД РУКОЙ
+           ========================= */
+
+        .hotkeyStage {
+            height: 540px;
+            padding: 0;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 20% 20%, rgba(80,110,200,.35), transparent 50%),
+                radial-gradient(circle at 85% 70%, rgba(180,90,160,.28), transparent 50%),
+                #0c1020;
+        }
+
+        .deskWindow {
+            position: absolute;
+            left: 7%;
+            top: 12%;
+            width: 58%;
+            height: 56%;
+            border: 1px solid rgba(255,255,255,.1);
+            border-radius: 10px;
+            background: rgba(20,24,38,.85);
+            box-shadow: 0 20px 50px rgba(0,0,0,.4);
+        }
+
+        .deskWindow::before {
+            content: "📄 Работа.docx";
+            display: block;
+            height: 30px;
+            padding: 0 12px;
+            border-bottom: 1px solid rgba(255,255,255,.06);
+            color: #778;
+            font-size: 11.5px;
+            line-height: 30px;
+        }
+
+        .deskLines {
+            display: grid;
+            gap: 9px;
+            padding: 18px;
+        }
+
+        .deskLines span {
+            height: 8px;
+            border-radius: 4px;
+            background: rgba(255,255,255,.07);
+        }
+
+        .deskLines span:nth-child(odd) { width: 85%; }
+        .deskLines span:nth-child(3n) { width: 60%; }
+
+        .keys {
+            position: absolute;
+            top: 30px;
+            left: 50%;
+            z-index: 6;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transform: translateX(-50%);
+        }
+
+        .key {
+            min-width: 58px;
+            height: 50px;
+            padding: 0 14px;
+            border: 1px solid rgba(255,255,255,.2);
+            border-bottom-width: 4px;
+            border-radius: 11px;
+            background: #1c1f2e;
+            color: #ddd;
+            font-size: 16px;
+            font-weight: 750;
+            line-height: 44px;
+            text-align: center;
+            transition: transform .12s ease, background .12s ease, border-color .12s ease, box-shadow .12s ease;
+        }
+
+        .key.down {
+            transform: translateY(3px);
+            border-bottom-width: 1px;
+            border-color: var(--accent);
+            background: rgba(var(--accent-rgb), .25);
+            color: #fff;
+            box-shadow: 0 0 24px rgba(var(--accent-rgb), .45);
+        }
+
+        .keys .plus {
+            color: #778;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .hkApp {
+            position: absolute;
+            left: 50%;
+            top: 52%;
+            z-index: 5;
+            width: min(470px, 80%);
+            padding: 18px;
+            border: 1px solid rgba(var(--accent-rgb), .4);
+            border-radius: 16px;
+            background:
+                radial-gradient(circle at 25% 0%, rgba(var(--accent-rgb), .25), transparent 60%),
+                #111117;
+            box-shadow: 0 30px 80px rgba(0,0,0,.6);
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(.7);
+            transition: opacity .35s ease, transform .5s cubic-bezier(.2, 1.1, .3, 1);
+        }
+
+        .hkApp.show {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .hkApp.toTray {
+            opacity: 0;
+            transform:
+                translate(calc(-50% + var(--tx, 0px)), calc(-50% + var(--ty, 0px)))
+                scale(.06);
+            transition: opacity .55s ease .1s, transform .6s cubic-bezier(.5, 0, .7, .4);
+        }
+
+        .hkApp b {
+            display: block;
+            margin-bottom: 14px;
+            font-size: 19px;
+        }
+
+        .hkPosters {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            gap: 9px;
+        }
+
+        .hkPosters .fakePoster .emoji {
+            font-size: 22px;
+        }
+
+        .hkPosters .fakePoster .posterTitle {
+            display: none;
+        }
+
+        .taskbar {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 7;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            height: 44px;
+            padding: 0 14px;
+            border-top: 1px solid rgba(255,255,255,.08);
+            background: rgba(14,16,26,.92);
+        }
+
+        .taskbar .tbIcon {
+            display: grid;
+            place-items: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 7px;
+            font-size: 16px;
+        }
+
+        .taskbar .tbIcon.start {
+            color: #6aa6ff;
+        }
+
+        .tray {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-left: auto;
+            color: #aab;
+            font-size: 12px;
+        }
+
+        .trayIcon {
+            display: grid;
+            place-items: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 7px;
+            font-size: 15px;
+            transition: background .2s ease, box-shadow .2s ease, transform .2s ease;
+        }
+
+        .trayIcon.ping {
+            background: rgba(var(--accent-rgb), .3);
+            box-shadow: 0 0 18px rgba(var(--accent-rgb), .6);
+            transform: scale(1.15);
+        }
+
+        .hkHint {
+            position: absolute;
+            left: 50%;
+            bottom: 64px;
+            z-index: 6;
+            padding: 8px 14px;
+            border: 1px solid rgba(255,255,255,.12);
+            border-radius: 10px;
+            background: rgba(14,16,26,.9);
+            color: #ccd;
+            font-size: 13px;
+            font-weight: 600;
+            white-space: nowrap;
+            opacity: 0;
+            transform: translate(-50%, 8px);
+            transition: opacity .3s ease, transform .3s var(--ease);
+        }
+
+        .hkHint.show {
+            opacity: 1;
+            transform: translate(-50%, 0);
+        }
+
+
+        @media (max-width: 760px) {
+            .logsFlow {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .gate {
+                width: 2px;
+                height: 70px;
+                margin: 0 auto;
+                border-top: 0;
+                border-left: 2px dashed rgba(255,255,255,.14);
+            }
+
+            .shield {
+                left: -21px;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+
+            .shield.hit {
+                transform: translateY(-50%) scale(1.15);
+            }
+
+            .dataPacket {
+                display: none;
+            }
+
+            .logsStage,
+            .anonStage {
+                height: auto;
+                min-height: 460px;
+            }
+
+            .themeStage {
+                height: auto;
+            }
+
+            .tpRow {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+
+            .tpRow .fakePoster:nth-child(n+4) {
+                display: none;
+            }
+
+            .hotkeyStage {
+                height: 460px;
+            }
+
+            .key {
+                min-width: 46px;
+                height: 42px;
+                padding: 0 10px;
+                font-size: 14px;
+                line-height: 36px;
+            }
+        }
+
+
+        /* =========================
+           УСТАНОВКА
+           ========================= */
+
+        .installSection {
+            margin-top: 140px;
+            text-align: center;
+        }
+
+        .installSection > h2 {
+            margin: 16px 0 0;
+            font-size: clamp(28px, 4vw, 40px);
+            letter-spacing: -1.4px;
+        }
+
+        .installBox {
+            width: min(650px, 100%);
+            margin: 32px auto 0;
+            padding: 28px;
+            border: 1px solid rgba(255,255,255,.09);
+            border-radius: 20px;
+            background: linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.025));
+            box-shadow: 0 20px 60px rgba(0,0,0,.25);
+            text-align: left;
+        }
 
         .stepHeader {
             display: flex;
             align-items: center;
             justify-content: space-between;
-
             margin-bottom: 24px;
         }
 
         .stepLabel {
             color: #666;
-
             font-size: 11px;
             font-weight: 700;
-
             letter-spacing: .8px;
-
             text-transform: uppercase;
         }
 
         .stepProgress {
             color: #666;
-
             font-size: 13px;
             font-weight: 600;
-
-            letter-spacing: .2px;
         }
 
+        .stepDots {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 22px;
+        }
 
-        /* =========================
-           STEP CONTENT
-           ========================= */
+        .stepDot {
+            flex: 1;
+            height: 3px;
+            border-radius: 3px;
+            background: rgba(255,255,255,.08);
+            transition: background .3s ease;
+        }
+
+        .stepDot.done {
+            background: rgba(255,255,255,.75);
+        }
 
         .step {
             display: none;
-
-            min-height: 190px;
+            min-height: 200px;
         }
 
         .step.active {
             display: block;
+            animation: stepIn .35s ease;
+        }
+
+        @keyframes stepIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to   { opacity: 1; transform: none; }
         }
 
         .step h2 {
             margin: 0 0 11px;
-
             font-size: 25px;
             line-height: 1.2;
-
             letter-spacing: -.7px;
         }
 
         .step p {
             margin: 0;
-
             color: #888;
-
             font-size: 14px;
             line-height: 23px;
+        }
+
+        .step p + p {
+            margin-top: 10px;
         }
 
         .step strong {
             color: #ddd;
         }
 
-
-        /* =========================
-           DOWNLOAD
-           ========================= */
-
         .downloadButton {
             display: inline-flex;
-
             align-items: center;
             justify-content: center;
-
             min-height: 48px;
-
             margin-top: 23px;
             padding: 0 21px;
-
             border: 0;
             border-radius: 11px;
-
             background: #fff;
             color: #080808;
-
             font-size: 13px;
             font-weight: 700;
-
             text-decoration: none;
-
-            transition:
-                transform .18s ease,
-                opacity .18s ease;
+            transition: transform .18s ease, opacity .18s ease;
         }
 
         .downloadButton:hover {
@@ -428,102 +2506,101 @@
             opacity: .88;
         }
 
+        .smartscreen {
+            margin-top: 18px;
+            padding: 16px 18px;
+            border-radius: 6px;
+            background: #1f5ea8;
+            color: #fff;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
 
-        /* =========================
-           BROWSER ADDRESS
-           ========================= */
+        .smartscreen b {
+            display: block;
+            font-size: 17px;
+            font-weight: 600;
+        }
 
-        .browserAddress {
-            display: inline-block;
-
-            max-width: 100%;
-
-            margin-top: 19px;
-            padding: 10px 12px;
-
-            border: 1px solid rgba(255,255,255,.08);
-            border-radius: 9px;
-
-            background: #0b0b0b;
-
-            color: #ddd;
-
-            font-family:
-                Consolas,
-                "Courier New",
-                monospace;
-
+        .smartscreen small {
+            display: block;
+            margin-top: 6px;
+            color: rgba(255,255,255,.85);
             font-size: 12px;
-
-            user-select: all;
-
-            overflow-x: auto;
+            line-height: 17px;
         }
 
-        .browserName {
+        .smartscreenLink {
+            display: inline-block;
+            margin-top: 8px;
+            color: #fff;
+            font-size: 12px;
+            text-decoration: underline;
+        }
+
+        .smartscreenButtons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
             margin-top: 14px;
-
-            color: #555;
-
-            font-size: 11px;
         }
 
+        .smartscreenButtons span {
+            padding: 6px 14px;
+            border: 1px solid rgba(255,255,255,.7);
+            font-size: 12px;
+        }
 
-        /* =========================
-           NAVIGATION
-           ========================= */
+        .smartscreenButtons .highlight {
+            border-color: #fff;
+            background: rgba(255,255,255,.18);
+            box-shadow: 0 0 0 3px rgba(255,216,77,.8);
+        }
+
+        .keyHint {
+            display: inline-flex;
+            align-items: center;
+            margin: 14px 0 4px;
+            padding: 7px 10px;
+            border: 1px solid rgba(255,255,255,.1);
+            border-radius: 8px;
+            background: #0c0c0c;
+            color: #ddd;
+            font-family: Consolas, "Courier New", monospace;
+            font-size: 12px;
+            font-weight: 600;
+        }
 
         .stepNavigation {
             display: flex;
             align-items: center;
             justify-content: space-between;
-
             gap: 10px;
-
             margin-top: 25px;
             padding-top: 20px;
-
             border-top: 1px solid rgba(255,255,255,.07);
-        }
-
-        .navLeft,
-        .navRight {
-            display: flex;
-            gap: 9px;
         }
 
         .navButton {
             min-height: 42px;
-
             padding: 0 16px;
-
             border: 1px solid rgba(255,255,255,.1);
             border-radius: 10px;
-
             background: rgba(255,255,255,.045);
             color: #aaa;
-
             font-size: 12px;
             font-weight: 600;
-
-            transition:
-                background .18s ease,
-                border-color .18s ease,
-                color .18s ease,
-                transform .18s ease;
+            transition: background .18s ease, border-color .18s ease, color .18s ease, transform .18s ease;
         }
 
         .navButton:hover {
             background: rgba(255,255,255,.09);
             border-color: rgba(255,255,255,.17);
             color: #fff;
-
             transform: translateY(-1px);
         }
 
         .navButton.primary {
             border-color: rgba(255,255,255,.2);
-
             background: #fff;
             color: #080808;
         }
@@ -538,77 +2615,36 @@
             pointer-events: none;
         }
 
-
-        /* =========================
-           OPEN GUIDE
-           ========================= */
-
         .openGuide {
             width: min(650px, 100%);
-
             margin: 18px auto 0;
-
             padding: 22px 28px;
-
             border: 1px solid rgba(255,255,255,.07);
             border-radius: 17px;
-
-            background:
-                rgba(255,255,255,.025);
-
+            background: rgba(255,255,255,.025);
             text-align: left;
-
-            display: none;
-        }
-
-        .openGuide.visible {
-            display: block;
         }
 
         .openGuide h2 {
             margin: 0 0 8px;
-
             font-size: 17px;
             line-height: 1.3;
-
             letter-spacing: -.3px;
         }
 
         .openGuide p {
             margin: 0;
-
             color: #888;
-
             font-size: 14px;
             line-height: 23px;
         }
 
-        .openGuide strong {
-            color: #ddd;
+        .openGuide p + p {
+            margin-top: 8px;
         }
 
-        .shortcut {
-            display: inline-flex;
-
-            align-items: center;
-
-            margin: 11px 0 8px;
-            padding: 7px 10px;
-
-            border: 1px solid rgba(255,255,255,.1);
-            border-radius: 8px;
-
-            background: #0c0c0c;
-
+        .openGuide strong {
             color: #ddd;
-
-            font-family:
-                Consolas,
-                "Courier New",
-                monospace;
-
-            font-size: 12px;
-            font-weight: 600;
         }
 
 
@@ -619,69 +2655,541 @@
         .celebration {
             position: fixed;
             inset: 0;
-
             z-index: 9999;
-
             pointer-events: none;
-
             overflow: hidden;
         }
 
         .firework {
             position: absolute;
-
             width: 7px;
             height: 7px;
-
             border-radius: 50%;
-
             opacity: 0;
-
-            animation:
-                firework 1.25s
-                cubic-bezier(.1,.7,.2,1)
-                forwards;
+            animation: firework 1.25s cubic-bezier(.1,.7,.2,1) forwards;
         }
 
         @keyframes firework {
+            0%   { opacity: 1; transform: translate(-50%, -50%) scale(.3); }
+            15%  { opacity: 1; }
+            100% { opacity: 0; transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(.85); }
+        }
 
-            0% {
-                opacity: 1;
+        .footer {
+            margin-top: 45px;
+            color: #444;
+            font-size: 11px;
+            text-align: center;
+        }
 
-                transform:
-                    translate(-50%, -50%)
-                    scale(.3);
+
+        /* =========================
+           КНОПКА «НАВЕРХ / ОБРАТНО»
+           ========================= */
+
+        .scrollJump {
+            position: fixed;
+            right: 26px;
+            bottom: 26px;
+            z-index: 50;
+            display: grid;
+            place-items: center;
+            width: 52px;
+            height: 52px;
+            border: 1px solid rgba(255,255,255,.14);
+            border-radius: 16px;
+            background: rgba(22,22,28,.88);
+            color: #fff;
+            box-shadow: 0 14px 34px rgba(0,0,0,.45);
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(14px) scale(.9);
+            transition:
+                opacity .25s ease,
+                transform .3s var(--ease),
+                visibility .25s,
+                border-color .2s ease,
+                background .2s ease,
+                box-shadow .25s ease;
+        }
+
+        .scrollJump.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: none;
+        }
+
+        .scrollJump:hover {
+            border-color: rgba(var(--accent-rgb), .6);
+            box-shadow: 0 14px 34px rgba(0,0,0,.45), 0 0 24px rgba(var(--accent-rgb), .3);
+        }
+
+        .scrollJump:active {
+            transform: scale(.92);
+        }
+
+        .scrollJump svg {
+            width: 22px;
+            height: 22px;
+            transition: transform .35s var(--ease);
+        }
+
+        /* Режим «вернуться туда, где был» — стрелка вниз и акцент */
+
+        .scrollJump.returning {
+            border-color: rgba(var(--accent-rgb), .55);
+            background: rgba(var(--accent-rgb), .22);
+        }
+
+        .scrollJump.returning svg {
+            transform: rotate(180deg);
+        }
+
+        .scrollJumpHint {
+            position: absolute;
+            right: calc(100% + 10px);
+            top: 50%;
+            padding: 6px 10px;
+            border: 1px solid rgba(255,255,255,.1);
+            border-radius: 8px;
+            background: rgba(20,20,26,.95);
+            color: #ddd;
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+            pointer-events: none;
+            opacity: 0;
+            transform: translate(6px, -50%);
+            transition: opacity .2s ease, transform .2s var(--ease);
+        }
+
+        .scrollJump:hover .scrollJumpHint {
+            opacity: 1;
+            transform: translate(0, -50%);
+        }
+
+        @media (max-width: 600px) {
+            .scrollJump {
+                right: 16px;
+                bottom: 16px;
+                width: 46px;
+                height: 46px;
             }
 
-            15% {
-                opacity: 1;
-            }
-
-            100% {
-                opacity: 0;
-
-                transform:
-                    translate(
-                        calc(-50% + var(--x)),
-                        calc(-50% + var(--y))
-                    )
-                    scale(.85);
+            .scrollJumpHint {
+                display: none;
             }
         }
 
 
         /* =========================
-           FOOTER
+           РАСКЛАДКА: ТЕКСТ СВЕРХУ, БОЛЬШОЕ ДЕМО СНИЗУ
+           Блоки больше не делят ширину пополам:
+           заголовок и описание по центру, под ними
+           ряд пояснений, а окно с анимацией — на всю
+           ширину и заметно крупнее.
            ========================= */
 
-        .footer {
-            margin-top: 45px;
+        .showcase {
+            grid-template-columns: 1fr;
+            justify-items: center;
+            gap: 34px;
+            margin-top: 150px;
+        }
 
-            color: #444;
+        .showcase.reverse .showcaseText {
+            order: 0;
+        }
 
-            font-size: 11px;
+        /*
+         * «Журнальная» раскладка текста: слева метка и
+         * заголовок, справа описание (прижато к низу
+         * заголовка), под ними пояснения в ряд. Всё по
+         * ширине окна с анимацией и по левому краю.
+         */
 
-            text-align: center;
+        .showcaseText {
+            display: grid;
+            grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+            grid-template-areas:
+                "eyebrow ."
+                "title   text"
+                "points  points";
+            column-gap: 56px;
+            width: min(940px, 100%);
+            text-align: left;
+        }
+
+        .showcaseText .eyebrow {
+            grid-area: eyebrow;
+            justify-self: start;
+        }
+
+        .showcaseText h2 {
+            grid-area: title;
+            align-self: end;
+            margin-top: 14px;
+            font-size: clamp(32px, 4.6vw, 50px);
+            letter-spacing: -1.8px;
+        }
+
+        .showcaseText > p {
+            grid-area: text;
+            align-self: end;
+            margin: 0 0 4px;
+            font-size: 15.5px;
+            line-height: 25px;
+        }
+
+        .points {
+            grid-area: points;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 12px;
+            margin-top: 28px;
+        }
+
+        .points li {
+            padding: 14px;
+            border: 1px solid rgba(255,255,255,.07);
+            border-radius: 14px;
+            background: rgba(255,255,255,.025);
+        }
+
+        @media (max-width: 760px) {
+            .showcaseText {
+                grid-template-columns: 1fr;
+                grid-template-areas:
+                    "eyebrow"
+                    "title"
+                    "text"
+                    "points";
+            }
+
+            .showcaseText > p {
+                margin-top: 14px;
+            }
+        }
+
+        .showcase > .appWindow {
+            width: min(940px, 100%);
+        }
+
+        /* Крупнее всё внутри демо */
+
+        .stage {
+            height: 540px;
+            padding: 26px 30px;
+        }
+
+        .windowBar {
+            height: 44px;
+        }
+
+        .windowBar span {
+            font-size: 12.5px;
+        }
+
+        .rowLabel {
+            margin-bottom: 14px;
+            font-size: 16px;
+        }
+
+        .rowLabel small {
+            font-size: 12px;
+        }
+
+        .miniRow {
+            grid-template-columns: repeat(4, 164px);
+            justify-content: center;
+            gap: 24px;
+        }
+
+        /* Ряды — плотной группой по центру окна,
+           подписи рядов выровнены по карточкам */
+
+        .stage > .rowLabel,
+        .stage > .miniRow {
+            max-width: 728px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #demoRecs,
+        #demoFavs {
+            height: 640px;
+        }
+
+        .pickPane > .fakeButton {
+            align-self: flex-start;
+        }
+
+        .fakePoster {
+            border-radius: 13px;
+        }
+
+        .fakePoster .emoji {
+            font-size: 44px;
+        }
+
+        .fakePoster .posterTitle {
+            left: 10px;
+            right: 10px;
+            bottom: 9px;
+            font-size: 13px;
+        }
+
+        .cardBtns {
+            right: 8px;
+            bottom: 34px;
+            gap: 6px;
+        }
+
+        .cardBtn {
+            width: 32px;
+            height: 32px;
+            font-size: 15px;
+        }
+
+        .tag {
+            padding: 4px 11px;
+            font-size: 12px;
+        }
+
+        .toast {
+            bottom: 22px;
+            padding: 11px 18px;
+            font-size: 14px;
+        }
+
+        .cursor {
+            width: 26px;
+            height: 26px;
+        }
+
+        .favHeaderBtn {
+            width: 34px;
+            height: 28px;
+            font-size: 15px;
+        }
+
+        .favDrawer {
+            width: 46%;
+            padding: 22px;
+        }
+
+        .favDrawer h4 {
+            font-size: 17px;
+        }
+
+        .favItem {
+            padding: 10px;
+        }
+
+        .favItem .fakePoster {
+            width: 44px;
+        }
+
+        .favItem b {
+            font-size: 14px;
+        }
+
+        .favItem small {
+            font-size: 12px;
+        }
+
+        /* Подбор */
+
+        .pickTab {
+            height: 38px;
+            font-size: 14px;
+        }
+
+        .pickPane {
+            left: 30px;
+            right: 30px;
+            top: 90px;
+            bottom: 26px;
+        }
+
+        .slot {
+            grid-template-columns: 190px 1fr;
+            gap: 30px;
+        }
+
+        .slotWindow {
+            width: 190px;
+            border-radius: 14px;
+        }
+
+        .dice {
+            font-size: 36px;
+        }
+
+        .slotInfo b {
+            font-size: 26px;
+        }
+
+        .slotInfo small {
+            font-size: 14px;
+        }
+
+        .fakeButton {
+            height: 42px;
+            padding: 0 20px;
+            font-size: 14px;
+        }
+
+        .chip {
+            height: 34px;
+            padding: 0 15px;
+            font-size: 13.5px;
+            line-height: 32px;
+        }
+
+        .chips {
+            gap: 8px;
+        }
+
+        .moodResult {
+            grid-template-columns: 96px 1fr;
+            gap: 18px;
+            margin-top: 22px;
+            padding: 16px;
+        }
+
+        .moodResult b {
+            font-size: 20px;
+        }
+
+        .moodResult small {
+            font-size: 13px;
+        }
+
+        .duo {
+            grid-template-columns: 1fr 60px 1fr;
+            gap: 12px;
+        }
+
+        .person {
+            padding: 18px;
+        }
+
+        .person b {
+            margin-bottom: 12px;
+            font-size: 16px;
+        }
+
+        .duoJoin {
+            font-size: 28px;
+        }
+
+        .duoResult b {
+            font-size: 20px;
+        }
+
+        .duoPosters {
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        .duoPosters .fakePoster {
+            width: 80px;
+        }
+
+        .duoPosters .fakePoster .emoji {
+            font-size: 28px;
+        }
+
+        /* Прокси */
+
+        .proxyStage {
+            height: 500px;
+            padding: 30px 36px 28px;
+        }
+
+        .modeBtn {
+            height: 38px;
+            padding: 0 20px;
+            font-size: 14px;
+        }
+
+        .diagram {
+            grid-template-columns: minmax(0, 1fr) 70px minmax(0, 1.25fr) 70px minmax(0, 1fr);
+            margin-top: 130px;
+        }
+
+        .node {
+            padding: 16px 18px;
+            border-radius: 15px;
+        }
+
+        .nodeHead {
+            gap: 12px;
+        }
+
+        .nodeIcon {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+        }
+
+        .nodeIcon svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .node b {
+            font-size: 15.5px;
+        }
+
+        .node small {
+            margin-top: 3px;
+            font-size: 12.5px;
+        }
+
+        .nodeFoot {
+            margin: 14px -18px -16px;
+            padding: 11px 18px;
+            font-size: 12.5px;
+        }
+
+        .statusPill {
+            padding: 4px 11px;
+            font-size: 12px;
+        }
+
+        .link {
+            height: 3px;
+        }
+
+        .packet,
+        .directPacket {
+            width: 10px;
+            height: 10px;
+        }
+
+        .directLane {
+            top: -56px;
+            height: 42px;
+        }
+
+        .directLabel {
+            top: -34px;
+            font-size: 13px;
+        }
+
+        .blocker {
+            top: -16px;
+            width: 30px;
+            height: 30px;
+            font-size: 16px;
+        }
+
+        .proxyResult {
+            margin-top: 46px;
+            font-size: 16px;
         }
 
 
@@ -689,11 +3197,78 @@
            MOBILE
            ========================= */
 
-        @media (max-width: 600px) {
+        @media (max-width: 860px) {
+            .showcase {
+                gap: 26px;
+                margin-top: 100px;
+            }
 
+            .stage {
+                height: 470px;
+                padding: 20px;
+            }
+
+            .miniRow {
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+                gap: 12px;
+            }
+
+            #demoRecs,
+            #demoFavs {
+                height: auto;
+                min-height: 470px;
+            }
+
+            .pickPane {
+                left: 20px;
+                right: 20px;
+                top: 80px;
+                bottom: 20px;
+            }
+
+            .slot {
+                grid-template-columns: 140px 1fr;
+                gap: 20px;
+            }
+
+            .slotWindow {
+                width: 140px;
+            }
+
+            .proxyStage {
+                padding: 26px 20px;
+            }
+
+            .diagram {
+                grid-template-columns: minmax(0, 1fr) 36px minmax(0, 1.25fr) 36px minmax(0, 1fr);
+            }
+
+            .node {
+                padding: 12px;
+            }
+
+            .nodeFoot {
+                margin: 12px -12px -12px;
+                padding: 9px 12px;
+            }
+
+            .node b {
+                font-size: 13px;
+            }
+
+            .node small {
+                font-size: 11px;
+            }
+
+            .nodeIcon {
+                width: 30px;
+                height: 30px;
+            }
+        }
+
+        @media (max-width: 600px) {
             .page {
                 width: calc(100% - 22px);
-
                 padding: 30px 0 45px;
             }
 
@@ -711,13 +3286,85 @@
                 line-height: 21px;
             }
 
+            .stage {
+                height: 380px;
+                padding: 14px;
+            }
+
+            .miniRow {
+                gap: 7px;
+            }
+
+            .fakePoster .emoji {
+                font-size: 22px;
+            }
+
+            .fakePoster .posterTitle {
+                font-size: 9px;
+            }
+
+            .pickPane {
+                left: 14px;
+                right: 14px;
+            }
+
+            .proxyStage {
+                height: auto;
+                padding: 20px 14px;
+            }
+
+            .diagram {
+                grid-template-columns: 1fr;
+                gap: 0;
+                margin-top: 20px;
+            }
+
+            .node {
+                padding: 12px 14px;
+            }
+
+            .nodeFoot {
+                margin: 10px -14px -12px;
+                padding: 8px 14px;
+            }
+
+            .link {
+                width: 2px;
+                height: 30px;
+                margin: 0 auto;
+            }
+
+            .link::after {
+                right: -4px;
+                top: auto;
+                bottom: -8px;
+                border: 5px solid transparent;
+                border-top: 7px solid rgba(255,255,255,.3);
+            }
+
+            .packet {
+                top: 0;
+                left: -3px;
+            }
+
+            @keyframes packet {
+                0%   { opacity: 0; left: -3px; top: 0; }
+                15%  { opacity: 1; }
+                85%  { opacity: 1; }
+                100% { opacity: 0; left: -3px; top: calc(100% - 8px); }
+            }
+
+            .directLane {
+                display: none;
+            }
+
             .installBox {
                 padding: 22px;
                 border-radius: 17px;
             }
 
             .step {
-                min-height: 210px;
+                min-height: 230px;
             }
 
             .step h2 {
@@ -729,27 +3376,64 @@
                 line-height: 21px;
             }
 
-            .stepNavigation {
-                margin-top: 20px;
-                padding-top: 17px;
-            }
-
-            .navButton {
-                min-height: 40px;
-                padding: 0 13px;
-            }
-
-            .browserAddress {
-                max-width: 100%;
-            }
-
             .openGuide {
                 padding: 20px 22px;
             }
+        }
 
-            .openGuide p {
-                font-size: 13px;
-                line-height: 21px;
+        /* Точные высоты новых демо (сильнее общих .stage) */
+
+        #demoAnon {
+            height: 520px;
+        }
+
+        #demoLogs {
+            height: 430px;
+        }
+
+        #demoThemes {
+            height: 600px;
+        }
+
+        #demoHotkey {
+            height: 560px;
+            padding: 0;
+        }
+
+        @media (max-width: 860px) {
+            #demoAnon,
+            #demoLogs,
+            #demoThemes {
+                height: auto;
+                min-height: 460px;
+            }
+
+            #demoHotkey {
+                height: 470px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            .heart,
+            .firework,
+            .step.active,
+            .popIn,
+            .proxyStage .packet,
+            .proxyStage .directPacket {
+                animation: none !important;
+            }
+
+            .reveal,
+            .appWindow.reveal,
+            .points li.reveal,
+            .word > span {
+                opacity: 1;
+                transform: none;
+                transition: none;
             }
         }
     </style>
@@ -758,338 +3442,701 @@
 
 <body>
 
-<div
-    class="hearts"
-    id="hearts"
-></div>
+<div class="hearts" id="hearts"></div>
+
+<button class="scrollJump" id="scrollJump" type="button" aria-label="Наверх">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M12 19V5M5 12l7-7 7 7"/>
+    </svg>
+    <span class="scrollJumpHint" id="scrollJumpHint">Наверх</span>
+</button>
 
 
 <div class="page">
 
-
-    <!-- HEADER -->
-
     <header class="header">
-
-        <img
-            class="headerIcon"
-            src="favicon.png"
-            alt="Movie Picker"
-        >
-
+        <img class="headerIcon" src="favicon.png" alt="Movie Picker">
         <div class="headerText">
-
-            <strong>
-                Movie Picker
-            </strong>
-
-            <span>
-                Установка расширения
-            </span>
-
+            <strong>Movie Picker</strong>
+            <span>Программа для Windows</span>
         </div>
-
     </header>
 
 
     <main>
 
+        <!-- =========================
+             HERO + СКАЧАТЬ
+             ========================= -->
+
         <section class="hero">
 
-
-            <h1>
-                Movie Picker
-            </h1>
-
+            <h1>Movie Picker</h1>
 
             <p>
-                Фильмы и сериалы, которые действительно хочется посмотреть.
-                Установи расширение и получай подборки прямо в браузере.
+                Хватит листать каталоги по полчаса. Movie Picker подберёт фильм
+                или сериал <strong>под твой вкус и настроение</strong> — учится
+                на твоих лайках, помнит избранное и найдёт кино, которое
+                понравится вам обоим. Бесплатно и без регистрации.
             </p>
 
+            <div class="downloadCard">
 
-            <!-- BROWSER SELECTOR -->
+                <a class="downloadMain" id="downloadMain" href="#" download>
+                    <svg class="windowsLogo" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill="currentColor" d="M3 5.1 10.4 4v7.1H3V5.1Zm0 13.8 7.4 1.1v-7H3v5.9Zm8.3 1.2L21 21.5v-8.4h-9.7v7ZM11.3 3.9v7.2H21V2.5l-9.7 1.4Z"/>
+                    </svg>
+                    Скачать для Windows
+                </a>
 
-            <div class="browserSelector">
-
-                <label for="browserSelect">
-                    Выберите свой браузер
-                </label>
-
-
-                <select id="browserSelect">
-
-                    <option
-                        value=""
-                        selected
-                        disabled
-                    >
-                        Выберите браузер
-                    </option>
-
-
-                    <optgroup label="Chromium">
-
-                        <option value="chrome">
-                            Google Chrome
-                        </option>
-
-                        <option value="opera">
-                            Opera
-                        </option>
-
-                        <option value="edge">
-                            Microsoft Edge
-                        </option>
-
-                        <option value="brave">
-                            Brave
-                        </option>
-
-                        <option value="vivaldi">
-                            Vivaldi
-                        </option>
-
-                        <option value="yandex">
-                            Яндекс Браузер
-                        </option>
-
-                    </optgroup>
-
-
-                    <optgroup label="Firefox">
-
-                        <option value="firefox">
-                            Mozilla Firefox
-                        </option>
-
-                        <option value="firefox-dev">
-                            Firefox Developer Edition
-                        </option>
-
-                        <option value="firefox-nightly">
-                            Firefox Nightly
-                        </option>
-
-                        <option value="zen">
-                            Zen Browser
-                        </option>
-
-                        <option value="librewolf">
-                            LibreWolf
-                        </option>
-
-                        <option value="waterfox">
-                            Waterfox
-                        </option>
-
-                    </optgroup>
-
-                </select>
-
-            </div>
-
-
-            <!-- INSTALLATION BOX -->
-
-            <div
-                class="installBox hidden"
-                id="installBox"
-            >
-
-
-                <div class="stepHeader">
-
-                    <div class="stepLabel">
-                        Установка Movie Picker
-                    </div>
-
-                    <div
-                        class="stepProgress"
-                        id="stepProgress"
-                    >
-                        1 / 4
-                    </div>
-
+                <div class="downloadMeta">
+                    <span id="metaVersion">Версия 3.2.0</span>
+                    <span>·</span>
+                    <span id="metaSize">≈ 106 МБ</span>
+                    <span>·</span>
+                    <span>Windows 10 / 11</span>
+                    <span>·</span>
+                    <a href="#install">Как установить</a>
                 </div>
 
-
-                <!-- STEP 1 -->
-
-                <div
-                    class="step active"
-                    data-step="1"
-                >
-
-                    <h2>
-                        Скачайте расширение
-                    </h2>
-
-                    <p>
-                        Нажмите кнопку ниже и скачайте архив
-                        с версией Movie Picker для вашего браузера.
-                        После скачивания
-                        <strong>распакуйте ZIP-архив</strong>
-                        в удобное место.
-                    </p>
-
-
-                    <a
-                        class="downloadButton"
-                        id="downloadButton"
-                        href="#"
-                        download
-                    >
-                        Скачать расширение
-                    </a>
-
-                </div>
-
-
-                <!-- STEP 2 -->
-
-                <div
-                    class="step"
-                    data-step="2"
-                >
-
-                    <h2>
-                        Откройте страницу расширений
-                    </h2>
-
-                    <p id="step2Text">
-                        Откройте страницу управления расширениями
-                        в вашем браузере.
-                        Можно просто вставить этот адрес
-                        в адресную строку.
-                    </p>
-
-
-                    <div
-                        class="browserAddress"
-                        id="browserAddress"
-                    >
-                        chrome://extensions/
-                    </div>
-
-
-                    <div
-                        class="browserName"
-                        id="browserName"
-                    >
-                        Google Chrome
-                    </div>
-
-                </div>
-
-
-                <!-- STEP 3 -->
-
-                <div
-                    class="step"
-                    data-step="3"
-                >
-
-                    <h2 id="step3Title">
-                        Включите режим разработчика
-                    </h2>
-
-                    <p id="step3Text">
-                        Найдите переключатель
-                        <strong>Developer mode</strong>
-                        или
-                        <strong>«Режим разработчика»</strong>
-                        и включите его.
-                    </p>
-
-                </div>
-
-
-                <!-- STEP 4 -->
-
-                <div
-                    class="step"
-                    data-step="4"
-                >
-
-                    <h2 id="step4Title">
-                        Загрузите расширение
-                    </h2>
-
-                    <p id="step4Text">
-                        Нажмите
-                        <strong>Load unpacked</strong>
-                        / «Загрузить распакованное расширение».
-                        Затем выберите распакованную папку
-                        Movie Picker, внутри которой находится
-                        файл <strong>manifest.json</strong>.
-                    </p>
-
-                </div>
-
-
-                <!-- NAVIGATION -->
-
-                <div class="stepNavigation">
-
-                    <div class="navLeft">
-
-                        <button
-                            class="navButton"
-                            id="backButton"
-                            type="button"
-                        >
-                            ← Назад
-                        </button>
-
-                    </div>
-
-
-                    <div class="navRight">
-
-                        <button
-                            class="navButton primary"
-                            id="nextButton"
-                            type="button"
-                        >
-                            Далее →
-                        </button>
-
-                    </div>
-
+                <div class="osNotice" id="osNotice">
+                    Похоже, ты зашёл не с Windows. Программа работает только
+                    на Windows 10 и 11 — открой эту страницу на компьютере.
+                    <span id="extensionHint"></span>
                 </div>
 
             </div>
 
+        </section>
 
-            <!-- OPEN GUIDE -->
 
-            <div
-                class="openGuide"
-                id="openGuide"
-            >
+        <!-- =========================
+             ЛЕНТА ФИЛЬМОВ
+             ========================= -->
 
-                <h2>
-                    Как открыть Movie Picker
-                </h2>
+        <section class="strip scrollReveal" aria-label="Популярные фильмы">
+
+            <div class="stripHead">
+                <h3>🔥 Популярное</h3>
+                <span class="stripCount" id="stripCount">1 000 000+ фильмов и сериалов</span>
+            </div>
+
+            <div class="stripViewport" id="stripViewport">
+                <div class="stripTrack" id="stripTrack"></div>
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             1. РЕКОМЕНДАЦИИ
+             ========================= -->
+
+        <section class="showcase scrollReveal">
+
+            <div class="showcaseText">
+
+                <span class="eyebrow">🧠 Рекомендации</span>
+
+                <h2>Умная система рекомендаций</h2>
 
                 <p>
-                    После установки расширение можно открыть
-                    сочетанием клавиш
-                    <strong>Ctrl + Shift + Y</strong>.
+                    Movie Picker учится на твоих оценках. Чем больше ты отмечаешь,
+                    тем точнее подборка <strong>«🎯 Для тебя»</strong> — и каждый раз
+                    она объясняет, <strong>почему фильм тебе понравится</strong>.
                 </p>
 
-                <div class="shortcut">
-                    Ctrl + Shift + Y
+                <ul class="points">
+                    <li>
+                        <span class="pointIcon">♡</span>
+                        <span><b>Лайк</b> — сразу подтянем похожие фильмы: по жанрам, настроению и тому, что смотрят вместе с ним.</span>
+                    </li>
+                    <li>
+                        <span class="pointIcon">👎</span>
+                        <span><b>Не моё</b> — фильм исчезнет, а подобного станет заметно меньше.</span>
+                    </li>
+                </ul>
+
+            </div>
+
+            <div class="appWindow">
+                <div class="windowBar">
+                    <i></i><i></i><i></i>
+                    <span>Movie Picker</span>
                 </div>
+                <div class="stage" id="demoRecs"></div>
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             2. ИЗБРАННОЕ
+             ========================= -->
+
+        <section class="showcase reverse scrollReveal">
+
+            <div class="showcaseText">
+
+                <span class="eyebrow">⭐ Избранное</span>
+
+                <h2>Сохраняй на потом</h2>
 
                 <p>
-                    Также можно закрепить Movie Picker
-                    на панели браузера через меню
-                    <strong>«Расширения»</strong>
-                    или значок 🧩.
-                    После этого расширение можно открывать
-                    <strong>одним кликом по его иконке</strong>.
+                    Увидел интересный фильм или сериал, но не сегодня?
+                    Одно нажатие на <strong>☆</strong> — и он в избранном.
+                    Всё под рукой в шапке, с трейлером и описанием.
+                </p>
+
+                <ul class="points">
+                    <li>
+                        <span class="pointIcon">🎬</span>
+                        <span><b>Фильмы и сериалы</b> — отдельные списки, ничего не перемешается.</span>
+                    </li>
+                    <li>
+                        <span class="pointIcon">💾</span>
+                        <span><b>Резервная копия</b> одним файлом — переезжай между компьютерами без потерь.</span>
+                    </li>
+                </ul>
+
+            </div>
+
+            <div class="appWindow">
+                <div class="windowBar">
+                    <i></i><i></i><i></i>
+                    <span>Movie Picker</span>
+                    <span class="barRight favHeaderBtn" id="favHeaderBtn">
+                        ☆
+                        <span class="favCount" id="favCount">0</span>
+                    </span>
+                </div>
+                <div class="stage" id="demoFavs"></div>
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             3. ПОДБОР
+             ========================= -->
+
+        <section class="showcase scrollReveal">
+
+            <div class="showcaseText">
+
+                <span class="eyebrow">🎯 Подбор</span>
+
+                <h2>Умный подбор</h2>
+
+                <p>
+                    Когда совсем не знаешь, что включить — три способа
+                    решить за пару секунд. Выбор идёт из <strong>сотен фильмов</strong>
+                    по всей глубине каталога, а уже показанное не повторяется.
+                </p>
+
+                <ul class="points">
+                    <li>
+                        <span class="pointIcon">🎲</span>
+                        <span><b>Случайное</b> — доверься случаю, можно с учётом твоего вкуса.</span>
+                    </li>
+                    <li>
+                        <span class="pointIcon">🌀</span>
+                        <span><b>По настроению</b> — напряжённое, смешное, mindfuck, на вечер…</span>
+                    </li>
+                    <li>
+                        <span class="pointIcon">👥</span>
+                        <span><b>Кино на двоих</b> — найдём то, что понравится вам обоим.</span>
+                    </li>
+                </ul>
+
+            </div>
+
+            <div class="appWindow">
+                <div class="windowBar">
+                    <i></i><i></i><i></i>
+                    <span>🎯 Подбор</span>
+                </div>
+                <div class="stage" id="demoPicker"></div>
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             4. ПРОКСИ
+             ========================= -->
+
+        <section class="showcase reverse scrollReveal">
+
+            <div class="showcaseText">
+
+                <span class="eyebrow">🌐 Прокси</span>
+
+                <h2>Проксирование трафика</h2>
+
+                <p>
+                    Нам не страшны замедления и блокировки. В программу встроен
+                    <strong>собственный прокси-сервер</strong>: если прямое соединение
+                    с базой фильмов тормозит или обрывается, запросы пойдут через него —
+                    и карточки снова грузятся.
+                </p>
+
+                <ul class="points">
+                    <li>
+                        <span class="pointIcon">⚡</span>
+                        <span><b>Сам подскажет</b> — заметит медленную загрузку и предложит включить прокси одной кнопкой.</span>
+                    </li>
+                    <li>
+                        <span class="pointIcon">🔒</span>
+                        <span><b>Только для программы</b> — остальной интернет и браузер он не трогает.</span>
+                    </li>
+                </ul>
+
+            </div>
+
+            <div class="appWindow">
+                <div class="windowBar">
+                    <i></i><i></i><i></i>
+                    <span>Как идёт трафик</span>
+                </div>
+
+                <div class="stage proxyStage via" id="demoProxy">
+
+                    <div class="modeSwitch">
+                        <button class="modeBtn bad" type="button" data-mode="direct">Напрямую</button>
+                        <button class="modeBtn active" type="button" data-mode="via">Через прокси</button>
+                    </div>
+
+                    <div class="diagram">
+
+                        <div class="directLane">
+                            <span class="blocker">✕</span>
+                            <span class="directPacket"></span>
+                        </div>
+
+                        <div class="node">
+                            <div class="nodeHead">
+                                <span class="nodeIcon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.8 3 2.8 15 0 18M12 3c-2.8 3-2.8 15 0 18"/></svg>
+                                </span>
+                                <div>
+                                    <b>Movie Picker</b>
+                                    <small>Программа</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="link"><span class="packet"></span><span class="packet"></span></div>
+
+                        <div class="node proxyNode">
+                            <div class="nodeHead">
+                                <span class="nodeIcon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 4 3 12l5 8M16 4l5 8-5 8M8 4h8M8 20h8"/></svg>
+                                </span>
+                                <div>
+                                    <b>Movie Picker Proxy</b>
+                                    <small>Cloudflare Worker</small>
+                                </div>
+                            </div>
+                            <div class="nodeFoot">
+                                <span>Proxy requests</span>
+                                <span class="statusPill" id="proxyPill">Enabled</span>
+                            </div>
+                        </div>
+
+                        <div class="link second"><span class="packet"></span><span class="packet"></span></div>
+
+                        <div class="node">
+                            <div class="nodeHead">
+                                <span class="nodeIcon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v6c0 1.7 3.1 3 7 3s7-1.3 7-3V6M5 12v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6"/></svg>
+                                </span>
+                                <div>
+                                    <b>TMDb API</b>
+                                    <small>База фильмов</small>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="proxyResult" id="proxyResult">⚡ Через наш прокси — всё хорошо!</div>
+
+                </div>
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             5. АНОНИМНОСТЬ
+             ========================= -->
+
+        <section class="showcase scrollReveal">
+
+            <div class="showcaseText">
+
+                <span class="eyebrow">🕶 Анонимность</span>
+
+                <h2>Полная анонимность</h2>
+
+                <p>
+                    Никаких аккаунтов. Ни регистрации, ни e-mail, ни пароля, ни телефона —
+                    <strong>открыл программу и пользуешься</strong>. Нам не нужно знать,
+                    кто ты, чтобы подобрать тебе кино.
+                </p>
+
+                <ul class="points">
+                    <li>
+                        <span class="pointIcon">🚫</span>
+                        <span><b>Без регистрации</b> — ни одной формы, ни одного письма «подтвердите почту».</span>
+                    </li>
+                    <li>
+                        <span class="pointIcon">👤</span>
+                        <span><b>Без профиля</b> — мы не знаем ни имени, ни почты, ни номера.</span>
+                    </li>
+                </ul>
+
+            </div>
+
+            <div class="appWindow">
+                <div class="windowBar">
+                    <i></i><i></i><i></i>
+                    <span>Movie Picker</span>
+                </div>
+
+                <div class="stage anonStage" id="demoAnon">
+
+                    <div class="signupCard" id="signupCard">
+                        <h4>Создать аккаунт</h4>
+                        <div class="field">Email</div>
+                        <div class="field">Пароль</div>
+                        <div class="field">Номер телефона</div>
+                        <div class="signupBtn">Зарегистрироваться</div>
+                        <div class="stamp" id="anonStamp">Не нужно</div>
+                    </div>
+
+                    <div class="anonApp" id="anonApp">
+                        <span class="badge">🕶 Без аккаунта</span>
+                        <b>Что посмотрим сегодня?</b>
+                        <small>Просто открыл — и пользуешься</small>
+                        <div class="anonPosters" id="anonPosters"></div>
+                    </div>
+
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             6. НИЧЕГО НЕ ЛОГИРУЕМ
+             ========================= -->
+
+        <section class="showcase scrollReveal">
+
+            <div class="showcaseText">
+
+                <span class="eyebrow">🔒 Приватность</span>
+
+                <h2>Ничего не логируем</h2>
+
+                <p>
+                    Лайки, избранное, токен и история подборов живут
+                    <strong>только на твоём компьютере</strong>. Мы не собираем
+                    статистику и не храним, что ты смотрел, — нам просто нечего логировать.
+                </p>
+
+                <ul class="points">
+                    <li>
+                        <span class="pointIcon">💻</span>
+                        <span><b>Всё локально</b> — данные лежат в программе, а не у нас на сервере.</span>
+                    </li>
+                    <li>
+                        <span class="pointIcon">💾</span>
+                        <span><b>Твоя копия</b> — хочешь перенести? Экспорт одним файлом, и он только у тебя.</span>
+                    </li>
+                </ul>
+
+            </div>
+
+            <div class="appWindow">
+                <div class="windowBar">
+                    <i></i><i></i><i></i>
+                    <span>Куда уходят данные</span>
+                </div>
+
+                <div class="stage logsStage" id="demoLogs">
+
+                    <div class="logsFlow">
+
+                        <div class="vault">
+                            <div class="boxTitle">💻 Твой компьютер <small>🔒 хранится здесь</small></div>
+                            <div class="dataChips" id="dataChips"></div>
+                        </div>
+
+                        <div class="gate">
+                            <span class="shield" id="logsShield">🛡️</span>
+                            <span class="dataPacket" id="dataPacket"></span>
+                        </div>
+
+                        <div class="server">
+                            <div class="boxTitle">🗄️ Наш сервер</div>
+                            <div class="logLines"><span></span><span></span><span></span></div>
+                            <div class="logCounter">логи: <b>0</b> записей</div>
+                        </div>
+
+                    </div>
+
+                    <div class="logsCaption">Данные никуда не уходят — <b>нам нечего хранить</b></div>
+
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             7. ТЕМЫ
+             ========================= -->
+
+        <section class="showcase scrollReveal">
+
+            <div class="showcaseText">
+
+                <span class="eyebrow">🎨 Внешний вид</span>
+
+                <h2>8 тем оформления</h2>
+
+                <p>
+                    От строгой тёмной до стеклянных Liquid Glass — выбери настроение
+                    интерфейса. Фон, свечение и акценты меняются <strong>на лету</strong>,
+                    а размер интерфейса можно подогнать под свой экран.
+                </p>
+
+                <ul class="points">
+                    <li>
+                        <span class="pointIcon">🫧</span>
+                        <span><b>Liquid Glass</b> — стеклянные панели в пяти цветах.</span>
+                    </li>
+                    <li>
+                        <span class="pointIcon">🔍</span>
+                        <span><b>Размер интерфейса</b> — от 75% до 150%, для любого монитора.</span>
+                    </li>
+                </ul>
+
+            </div>
+
+            <div class="appWindow">
+                <div class="windowBar">
+                    <i></i><i></i><i></i>
+                    <span>⚙ Настройки → Тема оформления</span>
+                </div>
+
+                <div class="stage themeStage" id="demoThemes">
+
+                    <div class="themePreview" id="themePreview">
+                        <div class="tpHeader">
+                            <span>🎬 Movie Picker</span>
+                            <span class="tpBtns"><i></i><i></i><i></i></span>
+                        </div>
+                        <div class="tpHero">Что посмотрим сегодня?</div>
+                        <div class="tpSearch"><span>Название фильма…</span><b>Поиск</b></div>
+                        <div class="tpRow" id="tpRow"></div>
+                    </div>
+
+                    <div class="themeChips" id="themeChips"></div>
+
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             8. ВСЕГДА ПОД РУКОЙ
+             ========================= -->
+
+        <section class="showcase scrollReveal">
+
+            <div class="showcaseText">
+
+                <span class="eyebrow">⚡ Горячая клавиша</span>
+
+                <h2>Всегда под рукой</h2>
+
+                <p>
+                    <strong>Ctrl + Shift + Y</strong> — и Movie Picker поверх любых окон:
+                    за работой, в браузере, в игре. Закрыл — программа тихо ждёт в трее
+                    и открывается мгновенно, без загрузки.
+                </p>
+
+                <ul class="points">
+                    <li>
+                        <span class="pointIcon">⌨️</span>
+                        <span><b>Из любого места</b> — клавиши работают во всей системе, не только в браузере.</span>
+                    </li>
+                    <li>
+                        <span class="pointIcon">🚀</span>
+                        <span><b>Вместе с Windows</b> — включи автозапуск, и программа всегда наготове.</span>
+                    </li>
+                </ul>
+
+            </div>
+
+            <div class="appWindow">
+                <div class="windowBar">
+                    <i></i><i></i><i></i>
+                    <span>Рабочий стол</span>
+                </div>
+
+                <div class="stage hotkeyStage" id="demoHotkey">
+
+                    <div class="deskWindow">
+                        <div class="deskLines"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+                    </div>
+
+                    <div class="keys">
+                        <span class="key" data-key>Ctrl</span>
+                        <span class="plus">+</span>
+                        <span class="key" data-key>Shift</span>
+                        <span class="plus">+</span>
+                        <span class="key" data-key>Y</span>
+                    </div>
+
+                    <div class="hkApp" id="hkApp">
+                        <b>🎬 Что посмотрим сегодня?</b>
+                        <div class="hkPosters" id="hkPosters"></div>
+                    </div>
+
+                    <div class="hkHint" id="hkHint">Крестик — и программа ждёт в трее</div>
+
+                    <div class="taskbar">
+                        <span class="tbIcon start">⊞</span>
+                        <span class="tbIcon">📁</span>
+                        <span class="tbIcon">🌐</span>
+                        <span class="tbIcon">💬</span>
+                        <div class="tray">
+                            <span class="trayIcon" id="trayIcon">🎬</span>
+                            <span>RU</span>
+                            <span>21:47</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             УСТАНОВКА
+             ========================= -->
+
+        <section class="installSection" id="install">
+
+            <span class="eyebrow">⬇️ Установка</span>
+
+            <h2>Установка за минуту</h2>
+
+            <div class="installBox" id="installBox">
+
+                <div class="stepHeader">
+                    <div class="stepLabel">Установка Movie Picker</div>
+                    <div class="stepProgress" id="stepProgress">1 / 4</div>
+                </div>
+
+                <div class="stepDots" id="stepDots"></div>
+
+                <div class="step active" data-step="1">
+                    <h2>Скачайте установщик</h2>
+                    <p>
+                        Нажмите кнопку ниже — скачается один файл
+                        <strong id="step1FileName">Movie Picker Setup 3.2.0.exe</strong>.
+                        Ничего распаковывать не нужно.
+                    </p>
+                    <a class="downloadButton" id="downloadButton" href="#" download>
+                        Скачать установщик
+                    </a>
+                </div>
+
+                <div class="step" data-step="2">
+                    <h2>Запустите и пропустите SmartScreen</h2>
+                    <p>
+                        Откройте скачанный файл. Программа не подписана платным
+                        сертификатом, поэтому Windows покажет синее окно — это нормально.
+                        Нажмите <strong>«Подробнее»</strong>, затем
+                        <strong>«Выполнить в любом случае»</strong>.
+                    </p>
+                    <div class="smartscreen" aria-hidden="true">
+                        <b>Windows защитила ваш компьютер</b>
+                        <small>
+                            Фильтр SmartScreen Microsoft Defender предотвратил
+                            запуск неопознанного приложения…
+                        </small>
+                        <span class="smartscreenLink">Подробнее</span>
+                        <div class="smartscreenButtons">
+                            <span class="highlight">Выполнить в любом случае</span>
+                            <span>Не выполнять</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step" data-step="3">
+                    <h2>Установите программу</h2>
+                    <p>
+                        В установщике можно оставить папку по умолчанию или выбрать свою,
+                        затем нажмите <strong>«Установить»</strong>.
+                        Права администратора не нужны.
+                    </p>
+                    <p>
+                        После установки на рабочем столе и в меню «Пуск»
+                        появится <strong>Movie Picker</strong>.
+                    </p>
+                </div>
+
+                <div class="step" data-step="4">
+                    <h2>Вставьте TMDB-токен</h2>
+                    <p>
+                        При первом запуске откройте <strong>⚙ Настройки</strong>
+                        и вставьте бесплатный TMDB Read Access Token — там же есть
+                        пошаговая инструкция, как его получить.
+                    </p>
+                    <p>
+                        Переходите с расширения? В расширении нажмите
+                        <strong>«Экспортировать»</strong>, а в программе —
+                        <strong>«Импортировать»</strong>: избранное, лайки и
+                        токен переедут одним файлом.
+                    </p>
+                </div>
+
+                <div class="stepNavigation">
+                    <button class="navButton" id="backButton" type="button">← Назад</button>
+                    <button class="navButton primary" id="nextButton" type="button">Далее →</button>
+                </div>
+
+            </div>
+
+            <div class="openGuide">
+
+                <h2>Как пользоваться</h2>
+
+                <p>Программу можно открыть откуда угодно сочетанием клавиш:</p>
+
+                <div class="keyHint">Ctrl + Shift + Y</div>
+
+                <p>
+                    Крестик не закрывает Movie Picker, а прячет его в
+                    <strong>трей</strong> (значок возле часов) — поэтому окно
+                    открывается мгновенно. Чтобы выйти совсем — правый клик по
+                    значку → <strong>«Выход»</strong>. Там же можно включить
+                    <strong>«Запускать вместе с Windows»</strong>.
+                </p>
+
+                <p>
+                    Обновление — просто скачайте новую версию с этой страницы и
+                    установите поверх: данные сохранятся.
                 </p>
 
             </div>
@@ -1098,10 +4145,7 @@
 
     </main>
 
-
-    <div class="footer">
-        Movie Picker
-    </div>
+    <div class="footer" id="footer">Movie Picker</div>
 
 </div>
 
@@ -1109,404 +4153,1341 @@
 <script>
 
     /* =========================
-       ELEMENTS
+       НАСТРОЙКИ СТРАНИЦЫ
+       Меняй здесь при выходе новой версии.
        ========================= */
 
-    const browserSelect =
-        document.getElementById("browserSelect");
+    const APP_VERSION = "3.2.0";
 
-    const installBox =
-        document.getElementById("installBox");
+    const APP_SIZE = "≈ 106 МБ";
 
-    const openGuide =
-        document.getElementById("openGuide");
+    // Файл установщика лежит рядом с этой страницей.
+    const APP_FILE = `Movie Picker Setup ${APP_VERSION}.exe`;
 
-    const downloadButton =
-        document.getElementById("downloadButton");
+    // Ссылка на установщик на GitHub (Releases). Если задана —
+    // кнопки «Скачать» ведут туда, а не на файл рядом со страницей.
+    const DOWNLOAD_URL = "";
 
-    const browserAddress =
-        document.getElementById("browserAddress");
-
-    const browserName =
-        document.getElementById("browserName");
-
-    const stepProgress =
-        document.getElementById("stepProgress");
-
-    const backButton =
-        document.getElementById("backButton");
-
-    const nextButton =
-        document.getElementById("nextButton");
-
-    const step2Text =
-        document.getElementById("step2Text");
-
-    const step3Title =
-        document.getElementById("step3Title");
-
-    const step3Text =
-        document.getElementById("step3Text");
-
-    const step4Title =
-        document.getElementById("step4Title");
-
-    const step4Text =
-        document.getElementById("step4Text");
-
-    const steps =
-        document.querySelectorAll(".step");
+    // Страница установки расширения (для тех, кто не на Windows).
+    // Пусто — ссылка не показывается.
+    const EXTENSION_PAGE = "";
 
 
-    let currentStep = 1;
+    const REDUCED_MOTION =
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 
     /* =========================
-       BROWSERS
+       ССЫЛКИ, ВЕРСИЯ, ОС
        ========================= */
 
-    const browsers = {
+    const downloadMain = document.getElementById("downloadMain");
+    const downloadButton = document.getElementById("downloadButton");
 
-        chrome: {
-            name: "Google Chrome",
-            engine: "Chromium",
-            url: "chrome://extensions/",
-            file: "MovePicker%20Cromium.zip"
-        },
+    [downloadMain, downloadButton].forEach(link => {
+        if (DOWNLOAD_URL) {
+            link.href = DOWNLOAD_URL;
+            link.removeAttribute("download");
+        } else {
+            link.href = encodeURI(APP_FILE);
+            link.setAttribute("download", APP_FILE);
+        }
+    });
 
-        opera: {
-            name: "Opera",
-            engine: "Chromium",
-            url: "opera://extensions/",
-            file: "MovePicker%20Cromium.zip"
-        },
+    document.getElementById("metaVersion").textContent = "Версия " + APP_VERSION;
+    document.getElementById("metaSize").textContent = APP_SIZE;
+    document.getElementById("step1FileName").textContent = APP_FILE;
+    document.getElementById("footer").textContent = "Movie Picker " + APP_VERSION;
 
-        edge: {
-            name: "Microsoft Edge",
-            engine: "Chromium",
-            url: "edge://extensions/",
-            file: "MovePicker%20Cromium.zip"
-        },
+    const platform =
+        (navigator.userAgentData && navigator.userAgentData.platform) ||
+        navigator.platform ||
+        navigator.userAgent;
 
-        brave: {
-            name: "Brave",
-            engine: "Chromium",
-            url: "brave://extensions/",
-            file: "MovePicker%20Cromium.zip"
-        },
+    if (!/win/i.test(platform)) {
+        document.getElementById("osNotice").classList.add("visible");
 
-        vivaldi: {
-            name: "Vivaldi",
-            engine: "Chromium",
-            url: "vivaldi://extensions/",
-            file: "MovePicker%20Cromium.zip"
-        },
-
-        yandex: {
-            name: "Яндекс Браузер",
-            engine: "Chromium",
-            url: "browser://extensions/",
-            file: "MovePicker%20Cromium.zip"
-        },
+        if (EXTENSION_PAGE) {
+            document.getElementById("extensionHint").innerHTML =
+                ' Или поставь <a href="' + EXTENSION_PAGE + '">расширение для браузера</a>.';
+        }
+    }
 
 
-        firefox: {
-            name: "Mozilla Firefox",
-            engine: "Firefox",
-            url: "about:debugging#/runtime/this-firefox",
-            file: "MovePicker%20FireFox.zip"
-        },
+    /* =========================
+       ПОЯВЛЕНИЕ БЛОКОВ ПРИ ПРОКРУТКЕ
+       ========================= */
 
-        "firefox-dev": {
-            name: "Firefox Developer Edition",
-            engine: "Firefox",
-            url: "about:debugging#/runtime/this-firefox",
-            file: "MovePicker%20FireFox.zip"
-        },
+    /*
+     * Каждому блоку: метка → слова заголовка → описание →
+     * пояснения по одному → окно с демо. Задержки растут
+     * по порядку, так блок «собирается» у тебя на глазах.
+     */
 
-        "firefox-nightly": {
-            name: "Firefox Nightly",
-            engine: "Firefox",
-            url: "about:debugging#/runtime/this-firefox",
-            file: "MovePicker%20FireFox.zip"
-        },
+    function splitWords(heading) {
+        heading.innerHTML = heading.textContent
+            .trim()
+            .split(/\s+/)
+            .map(word => `<span class="word"><span>${word}</span></span>`)
+            .join(" ");
 
-        zen: {
-            name: "Zen Browser",
-            engine: "Firefox",
-            url: "about:debugging#/runtime/this-firefox",
-            file: "MovePicker%20FireFox.zip"
-        },
+        return [...heading.querySelectorAll(".word > span")];
+    }
 
-        librewolf: {
-            name: "LibreWolf",
-            engine: "Firefox",
-            url: "about:debugging#/runtime/this-firefox",
-            file: "MovePicker%20FireFox.zip"
-        },
+    function prepareReveal(block) {
+        let delay = 0;
 
-        waterfox: {
-            name: "Waterfox",
-            engine: "Firefox",
-            url: "about:debugging#/runtime/this-firefox",
-            file: "MovePicker%20FireFox.zip"
+        const step = (el, amount = .08) => {
+            if (!el) {
+                return;
+            }
+
+            el.style.setProperty("--d", delay.toFixed(2) + "s");
+            delay += amount;
+        };
+
+        const mark = (el, amount) => {
+            if (!el) {
+                return;
+            }
+
+            el.classList.add("reveal");
+            step(el, amount);
+        };
+
+        mark(block.querySelector(".eyebrow"), .04);
+
+        const heading = block.querySelector(".showcaseText h2, .installSection > h2, .stripHead h3");
+
+        if (heading) {
+            splitWords(heading).forEach(word => step(word, .035));
+            delay += .02;
         }
 
+        mark(block.querySelector(".showcaseText > p"), .05);
+
+        block.querySelectorAll(".points li").forEach(li => mark(li, .045));
+
+        mark(block.querySelector(".stripCount"), .04);
+        mark(block.querySelector(".stripViewport"), .04);
+
+        block.querySelectorAll(":scope > .appWindow, :scope > .installBox, :scope > .openGuide")
+            .forEach(el => mark(el, .06));
+    }
+
+    const revealTargets =
+        document.querySelectorAll(".scrollReveal, .installSection");
+
+    if (!REDUCED_MOTION) {
+        revealTargets.forEach(prepareReveal);
+    }
+
+    const revealObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("revealed");
+                revealObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: .12, rootMargin: "0px 0px -8% 0px" });
+
+    revealTargets.forEach(el => revealObserver.observe(el));
+
+
+    /* =========================
+       ДВИЖОК ДЕМО-СЦЕН
+       Сцена крутится по кругу, пока окно на экране,
+       и останавливается, когда его прокрутили.
+       ========================= */
+
+    const STOP = Symbol("stop");
+
+    // Скорость демо в окнах: 1 — как задумано, меньше — быстрее
+    const DEMO_SPEED = 0.75;
+
+    function runScene(stage, scene) {
+        let token = 0;
+        let running = false;
+
+        const makeContext = myToken => ({
+            sleep: ms => new Promise((resolve, reject) => {
+                setTimeout(() => myToken === token ? resolve() : reject(STOP), ms * DEMO_SPEED);
+            })
+        });
+
+        async function loop(myToken) {
+            while (running && myToken === token) {
+                try {
+                    await scene(makeContext(myToken));
+                } catch (error) {
+                    if (error !== STOP) {
+                        console.error(error);
+                    }
+                    return;
+                }
+            }
+        }
+
+        new IntersectionObserver(([entry]) => {
+            if (entry.isIntersecting && !running) {
+                running = true;
+                loop(++token);
+            } else if (!entry.isIntersecting && running) {
+                running = false;
+                token++;
+            }
+        }, { threshold: .35 }).observe(stage);
+    }
+
+    /* Постеры-макеты: градиент + эмодзи, без картинок из сети */
+
+    const MOVIES = {
+        interstellar: { t: "Интерстеллар", e: "🪐", c1: "#16213e", c2: "#c9a14a" },
+        arrival:      { t: "Прибытие", e: "🛸", c1: "#2c3e50", c2: "#8e9eab" },
+        martian:      { t: "Марсианин", e: "🚀", c1: "#8e2c16", c2: "#e67e22" },
+        gravity:      { t: "Гравитация", e: "🌍", c1: "#0f2027", c2: "#2c5364" },
+        dune:         { t: "Дюна", e: "🏜️", c1: "#6b4a1e", c2: "#d4a15a" },
+        conjuring:    { t: "Заклятие", e: "👻", c1: "#140000", c2: "#4a0d0d" },
+        wick:         { t: "Джон Уик", e: "🔫", c1: "#101820", c2: "#4b6584" },
+        paddington:   { t: "Паддингтон", e: "🧸", c1: "#7a3b1e", c2: "#d9822b" },
+        oppenheimer:  { t: "Оппенгеймер", e: "💥", c1: "#2b1a0f", c2: "#c0562b" },
+        getout:       { t: "Прочь", e: "🫖", c1: "#1d1d2b", c2: "#6c5b7b" },
+        blade:        { t: "Бегущий по лезвию", e: "🌆", c1: "#1a0b2e", c2: "#e2598b" },
+        matrix:       { t: "Матрица", e: "💊", c1: "#001a0a", c2: "#1f7a3a" },
+        amelie:       { t: "Амели", e: "🍓", c1: "#3b0d0d", c2: "#2e7d32" },
+        la:           { t: "Ла-Ла Ленд", e: "🎹", c1: "#1b1464", c2: "#e85d9a" },
+        inception:    { t: "Начало", e: "🌀", c1: "#1c2833", c2: "#5d6d7e" },
+        grand:        { t: "Отель «Гранд Будапешт»", e: "🏨", c1: "#6d2e46", c2: "#e8a0bf" }
     };
 
+    function posterHtml(key) {
+        const m = MOVIES[key];
 
-    /* =========================
-       UPDATE FIREFOX GUIDE
-       ========================= */
+        return `
+            <div class="fakePoster" style="--c1:${m.c1};--c2:${m.c2}">
+                <span class="emoji">${m.e}</span>
+                <span class="posterTitle">${m.t}</span>
+            </div>
+        `;
+    }
 
-    function updateFirefoxGuide() {
+    function cardHtml(key, buttons = "") {
+        return `<div class="fakeCard" data-key="${key}">${posterHtml(key)}${buttons}</div>`;
+    }
 
-        step2Text.innerHTML =
-            "Откройте страницу отладки расширений " +
-            "в вашем браузере. Можно просто вставить " +
-            "этот адрес в адресную строку.";
+    const CURSOR_SVG = `
+        <svg viewBox="0 0 24 24">
+            <path d="M4 2.5 19.5 13l-6.7 1.1 3.9 6.7-2.6 1.5-3.9-6.8L5.6 20Z"
+                  fill="#fff" stroke="#111" stroke-width="1.3" stroke-linejoin="round"/>
+        </svg>
+    `;
 
-        step3Title.textContent =
-            "Загрузите временное расширение";
+    function addCursor(stage) {
+        const cursor = document.createElement("div");
+        cursor.className = "cursor";
+        cursor.innerHTML = CURSOR_SVG;
+        stage.appendChild(cursor);
+        return cursor;
+    }
 
-        step3Text.innerHTML =
-            "На странице <strong>This Firefox</strong> " +
-            "найдите кнопку " +
-            "<strong>Load Temporary Add-on…</strong> " +
-            "и нажмите её.";
+    /* Ставит курсор на элемент (координаты — относительно сцены) */
 
-        step4Title.textContent =
-            "Выберите manifest.json";
+    function pointAt(stage, cursor, target, instant = false) {
+        const s = stage.getBoundingClientRect();
+        const r = target.getBoundingClientRect();
 
-        step4Text.innerHTML =
-            "Откройте распакованную папку " +
-            "<strong>Movie Picker</strong> " +
-            "и выберите файл " +
-            "<strong>manifest.json</strong>. " +
-            "Расширение сразу появится в браузере.";
+        const x = r.left - s.left + r.width * .5 - 4;
+        const y = r.top - s.top + r.height * .5 - 3;
 
+        cursor.style.transition = instant ? "none" : "";
+        cursor.style.transform = `translate(${x}px, ${y}px)`;
+
+        if (instant) {
+            cursor.getBoundingClientRect();
+            cursor.style.transition = "";
+        }
+
+        return { x: x + 4, y: y + 3 };
+    }
+
+    async function clickAt(ctx, stage, cursor, target) {
+        const point = pointAt(stage, cursor, target);
+
+        await ctx.sleep(780);
+
+        cursor.classList.add("press");
+
+        const ripple = document.createElement("span");
+        ripple.className = "ripple";
+        ripple.style.left = point.x + "px";
+        ripple.style.top = point.y + "px";
+        stage.appendChild(ripple);
+        setTimeout(() => ripple.remove(), 600);
+
+        await ctx.sleep(150);
+
+        cursor.classList.remove("press");
+
+        return point;
+    }
+
+    function burstAt(stage, point, symbol, count = 7) {
+        for (let i = 0; i < count; i++) {
+            const bit = document.createElement("span");
+            bit.className = "burst";
+            bit.textContent = symbol;
+
+            const angle = (Math.PI * 2 / count) * i;
+            bit.style.left = point.x - 7 + "px";
+            bit.style.top = point.y - 9 + "px";
+            bit.style.setProperty("--bx", Math.cos(angle) * 34 + "px");
+            bit.style.setProperty("--by", Math.sin(angle) * 34 + "px");
+
+            stage.appendChild(bit);
+            setTimeout(() => bit.remove(), 850);
+        }
     }
 
 
+
     /* =========================
-       UPDATE CHROMIUM GUIDE
+       ЛЕНТА ФИЛЬМОВ
+       Настоящие фильмы (TMDB), карточки как в программе.
+       Постеры лежат рядом: posters/<id>.jpg — если файла
+       нет, берём с image.tmdb.org, если и там нет — 🎬.
+       Лента сама сдвигается на 1 фильм, на наведении
+       и вне экрана — стоит.
        ========================= */
 
-    function updateChromiumGuide() {
+    const STRIP_MOVIES = [
+        {"id":969681,"t":"Человек-паук: Новый день","y":"2026","g":["Фантастика","Боевик"],"r":"7.9","a":"12+","p":"/pK8CH9JxrgX2ZIq3WclTwnX0cCL.jpg"},
+        {"id":980431,"t":"Легенда об Аанге: Последний маг воздуха","y":"2026","g":["Мультфильм","Приключения"],"r":"9.1","a":"6+","p":"/cypsdXImFEVN3NOlckf9ZVrBY6M.jpg"},
+        {"id":1101383,"t":"На краю Оук-стрит","y":"2026","g":["Фантастика","Детектив"],"r":"7.0","a":"12+","p":"/5jhArZFrQIqEuh4ZNuBaQsnEy7s.jpg"},
+        {"id":1007757,"t":"В чужой шкуре","y":"2026","g":["Приключения","Мультфильм"],"r":"8.9","a":"6+","p":"/gl112Rnih0fHcWBIKpVzeW84xov.jpg"},
+        {"id":1204680,"t":"Хитрый Койот","y":"2026","g":["Комедия","Приключения"],"r":"7.6","a":"12+","p":"/gwCwmTk2EfDccd4RtIPsWEwzd1r.jpg"},
+        {"id":1368337,"t":"Одиссея","y":"2026","g":["Приключения","Боевик"],"r":"8.0","a":"16+","p":"/n7NR7SH7CyiiF70yN96r3d1jWr0.jpg"},
+        {"id":1311031,"t":"Истребитель демонов: Бесконечный замок","y":"2025","g":["Мультфильм","Боевик"],"r":"8.8","a":"16+","p":"/rz1jMKpu4rq2wiKMyILF06aiSwP.jpg"},
+        {"id":1621552,"t":"Поймать Эль Чапо","y":"2026","g":["Криминал","Боевик"],"r":"8.8","a":"16+","p":"/cd6wq3ctMo3eKnZvKeYwoasBhJL.jpg"},
+        {"id":278,"t":"Побег из Шоушенка","y":"1994","g":["Драма","Криминал"],"r":"8.7","a":"16+","p":"/yvmKPlTIi0xdcFQIFcQKQJcI63W.jpg"},
+        {"id":1375646,"t":"Колония","y":"2026","g":["Боевик","Ужасы"],"r":"8.1","a":"18+","p":"/uQIlX1zpvM7FAKRbeyLDJN3zxrX.jpg"},
+        {"id":238,"t":"Крёстный отец","y":"1972","g":["Драма","Криминал"],"r":"8.7","a":"16+","p":"/hoowzozsn0XQGtgH8nyivAMZfPN.jpg"},
+        {"id":1288445,"t":"Мятеж","y":"2026","g":["Боевик","Триллер"],"r":"7.0","a":"18+","p":"/opOHbNmV0VPOugSBxrRQKmPgfZL.jpg"},
+        {"id":687163,"t":"Проект «Конец света»","y":"2026","g":["Фантастика","Приключения"],"r":"8.6","a":"12+","p":"/lGNWODvZnfiocvegYSw1bYnm6pt.jpg"},
+        {"id":1084244,"t":"История игрушек 5","y":"2026","g":["Мультфильм","Семейный"],"r":"8.3","a":"6+","p":"/84igQj0DU3TgPrtQ7bHXHCio1sV.jpg"},
+        {"id":936075,"t":"Майкл","y":"2026","g":["Музыка","Драма"],"r":"8.6","a":"18+","p":"/AsPFMI3PhgCsraMq7RmMJwFQh2b.jpg"},
+        {"id":389,"t":"12 разгневанных мужчин","y":"1957","g":["Драма"],"r":"8.6","a":"","p":"/uDFEvhvKrH61KuGWWozRtbw2Rjv.jpg"}
+    ];
 
-        step2Text.innerHTML =
-            "Откройте страницу управления расширениями " +
-            "в вашем браузере. Можно просто вставить " +
-            "этот адрес в адресную строку.";
+    const STRIP_STEP_MS = 2100;
 
-        step3Title.textContent =
-            "Включите режим разработчика";
+    const stripTrack = document.getElementById("stripTrack");
+    const stripViewport = document.getElementById("stripViewport");
 
-        step3Text.innerHTML =
-            "Найдите переключатель " +
-            "<strong>Developer mode</strong> " +
-            "или <strong>«Режим разработчика»</strong> " +
-            "и включите его.";
+    document.getElementById("stripCount").textContent =
+        "1 000 000+ фильмов и сериалов";
 
-        step4Title.textContent =
-            "Загрузите расширение";
+    /*
+     * ♡ и ☆ на карточках ленты работают: отметки
+     * запоминаются в браузере посетителя (localStorage),
+     * ▶ открывает трейлер на YouTube.
+     */
 
-        step4Text.innerHTML =
-            "Нажмите <strong>Load unpacked</strong> " +
-            "/ «Загрузить распакованное расширение». " +
-            "Затем выберите распакованную папку " +
-            "<strong>Movie Picker</strong>, " +
-            "внутри которой находится файл " +
-            "<strong>manifest.json</strong>.";
+    const MARKS_KEY = "mp_site_marks";
 
+    const stripMarks = (() => {
+        try {
+            const saved = JSON.parse(localStorage.getItem(MARKS_KEY) || "{}");
+
+            return {
+                like: Array.isArray(saved.like) ? saved.like : [],
+                fav: Array.isArray(saved.fav) ? saved.fav : []
+            };
+        } catch (error) {
+            return { like: [], fav: [] };
+        }
+    })();
+
+    function saveStripMarks() {
+        try {
+            localStorage.setItem(MARKS_KEY, JSON.stringify(stripMarks));
+        } catch (error) {}
     }
 
+    function burstFrom(button, symbol, color) {
+        const r = button.getBoundingClientRect();
+        const count = 7;
 
-    /* =========================
-       BROWSER CHANGE
-       ========================= */
+        for (let i = 0; i < count; i++) {
+            const bit = document.createElement("span");
+            const angle = (Math.PI * 2 / count) * i;
 
-    function updateBrowser() {
+            bit.className = "mpBurst";
+            bit.textContent = symbol;
+            bit.style.color = color;
+            bit.style.left = r.left + r.width / 2 - 7 + "px";
+            bit.style.top = r.top + r.height / 2 - 9 + "px";
+            bit.style.setProperty("--bx", Math.cos(angle) * 34 + "px");
+            bit.style.setProperty("--by", Math.sin(angle) * 34 + "px");
 
-        const selected =
-            browsers[browserSelect.value];
+            document.body.appendChild(bit);
+            setTimeout(() => bit.remove(), 800);
+        }
+    }
 
+    function stripCardHtml(movie) {
+        const meta = [movie.y, ...movie.g].filter(Boolean).join(" · ");
 
-        if (!selected) {
+        return `
+            <article class="mpCard">
+                <div class="mpPosterWrap">
+                    <img
+                        class="mpPoster"
+                        src="posters/${movie.id}.jpg"
+                        data-remote="https://image.tmdb.org/t/p/w342${movie.p}"
+                        alt="${movie.t}"
+                        loading="lazy"
+                        decoding="async"
+                    >
+                    <button class="mpBtn trailer" type="button" data-action="trailer" data-title="${movie.t} ${movie.y}" title="Смотреть трейлер">▶</button>
+                    <button class="mpBtn fav${stripMarks.fav.includes(movie.id) ? " on" : ""}" type="button" data-action="fav" data-id="${movie.id}" title="В избранное">${stripMarks.fav.includes(movie.id) ? "★" : "☆"}</button>
+                    <button class="mpBtn like${stripMarks.like.includes(movie.id) ? " on" : ""}" type="button" data-action="like" data-id="${movie.id}" title="Нравится">${stripMarks.like.includes(movie.id) ? "♥" : "♡"}</button>
+                </div>
+                <div class="mpTitle">${movie.t}</div>
+                <div class="mpMeta">${meta}</div>
+                <div class="mpRating">★ ${movie.r}${movie.a ? ` · <span>${movie.a}</span>` : ""}</div>
+            </article>
+        `;
+    }
 
-            installBox.classList.add(
-                "hidden"
-            );
+    stripTrack.innerHTML = STRIP_MOVIES.map(stripCardHtml).join("");
 
-            openGuide.classList.remove(
-                "visible"
-            );
+    stripTrack.addEventListener("click", event => {
+        const button = event.target.closest(".mpBtn");
 
+        if (!button) {
             return;
         }
 
+        const action = button.dataset.action;
 
-        downloadButton.href =
-            selected.file;
-
-
-        browserAddress.textContent =
-            selected.url;
-
-
-        browserName.textContent =
-            selected.name;
-
-
-        if (
-            selected.engine ===
-            "Firefox"
-        ) {
-
-            updateFirefoxGuide();
-
-        } else {
-
-            updateChromiumGuide();
-
+        if (action === "trailer") {
+            window.open(
+                "https://www.youtube.com/results?search_query=" +
+                encodeURIComponent(button.dataset.title + " трейлер"),
+                "_blank",
+                "noopener"
+            );
+            return;
         }
 
+        const id = Number(button.dataset.id);
+        const list = stripMarks[action];
+        const on = !list.includes(id);
+
+        if (on) {
+            list.push(id);
+        } else {
+            list.splice(list.indexOf(id), 1);
+        }
+
+        saveStripMarks();
+
+        button.classList.toggle("on", on);
+
+        if (action === "like") {
+            button.textContent = on ? "♥" : "♡";
+            if (on) burstFrom(button, "♥", "#ff4d67");
+        } else {
+            button.textContent = on ? "★" : "☆";
+            if (on) burstFrom(button, "★", "#ffd84d");
+        }
+    });
+
+    stripTrack.querySelectorAll(".mpPoster").forEach(img => {
+        img.addEventListener("error", () => {
+            if (img.dataset.remote && img.src !== img.dataset.remote) {
+                img.src = img.dataset.remote;
+                img.dataset.remote = "";
+                return;
+            }
+
+            const fallback = document.createElement("div");
+            fallback.className = "mpPoster fallback";
+            fallback.textContent = "🎬";
+            img.replaceWith(fallback);
+        });
+    });
+
+    let stripPaused = false;
+    let stripVisible = false;
+    let stripBusy = false;
+
+    function stripStep() {
+        if (stripPaused || !stripVisible || stripBusy || document.hidden || REDUCED_MOTION) {
+            return;
+        }
+
+        const first = stripTrack.firstElementChild;
+
+        if (!first) {
+            return;
+        }
+
+        const gap = parseFloat(getComputedStyle(stripTrack).columnGap) || 0;
+        const shift = first.getBoundingClientRect().width + gap;
+
+        stripBusy = true;
+
+        stripTrack.classList.add("moving");
+        stripTrack.style.transform = `translateX(${-shift}px)`;
+
+        stripTrack.addEventListener("transitionend", function done(event) {
+            if (event.target !== stripTrack) {
+                return;
+            }
+
+            stripTrack.removeEventListener("transitionend", done);
+
+            /* Первую карточку — в конец, сдвиг — обратно в 0:
+               лента бесконечная, скачка не видно. */
+
+            stripTrack.classList.remove("moving");
+            stripTrack.appendChild(first);
+            stripTrack.style.transform = "translateX(0)";
+
+            stripTrack.getBoundingClientRect();
+
+            stripBusy = false;
+        });
+    }
+
+    setInterval(stripStep, STRIP_STEP_MS);
+
+    stripViewport.addEventListener("mouseenter", () => { stripPaused = true; });
+    stripViewport.addEventListener("mouseleave", () => { stripPaused = false; });
+
+    new IntersectionObserver(([entry]) => {
+        stripVisible = entry.isIntersecting;
+    }, { threshold: .2 }).observe(stripViewport);
+
+    /* =========================
+       СЦЕНА 1 — РЕКОМЕНДАЦИИ
+       ========================= */
+
+    const recsStage = document.getElementById("demoRecs");
+
+    function recsButtons() {
+        return `
+            <div class="cardBtns">
+                <span class="cardBtn dislike">👎</span>
+                <span class="cardBtn like">♡</span>
+            </div>
+        `;
+    }
+
+    async function recsScene(ctx) {
+        const stage = recsStage;
+
+        stage.innerHTML = `
+            <div class="rowLabel">🔥 Популярное <small>4 фильма</small></div>
+            <div class="miniRow" id="recsTop">
+                ${cardHtml("interstellar", recsButtons())}
+                ${cardHtml("conjuring", recsButtons())}
+                ${cardHtml("wick", recsButtons())}
+                ${cardHtml("paddington", recsButtons())}
+            </div>
+
+            <div class="rowLabel" style="margin-top:18px">
+                🎯 Для тебя
+                <span class="tag" id="recsTag">♥ похоже на «Интерстеллар»</span>
+            </div>
+            <div class="miniRow" id="recsForYou">
+                <div class="fakeCard skeleton">${posterHtml("arrival")}</div>
+                <div class="fakeCard skeleton">${posterHtml("arrival")}</div>
+                <div class="fakeCard skeleton">${posterHtml("arrival")}</div>
+                <div class="fakeCard skeleton">${posterHtml("arrival")}</div>
+            </div>
+
+            <div class="toast" id="recsToast">👎 Понял — ужасов в «Для тебя» станет меньше</div>
+        `;
+
+        stage.querySelectorAll(".skeleton .fakePoster").forEach(p => p.innerHTML = "");
+
+        const cursor = addCursor(stage);
+        const top = stage.querySelector("#recsTop");
+
+        pointAt(stage, cursor, stage.querySelector("#recsForYou"), true);
+
+        await ctx.sleep(900);
+
+        /* Лайк «Интерстеллару» */
+
+        const inter = top.children[0];
+        const likeBtn = inter.querySelector(".like");
+
+        const point = await clickAt(ctx, stage, cursor, likeBtn);
+
+        likeBtn.classList.add("on", "pressed");
+        likeBtn.textContent = "♥";
+        inter.classList.add("liked");
+        burstAt(stage, point, "♥");
+
+        await ctx.sleep(180);
+        likeBtn.classList.remove("pressed");
+
+        await ctx.sleep(500);
+
+        /* «Для тебя» наполняется похожими */
+
+        const forYou = stage.querySelector("#recsForYou");
+
+        ["arrival", "martian", "gravity", "dune"].forEach((key, index) => {
+            const slot = forYou.children[index];
+            slot.outerHTML = `<div class="fakeCard popIn" style="animation-delay:${index * .12}s">${posterHtml(key)}</div>`;
+        });
+
+        stage.querySelector("#recsTag").classList.add("show");
+
+        await ctx.sleep(1900);
+
+        /* Дизлайк «Заклятию» */
+
+        const conj = top.children[1];
+        const dislikeBtn = conj.querySelector(".dislike");
+
+        await clickAt(ctx, stage, cursor, dislikeBtn);
+
+        dislikeBtn.classList.add("on", "pressed");
+
+        await ctx.sleep(250);
+
+        conj.classList.add("disliked");
+        stage.querySelector("#recsToast").classList.add("show");
+
+        await ctx.sleep(3000);
+    }
+
+    runScene(recsStage, recsScene);
+
+
+    /* =========================
+       СЦЕНА 2 — ИЗБРАННОЕ
+       ========================= */
+
+    const favsStage = document.getElementById("demoFavs");
+    const favHeaderBtn = document.getElementById("favHeaderBtn");
+    const favCount = document.getElementById("favCount");
+
+    async function flyStar(ctx, stage, from, to) {
+        const star = document.createElement("span");
+        star.className = "flyStar";
+        star.textContent = "★";
+        star.style.left = from.x - 9 + "px";
+        star.style.top = from.y - 11 + "px";
+        stage.appendChild(star);
+
+        const s = stage.getBoundingClientRect();
+        const r = to.getBoundingClientRect();
+
+        const dx = r.left - s.left + r.width / 2 - from.x;
+        const dy = r.top - s.top + r.height / 2 - from.y;
+
+        star.getBoundingClientRect();
+        star.style.transform = `translate(${dx}px, ${dy}px) scale(.7)`;
+
+        await ctx.sleep(680);
+
+        star.remove();
+    }
+
+    async function favsScene(ctx) {
+        const stage = favsStage;
+
+        favCount.textContent = "0";
+        favCount.classList.remove("show");
+        favHeaderBtn.firstChild.textContent = "☆ ";
+
+        stage.innerHTML = `
+            <div class="rowLabel">🆕 Новинки <small>вышло недавно</small></div>
+            <div class="miniRow">
+                ${["dune", "oppenheimer", "blade", "la"].map(key =>
+                    cardHtml(key, `<div class="cardBtns"><span class="cardBtn fav">☆</span></div>`)
+                ).join("")}
+            </div>
+
+            <div class="rowLabel" style="margin-top:18px">⭐ Высокий рейтинг <small>классика</small></div>
+            <div class="miniRow">
+                ${["matrix", "inception", "amelie", "grand"].map(key => cardHtml(key)).join("")}
+            </div>
+
+            <div class="favDrawer" id="favDrawer">
+                <h4>⭐ Избранное</h4>
+                <div id="favList"></div>
+            </div>
+        `;
+
+        const cursor = addCursor(stage);
+        const cards = stage.querySelectorAll(".miniRow")[0].children;
+
+        pointAt(stage, cursor, cards[2], true);
+
+        await ctx.sleep(700);
+
+        const saved = [];
+
+        for (const index of [0, 1, 3]) {
+            const card = cards[index];
+            const btn = card.querySelector(".fav");
+
+            const point = await clickAt(ctx, stage, cursor, btn);
+
+            btn.classList.add("on", "pressed");
+            btn.textContent = "★";
+
+            await ctx.sleep(120);
+            btn.classList.remove("pressed");
+
+            /*
+             * Звезда летит в кнопку избранного в шапке.
+             * Шапка выше сцены — считаем от сцены,
+             * отрицательный dy — нормально.
+             */
+
+            await flyStar(ctx, stage, point, favHeaderBtn);
+
+            saved.push(card.dataset.key);
+
+            favCount.textContent = String(saved.length);
+            favCount.classList.add("show");
+            favHeaderBtn.firstChild.textContent = "★ ";
+            favHeaderBtn.classList.add("bump");
+
+            await ctx.sleep(220);
+            favHeaderBtn.classList.remove("bump");
+
+            await ctx.sleep(350);
+        }
+
+        /* Открываем избранное */
+
+        await ctx.sleep(400);
+
+        const list = stage.querySelector("#favList");
+
+        list.innerHTML = saved.map((key, index) => `
+            <div class="favItem popIn" style="animation-delay:${.25 + index * .1}s">
+                ${posterHtml(key)}
+                <div>
+                    <b>${MOVIES[key].t}</b>
+                    <small>Посмотреть позже · ▶ трейлер</small>
+                </div>
+            </div>
+        `).join("");
+
+        /* Курсор «нажимает» кнопку в шапке — она над сценой,
+           поэтому просто уводим курсор к правому верхнему краю */
+
+        cursor.style.transform = `translate(${stage.clientWidth - 40}px, -6px)`;
+
+        await ctx.sleep(750);
+
+        cursor.classList.add("press");
+        favHeaderBtn.classList.add("bump");
+
+        await ctx.sleep(160);
+
+        cursor.classList.remove("press");
+        favHeaderBtn.classList.remove("bump");
+
+        stage.querySelector("#favDrawer").classList.add("open");
+
+        await ctx.sleep(3200);
+    }
+
+    runScene(favsStage, favsScene);
+
+
+    /* =========================
+       СЦЕНА 3 — ПОДБОР
+       ========================= */
+
+    const pickerStage = document.getElementById("demoPicker");
+
+    pickerStage.innerHTML = `
+        <div class="pickTabs">
+            <button class="pickTab active" type="button" data-tab="random">🎲 Случайное</button>
+            <button class="pickTab" type="button" data-tab="mood">🎯 По настроению</button>
+            <button class="pickTab" type="button" data-tab="duo">👥 На двоих</button>
+        </div>
+
+        <div class="pickPane active" data-pane="random">
+            <div class="slot">
+                <div class="slotWindow" id="slotWindow"></div>
+                <div class="slotInfo">
+                    <span class="dice" id="dice">🎲</span>
+                    <b id="slotTitle">Крутим…</b>
+                    <small id="slotMeta">Выбираем из 251 фильма</small>
+                    <span class="fakeButton" id="slotButton">🎲 Выбрать случайно</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="pickPane" data-pane="mood">
+            <div class="chips" id="moodChips">
+                <span class="chip" data-mood>😬 Напряжённое</span>
+                <span class="chip">😂 Смешное</span>
+                <span class="chip">🌅 Красивое</span>
+                <span class="chip" data-mood>🌀 Mindfuck</span>
+                <span class="chip">🌙 На вечер</span>
+                <span class="chip">💞 На двоих</span>
+                <span class="chip" data-mood>90–120 мин</span>
+            </div>
+            <span class="fakeButton" id="moodButton">✨ Подобрать</span>
+            <div class="moodResult" id="moodResult">
+                ${posterHtml("getout")}
+                <div>
+                    <b>Прочь</b>
+                    <small>2017 · Ужасы, Детектив · ★ 7.6 · 104 мин</small>
+                    <span class="tag show">Совпало: 😬 Напряжённое · 🌀 Mindfuck</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="pickPane" data-pane="duo">
+            <div class="duo">
+                <div class="person" id="personMe">
+                    <b>🙋 Ты</b>
+                    <div class="chips">
+                        <span class="chip on">Фантастика</span>
+                        <span class="chip on">Триллер</span>
+                    </div>
+                </div>
+                <div class="duoJoin" id="duoJoin">⇄</div>
+                <div class="person" id="personFriend">
+                    <b>👥 Друг</b>
+                    <div class="chips">
+                        <span class="chip on">Комедия</span>
+                        <span class="chip on">Драма</span>
+                    </div>
+                </div>
+            </div>
+            <div class="duoResult" id="duoResult">
+                <b>Нашли <span class="count" id="duoCount">0</span> фильмов, которые понравятся вам обоим</b>
+                <div class="duoPosters">
+                    ${posterHtml("martian")}
+                    ${posterHtml("grand")}
+                    ${posterHtml("inception")}
+                    ${posterHtml("amelie")}
+                </div>
+            </div>
+        </div>
+    `;
+
+    const pickTabs = pickerStage.querySelectorAll(".pickTab");
+    const pickPanes = pickerStage.querySelectorAll(".pickPane");
+
+    let forcedTab = null;
+
+    function showTab(name) {
+        pickTabs.forEach(tab => tab.classList.toggle("active", tab.dataset.tab === name));
+        pickPanes.forEach(pane => pane.classList.toggle("active", pane.dataset.pane === name));
+    }
+
+    async function randomDemo(ctx) {
+        const win = pickerStage.querySelector("#slotWindow");
+        const title = pickerStage.querySelector("#slotTitle");
+        const button = pickerStage.querySelector("#slotButton");
+        const dice = pickerStage.querySelector("#dice");
+
+        win.classList.remove("win");
+        title.textContent = "Крутим…";
+
+        button.classList.add("pressed");
+        dice.classList.remove("roll");
+        dice.getBoundingClientRect();
+        dice.classList.add("roll");
+
+        await ctx.sleep(140);
+        button.classList.remove("pressed");
+
+        /* «Барабан»: постеры мелькают и замедляются */
+
+        const pool = ["matrix", "dune", "la", "wick", "amelie", "gravity", "grand", "inception", "blade"];
+
+        let delay = 60;
+
+        for (let i = 0; i < 14; i++) {
+            win.innerHTML = posterHtml(pool[i % pool.length]);
+            await ctx.sleep(delay);
+            delay *= 1.18;
+        }
+
+        win.innerHTML = posterHtml("blade");
+        win.classList.add("win");
+        title.textContent = "Бегущий по лезвию";
+
+        await ctx.sleep(2600);
+    }
+
+    async function moodDemo(ctx) {
+        const chips = pickerStage.querySelectorAll("#moodChips .chip");
+        const button = pickerStage.querySelector("#moodButton");
+        const result = pickerStage.querySelector("#moodResult");
+
+        chips.forEach(chip => chip.classList.remove("on"));
+        result.classList.remove("show");
+
+        await ctx.sleep(400);
+
+        for (const chip of chips) {
+            if (chip.hasAttribute("data-mood")) {
+                chip.classList.add("on");
+                await ctx.sleep(420);
+            }
+        }
+
+        button.classList.add("pressed");
+        await ctx.sleep(160);
+        button.classList.remove("pressed");
+
+        await ctx.sleep(350);
+
+        result.classList.add("show");
+
+        await ctx.sleep(2800);
+    }
+
+    async function duoDemo(ctx) {
+        const me = pickerStage.querySelector("#personMe");
+        const friend = pickerStage.querySelector("#personFriend");
+        const join = pickerStage.querySelector("#duoJoin");
+        const result = pickerStage.querySelector("#duoResult");
+        const count = pickerStage.querySelector("#duoCount");
+
+        [me, friend, join, result].forEach(el => el.classList.remove("show"));
+        count.textContent = "0";
+
+        await ctx.sleep(300);
+        me.classList.add("show");
+        await ctx.sleep(450);
+        friend.classList.add("show");
+        await ctx.sleep(500);
+        join.classList.add("show");
+        await ctx.sleep(500);
+
+        result.classList.add("show");
+
+        for (let n = 1; n <= 17; n++) {
+            count.textContent = String(n);
+            await ctx.sleep(45);
+        }
+
+        await ctx.sleep(2600);
+    }
+
+    const PICKER_DEMOS = {
+        random: randomDemo,
+        mood: moodDemo,
+        duo: duoDemo
+    };
+
+    async function pickerScene(ctx) {
+        for (const name of ["random", "mood", "duo"]) {
+            const next = forcedTab || name;
+            forcedTab = null;
+
+            showTab(next);
+            await ctx.sleep(350);
+            await PICKER_DEMOS[next](ctx);
+        }
+    }
+
+    /* Вкладки можно нажимать — сцена перезапустится с выбранной */
+
+    pickTabs.forEach(tab => {
+        tab.addEventListener("click", () => {
+            forcedTab = tab.dataset.tab;
+            restartPicker();
+        });
+    });
+
+    let restartPicker = () => {};
+
+    (function () {
+        let token = 0;
+        let running = false;
+
+        const makeContext = myToken => ({
+            sleep: ms => new Promise((resolve, reject) => {
+                setTimeout(() => myToken === token ? resolve() : reject(STOP), ms * DEMO_SPEED);
+            })
+        });
+
+        async function loop(myToken) {
+            while (running && myToken === token) {
+                try {
+                    await pickerScene(makeContext(myToken));
+                } catch (error) {
+                    if (error !== STOP) console.error(error);
+                    return;
+                }
+            }
+        }
+
+        restartPicker = () => {
+            if (running) {
+                loop(++token);
+            } else {
+                showTab(forcedTab);
+            }
+        };
+
+        new IntersectionObserver(([entry]) => {
+            if (entry.isIntersecting && !running) {
+                running = true;
+                loop(++token);
+            } else if (!entry.isIntersecting && running) {
+                running = false;
+                token++;
+            }
+        }, { threshold: .35 }).observe(pickerStage);
+    })();
+
+
+    /* =========================
+       СЦЕНА 4 — ПРОКСИ
+       ========================= */
+
+    const proxyStage = document.getElementById("demoProxy");
+    const proxyPill = document.getElementById("proxyPill");
+    const proxyResult = document.getElementById("proxyResult");
+    const modeButtons = proxyStage.querySelectorAll(".modeBtn");
+
+    let proxyAuto = true;
+
+    function setProxyMode(mode) {
+        proxyStage.classList.toggle("direct", mode === "direct");
+        proxyStage.classList.toggle("via", mode === "via");
+
+        modeButtons.forEach(btn => btn.classList.toggle("active", btn.dataset.mode === mode));
+
+        proxyPill.classList.toggle("off", mode === "direct");
+        proxyPill.textContent = mode === "direct" ? "Disabled" : "Enabled";
+
+        proxyResult.textContent =
+            mode === "direct"
+                ? "🐢 Вам опять замедляют инет? Р*н сходят с ума? — не беда!"
+                : "⚡ Через наш прокси — всё хорошо!";
+    }
+
+    modeButtons.forEach(btn => {
+        btn.addEventListener("click", () => {
+            proxyAuto = false;
+            setProxyMode(btn.dataset.mode);
+        });
+    });
+
+    runScene(proxyStage, async ctx => {
+        if (!proxyAuto) {
+            await ctx.sleep(1000);
+            return;
+        }
+
+        setProxyMode("direct");
+        await ctx.sleep(3200);
+
+        if (!proxyAuto) return;
+
+        setProxyMode("via");
+        await ctx.sleep(4200);
+    });
+
+
+
+    /* =========================
+       СЦЕНА 5 — АНОНИМНОСТЬ
+       ========================= */
+
+    const anonStage = document.getElementById("demoAnon");
+    const signupCard = document.getElementById("signupCard");
+    const anonStamp = document.getElementById("anonStamp");
+    const anonApp = document.getElementById("anonApp");
+
+    document.getElementById("anonPosters").innerHTML =
+        ["dune", "matrix", "la", "amelie", "blade"].map(posterHtml).join("");
+
+    runScene(anonStage, async ctx => {
+        const fields = signupCard.querySelectorAll(".field");
+
+        fields.forEach(field => field.classList.remove("struck"));
+        anonStamp.classList.remove("on");
+        signupCard.classList.remove("away");
+        anonApp.classList.remove("show");
+
+        await ctx.sleep(1100);
+
+        for (const field of fields) {
+            field.classList.add("struck");
+            await ctx.sleep(380);
+        }
+
+        await ctx.sleep(250);
+        anonStamp.classList.add("on");
+
+        await ctx.sleep(1300);
+
+        signupCard.classList.add("away");
+        await ctx.sleep(250);
+        anonApp.classList.add("show");
+
+        await ctx.sleep(3200);
+    });
+
+
+    /* =========================
+       СЦЕНА 6 — НИЧЕГО НЕ ЛОГИРУЕМ
+       ========================= */
+
+    const logsStage = document.getElementById("demoLogs");
+    const dataChips = document.getElementById("dataChips");
+    const dataPacket = document.getElementById("dataPacket");
+    const logsShield = document.getElementById("logsShield");
+
+    const DATA_ITEMS = ["♥ Лайки", "⭐ Избранное", "🔑 Токен", "🎯 Подборы", "🎨 Тема"];
+
+    runScene(logsStage, async ctx => {
+        dataChips.innerHTML = "";
+
+        await ctx.sleep(500);
+
+        for (const [index, label] of DATA_ITEMS.entries()) {
+            const chip = document.createElement("span");
+            chip.className = "dataChip";
+            chip.textContent = label;
+            dataChips.appendChild(chip);
+
+            await ctx.sleep(420);
+
+            /* Каждая вторая «пытается» уйти наружу —
+               и возвращается от щита обратно */
+
+            if (index % 2 === 0) {
+                dataPacket.classList.remove("go");
+                dataPacket.getBoundingClientRect();
+                dataPacket.classList.add("go");
+
+                await ctx.sleep(520);
+                logsShield.classList.add("hit");
+                await ctx.sleep(200);
+                logsShield.classList.remove("hit");
+
+                await ctx.sleep(380);
+                chip.classList.add("pulse");
+            }
+        }
+
+        await ctx.sleep(2800);
+    });
+
+
+    /* =========================
+       СЦЕНА 7 — ТЕМЫ
+       ========================= */
+
+    const THEMES = [
+        { name: "🌑 Тёмная",            bg: "#080808", glow: "rgba(255,255,255,.10)", acc: "#ffffff", panel: "rgba(255,255,255,.04)", chip: "#ffffff" },
+        { name: "🍑 Peach Velvet",      bg: "#211a19", glow: "rgba(217,143,125,.30)", acc: "#e8b0a1", panel: "rgba(232,176,161,.08)", chip: "#e8b0a1" },
+        { name: "🫧 Liquid Glass",      bg: "#07100b", glow: "rgba(50,220,120,.28)",  acc: "#5ce59a", panel: "rgba(255,255,255,.06)", chip: "#5ce59a" },
+        { name: "🍑 Glass Peach",       bg: "#1b1514", glow: "rgba(232,176,161,.26)", acc: "#d98f7d", panel: "rgba(255,255,255,.07)", chip: "#d98f7d" },
+        { name: "🖤 Obsidian",          bg: "#0e0b14", glow: "rgba(155,124,255,.32)", acc: "#a58bff", panel: "rgba(155,124,255,.08)", chip: "#a58bff" },
+        { name: "🍷 Wine",              bg: "#160a0e", glow: "rgba(184,92,114,.34)",  acc: "#e39aa9", panel: "rgba(184,92,114,.09)", chip: "#e39aa9" },
+        { name: "💚 Emerald",           bg: "#06130f", glow: "rgba(67,197,158,.30)",  acc: "#5fd6b1", panel: "rgba(67,197,158,.08)", chip: "#5fd6b1" },
+        { name: "🧊 Arctic",            bg: "#081018", glow: "rgba(115,199,255,.30)", acc: "#8fd3ff", panel: "rgba(115,199,255,.08)", chip: "#8fd3ff" }
+    ];
+
+    const themeStage = document.getElementById("demoThemes");
+    const themePreview = document.getElementById("themePreview");
+    const themeChips = document.getElementById("themeChips");
+
+    document.getElementById("tpRow").innerHTML =
+        ["interstellar", "grand", "wick", "amelie", "gravity", "la"].map(posterHtml).join("");
+
+    themeChips.innerHTML = THEMES.map((theme, index) =>
+        `<button class="themeChip" type="button" data-index="${index}" style="--chip:${theme.chip}">${theme.name}</button>`
+    ).join("");
+
+    let themeIndex = 0;
+    let themeManualUntil = 0;
+
+    function applyTheme(index) {
+        const theme = THEMES[index];
+
+        themeIndex = index;
+
+        themePreview.style.setProperty("--tbg", theme.bg);
+        themePreview.style.setProperty("--tglow", theme.glow);
+        themePreview.style.setProperty("--tacc", theme.acc);
+        themePreview.style.setProperty("--tpanel", theme.panel);
+
+        themeChips.querySelectorAll(".themeChip").forEach(chip => {
+            chip.classList.toggle("active", Number(chip.dataset.index) === index);
+        });
+    }
+
+    themeChips.addEventListener("click", event => {
+        const chip = event.target.closest(".themeChip");
+
+        if (chip) {
+            themeManualUntil = Date.now() + 8000;
+            applyTheme(Number(chip.dataset.index));
+        }
+    });
+
+    applyTheme(0);
+
+    runScene(themeStage, async ctx => {
+        await ctx.sleep(1900);
+
+        if (Date.now() > themeManualUntil) {
+            applyTheme((themeIndex + 1) % THEMES.length);
+        }
+    });
+
+
+    /* =========================
+       СЦЕНА 8 — ВСЕГДА ПОД РУКОЙ
+       ========================= */
+
+    const hotkeyStage = document.getElementById("demoHotkey");
+    const hkApp = document.getElementById("hkApp");
+    const hkHint = document.getElementById("hkHint");
+    const trayIcon = document.getElementById("trayIcon");
+    const hkKeys = hotkeyStage.querySelectorAll("[data-key]");
+
+    document.getElementById("hkPosters").innerHTML =
+        ["blade", "dune", "matrix", "inception", "oppenheimer"].map(posterHtml).join("");
+
+    async function pressKeys(ctx) {
+        for (const key of hkKeys) {
+            key.classList.add("down");
+            await ctx.sleep(230);
+        }
+
+        await ctx.sleep(260);
+
+        hkKeys.forEach(key => key.classList.remove("down"));
+    }
+
+    runScene(hotkeyStage, async ctx => {
+        hkApp.classList.remove("show", "toTray");
+        hkHint.classList.remove("show");
+
+        await ctx.sleep(900);
+
+        await pressKeys(ctx);
+
+        hkApp.classList.add("show");
+
+        await ctx.sleep(2600);
+
+        /* Прячем в трей: считаем, куда лететь */
+
+        const s = hotkeyStage.getBoundingClientRect();
+        const a = hkApp.getBoundingClientRect();
+        const t = trayIcon.getBoundingClientRect();
+
+        hkApp.style.setProperty("--tx", (t.left + t.width / 2) - (a.left + a.width / 2) + "px");
+        hkApp.style.setProperty("--ty", (t.top + t.height / 2) - (a.top + a.height / 2) + "px");
+
+        hkHint.classList.add("show");
+
+        await ctx.sleep(900);
+
+        hkApp.classList.add("toTray");
+
+        await ctx.sleep(520);
+
+        trayIcon.classList.add("ping");
+        await ctx.sleep(450);
+        trayIcon.classList.remove("ping");
+
+        await ctx.sleep(1400);
+    });
+
+    /* При «меньше движения» — статичные финальные кадры */
+
+    if (REDUCED_MOTION) {
+        setProxyMode("via");
+    }
+
+
+    /* =========================
+       УСТАНОВКА — ШАГИ
+       ========================= */
+
+    const stepProgress = document.getElementById("stepProgress");
+    const stepDots = document.getElementById("stepDots");
+    const backButton = document.getElementById("backButton");
+    const nextButton = document.getElementById("nextButton");
+    const steps = document.querySelectorAll(".step");
+
+    let currentStep = 1;
+
+    steps.forEach(() => {
+        const dot = document.createElement("span");
+        dot.className = "stepDot";
+        stepDots.appendChild(dot);
+    });
+
+    function updateStep() {
+        steps.forEach(step => {
+            step.classList.toggle("active", Number(step.dataset.step) === currentStep);
+        });
+
+        [...stepDots.children].forEach((dot, index) => {
+            dot.classList.toggle("done", index < currentStep);
+        });
+
+        stepProgress.textContent = currentStep + " / " + steps.length;
+
+        backButton.classList.toggle("hidden", currentStep === 1);
+
+        nextButton.textContent = currentStep === steps.length ? "🎉 Готово" : "Далее →";
+    }
+
+    nextButton.addEventListener("click", () => {
+        if (currentStep < steps.length) {
+            currentStep++;
+            updateStep();
+            return;
+        }
+
+        celebrate();
 
         currentStep = 1;
+        updateStep();
+    });
 
+    backButton.addEventListener("click", () => {
+        if (currentStep > 1) {
+            currentStep--;
+            updateStep();
+        }
+    });
+
+    /* Нажали «Скачать» наверху — ведём к шагу «Запустите» */
+
+    downloadMain.addEventListener("click", () => {
+        currentStep = 2;
         updateStep();
 
-        installBox.classList.remove(
-            "hidden"
-        );
-
-        openGuide.classList.add(
-            "visible"
-        );
-
-
         setTimeout(() => {
-
-            installBox.scrollIntoView({
+            document.getElementById("installBox").scrollIntoView({
                 behavior: "smooth",
                 block: "center"
             });
-
-        }, 50);
-
-    }
-
-
-    /* =========================
-       UPDATE STEP
-       ========================= */
-
-    function updateStep() {
-
-        steps.forEach(step => {
-
-            const stepNumber =
-                Number(step.dataset.step);
-
-
-            step.classList.toggle(
-                "active",
-                stepNumber === currentStep
-            );
-
-        });
-
-
-        stepProgress.textContent =
-            currentStep +
-            " / " +
-            steps.length;
-
-
-        if (currentStep === 1) {
-
-            backButton.classList.add(
-                "hidden"
-            );
-
-        } else {
-
-            backButton.classList.remove(
-                "hidden"
-            );
-
-        }
-
-
-        if (
-            currentStep ===
-            steps.length
-        ) {
-
-            nextButton.textContent =
-                "🎉 Готово";
-
-        } else {
-
-            nextButton.textContent =
-                "Далее →";
-
-        }
-
-    }
-
-
-    /* =========================
-       NEXT
-       ========================= */
-
-    nextButton.addEventListener(
-        "click",
-        () => {
-
-            if (
-                currentStep <
-                steps.length
-            ) {
-
-                currentStep++;
-
-                updateStep();
-
-                return;
-            }
-
-
-            celebrate();
-
-
-            currentStep = 1;
-
-            updateStep();
-
-        }
-    );
-
-
-    /* =========================
-       BACK
-       ========================= */
-
-    backButton.addEventListener(
-        "click",
-        () => {
-
-            if (currentStep <= 1) {
-                return;
-            }
-
-
-            currentStep--;
-
-            updateStep();
-
-        }
-    );
+        }, 400);
+    });
 
 
     /* =========================
@@ -1514,262 +5495,143 @@
        ========================= */
 
     function celebrate() {
+        const container = document.createElement("div");
+        container.className = "celebration";
+        document.body.appendChild(container);
 
-        const container =
-            document.createElement("div");
+        const colors = ["#ffffff", "#ff4d67", "#ffd84d", "#5cff8d", "#5cc8ff", "#b56cff"];
 
-
-        container.className =
-            "celebration";
-
-
-        document.body.appendChild(
-            container
-        );
-
-
-        const colors = [
-
-            "#ffffff",
-            "#ff4d67",
-            "#ffd84d",
-            "#5cff8d",
-            "#5cc8ff",
-            "#b56cff"
-
-        ];
-
-
-        const fireworks = 9;
-
-
-        for (
-            let f = 0;
-            f < fireworks;
-            f++
-        ) {
-
-            const centerX =
-                12 +
-                Math.random() * 76;
-
-
-            const centerY =
-                18 +
-                Math.random() * 48;
-
-
+        for (let f = 0; f < 9; f++) {
+            const centerX = 12 + Math.random() * 76;
+            const centerY = 18 + Math.random() * 48;
             const particles = 32;
 
+            for (let i = 0; i < particles; i++) {
+                const particle = document.createElement("div");
+                particle.className = "firework";
 
-            for (
-                let i = 0;
-                i < particles;
-                i++
-            ) {
+                const angle = (Math.PI * 2 / particles) * i;
+                const distance = 65 + Math.random() * 145;
 
-                const particle =
-                    document.createElement("div");
+                particle.style.left = centerX + "%";
+                particle.style.top = centerY + "%";
+                particle.style.setProperty("--x", Math.cos(angle) * distance + "px");
+                particle.style.setProperty("--y", Math.sin(angle) * distance + "px");
 
+                const color = colors[Math.floor(Math.random() * colors.length)];
 
-                particle.className =
-                    "firework";
+                particle.style.background = color;
+                particle.style.boxShadow = "0 0 10px " + color;
+                particle.style.animationDelay = Math.random() * .35 + "s";
 
-
-                const angle =
-                    (
-                        Math.PI * 2 /
-                        particles
-                    ) * i;
-
-
-                const distance =
-                    65 +
-                    Math.random() * 145;
-
-
-                const x =
-                    Math.cos(angle) *
-                    distance;
-
-
-                const y =
-                    Math.sin(angle) *
-                    distance;
-
-
-                particle.style.left =
-                    centerX + "%";
-
-
-                particle.style.top =
-                    centerY + "%";
-
-
-                particle.style.setProperty(
-                    "--x",
-                    x + "px"
-                );
-
-
-                particle.style.setProperty(
-                    "--y",
-                    y + "px"
-                );
-
-
-                const color =
-                    colors[
-                        Math.floor(
-                            Math.random() *
-                            colors.length
-                        )
-                    ];
-
-
-                particle.style.background =
-                    color;
-
-
-                particle.style.boxShadow =
-                    "0 0 10px " +
-                    color;
-
-
-                particle.style.animationDelay =
-                    (
-                        Math.random() * .35
-                    ) + "s";
-
-
-                container.appendChild(
-                    particle
-                );
-
+                container.appendChild(particle);
             }
-
         }
 
-
-        setTimeout(
-            () => {
-
-                container.remove();
-
-            },
-            2300
-        );
-
+        setTimeout(() => container.remove(), 2300);
     }
+
+
+    /* =========================
+       КНОПКА «НАВЕРХ / ОБРАТНО»
+       Первое нажатие — наверх, и кнопка запоминает, где
+       ты был (стрелка переворачивается вниз). Второе —
+       возвращает на то же место. Если после прыжка
+       наверх начал листать сам — память сбрасывается.
+       ========================= */
+
+    const scrollJump = document.getElementById("scrollJump");
+    const scrollJumpHint = document.getElementById("scrollJumpHint");
+
+    const SHOW_AFTER_PX = 600;
+
+    let returnTo = null;
+    let autoScrolling = false;
+    let autoScrollTimer = null;
+
+    function updateScrollJump() {
+        const returning = returnTo !== null;
+
+        scrollJump.classList.toggle("returning", returning);
+        scrollJump.classList.toggle("visible", returning || window.scrollY > SHOW_AFTER_PX);
+
+        const label = returning ? "Вернуться, где был" : "Наверх";
+
+        scrollJumpHint.textContent = label;
+        scrollJump.setAttribute("aria-label", label);
+    }
+
+    function jumpTo(top) {
+        autoScrolling = true;
+
+        window.scrollTo({ top, behavior: REDUCED_MOTION ? "auto" : "smooth" });
+
+        clearTimeout(autoScrollTimer);
+        autoScrollTimer = setTimeout(() => { autoScrolling = false; }, 1200);
+    }
+
+    scrollJump.addEventListener("click", () => {
+        if (returnTo !== null) {
+            const target = returnTo;
+            returnTo = null;
+            jumpTo(target);
+        } else {
+            returnTo = window.scrollY;
+            jumpTo(0);
+        }
+
+        updateScrollJump();
+    });
+
+    window.addEventListener("scrollend", () => {
+        autoScrolling = false;
+    });
+
+    window.addEventListener("scroll", () => {
+        /* Ушёл вниз сам после прыжка наверх — забываем точку */
+
+        if (!autoScrolling && returnTo !== null && window.scrollY > SHOW_AFTER_PX) {
+            returnTo = null;
+        }
+
+        updateScrollJump();
+    }, { passive: true });
+
+    updateScrollJump();
 
 
     /* =========================
        FLOATING HEARTS
        ========================= */
 
-    const heartsContainer =
-        document.getElementById("hearts");
-
+    const heartsContainer = document.getElementById("hearts");
 
     function createHeart() {
+        if (document.hidden || REDUCED_MOTION) {
+            return;
+        }
 
-        const heart =
-            document.createElement("div");
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.textContent = "♥";
 
-
-        heart.className =
-            "heart";
-
-
-        heart.textContent =
-            "♥";
-
-
-        heart.style.left =
-            Math.random() * 100 + "%";
-
-
-        heart.style.setProperty(
-            "--duration",
-            8 +
-            Math.random() * 7 +
-            "s"
-        );
-
-
-        heart.style.setProperty(
-            "--sway",
-            -50 +
-            Math.random() * 100 +
-            "px"
-        );
-
-
-        heart.style.fontSize =
-            15 +
-            Math.random() * 16 +
-            "px";
-
-
+        heart.style.left = Math.random() * 100 + "%";
+        heart.style.setProperty("--duration", 8 + Math.random() * 7 + "s");
+        heart.style.setProperty("--sway", -50 + Math.random() * 100 + "px");
+        heart.style.fontSize = 15 + Math.random() * 16 + "px";
         heart.style.color =
-            `rgba(
-                255,
-                ${85 + Math.random() * 45},
-                ${115 + Math.random() * 35},
-                ${.14 + Math.random() * .16}
-            )`;
+            `rgba(255, ${85 + Math.random() * 45}, ${115 + Math.random() * 35}, ${.14 + Math.random() * .16})`;
 
+        heartsContainer.appendChild(heart);
 
-        heartsContainer.appendChild(
-            heart
-        );
-
-
-        heart.addEventListener(
-            "animationend",
-            () => {
-
-                heart.remove();
-
-            }
-        );
-
+        heart.addEventListener("animationend", () => heart.remove());
     }
 
-
-    /* Initial hearts */
-
-    for (
-        let i = 0;
-        i < 8;
-        i++
-    ) {
-
-        setTimeout(
-            createHeart,
-            i * 900
-        );
-
+    for (let i = 0; i < 8; i++) {
+        setTimeout(createHeart, i * 900);
     }
 
-
-    /* New hearts */
-
-    setInterval(
-        createHeart,
-        1100
-    );
-
-
-    /* =========================
-       INIT
-       ========================= */
-
-    browserSelect.addEventListener(
-        "change",
-        updateBrowser
-    );
-
+    setInterval(createHeart, 1100);
 
     updateStep();
 
