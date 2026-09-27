@@ -3482,7 +3482,7 @@
 
             <div class="downloadCard">
 
-                <a class="downloadMain" id="downloadMain" href="#" download>
+                <a class="downloadMain" id="downloadMain" href="https://github.com/Miha1ych/MovePicker/releases/latest">
                     <svg class="windowsLogo" viewBox="0 0 24 24" aria-hidden="true">
                         <path fill="currentColor" d="M3 5.1 10.4 4v7.1H3V5.1Zm0 13.8 7.4 1.1v-7H3v5.9Zm8.3 1.2L21 21.5v-8.4h-9.7v7ZM11.3 3.9v7.2H21V2.5l-9.7 1.4Z"/>
                     </svg>
@@ -3490,7 +3490,7 @@
                 </a>
 
                 <div class="downloadMeta">
-                    <span id="metaVersion">Версия 3.2.0</span>
+                    <span id="metaVersion">Последняя версия</span>
                     <span>·</span>
                     <span id="metaSize">≈ 106 МБ</span>
                     <span>·</span>
@@ -4053,10 +4053,10 @@
                     <h2>Скачайте установщик</h2>
                     <p>
                         Нажмите кнопку ниже — скачается один файл
-                        <strong id="step1FileName">Movie Picker Setup 3.2.0.exe</strong>.
+                        <strong id="step1FileName">MoviePicker-Setup.exe</strong>.
                         Ничего распаковывать не нужно.
                     </p>
-                    <a class="downloadButton" id="downloadButton" href="#" download>
+                    <a class="downloadButton" id="downloadButton" href="https://github.com/Miha1ych/MovePicker/releases/latest">
                         Скачать установщик
                     </a>
                 </div>
@@ -4157,16 +4157,21 @@
        Меняй здесь при выходе новой версии.
        ========================= */
 
-    const APP_VERSION = "3.2.0";
+    // Самая новая версия берётся с GitHub автоматически
+    // (последний релиз, файл .exe). Значения ниже — только
+    // запасные, пока GitHub не ответил или если он недоступен.
+    const GITHUB_REPO = "Miha1ych/MovePicker";
 
-    const APP_SIZE = "≈ 106 МБ";
+    const LATEST_PAGE = `https://github.com/${GITHUB_REPO}/releases/latest`;
 
-    // Файл установщика лежит рядом с этой страницей.
-    const APP_FILE = `Movie Picker Setup ${APP_VERSION}.exe`;
+    let APP_VERSION = "";
 
-    // Ссылка на установщик на GitHub (Releases). Если задана —
-    // кнопки «Скачать» ведут туда, а не на файл рядом со страницей.
-    const DOWNLOAD_URL = "https://github.com/Miha1ych/MovePicker/releases/download/one/Movie.Picker.Setup.3.2.0.exe";
+    let APP_SIZE = "≈ 107 МБ";
+
+    // Пока не узнали точный файл — ведём на страницу последнего релиза
+    let DOWNLOAD_URL = LATEST_PAGE;
+
+    const APP_FILE = "MoviePicker-Setup.exe";
 
     // Страница установки расширения (для тех, кто не на Windows).
     // Пусто — ссылка не показывается.
@@ -4184,23 +4189,48 @@
     const downloadMain = document.getElementById("downloadMain");
     const downloadButton = document.getElementById("downloadButton");
 
-    [downloadMain, downloadButton].forEach(link => {
-        if (DOWNLOAD_URL) {
+    function applyDownloadInfo(fileName) {
+        [downloadMain, downloadButton].forEach(link => {
             link.href = DOWNLOAD_URL;
             link.removeAttribute("download");
-        } else {
-            link.href = encodeURI(APP_FILE);
-            link.setAttribute("download", APP_FILE);
-        }
-    });
+        });
 
-    document.getElementById("metaVersion").textContent = "Версия " + APP_VERSION;
-    document.getElementById("metaSize").textContent = APP_SIZE;
-    document.getElementById("step1FileName").textContent =
-        DOWNLOAD_URL
-            ? decodeURIComponent(DOWNLOAD_URL.split("/").pop())
-            : APP_FILE;
-    document.getElementById("footer").textContent = "Movie Picker " + APP_VERSION;
+        document.getElementById("metaVersion").textContent =
+            APP_VERSION ? "Версия " + APP_VERSION : "Последняя версия";
+        document.getElementById("metaSize").textContent = APP_SIZE;
+        document.getElementById("step1FileName").textContent = fileName;
+        document.getElementById("footer").textContent =
+            "Movie Picker" + (APP_VERSION ? " " + APP_VERSION : "");
+    }
+
+    applyDownloadInfo(APP_FILE);
+
+    /*
+     * Спрашиваем у GitHub последний релиз и ставим
+     * прямую ссылку на его установщик (.exe).
+     */
+    fetch(`https://api.github.com/repos/${GITHUB_REPO}/releases/latest`, {
+        headers: { Accept: "application/vnd.github+json" }
+    })
+        .then(response => response.ok ? response.json() : Promise.reject(response.status))
+        .then(release => {
+            const asset = (release.assets || []).find(item =>
+                /\.exe$/i.test(item.name) && !/blockmap/i.test(item.name)
+            );
+
+            if (!asset) {
+                return;
+            }
+
+            APP_VERSION = String(release.tag_name || "").replace(/^v/i, "");
+            APP_SIZE = "≈ " + Math.round(asset.size / 1024 / 1024) + " МБ";
+            DOWNLOAD_URL = asset.browser_download_url;
+
+            applyDownloadInfo(asset.name);
+        })
+        .catch(() => {
+            // GitHub не ответил — остаётся ссылка на страницу релиза
+        });
 
     const platform =
         (navigator.userAgentData && navigator.userAgentData.platform) ||
