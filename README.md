@@ -4,7 +4,7 @@
 
 Делал для себя, потому что надоело по полчаса листать списки. В итоге выросло в нормальную программу.
 <img width="2559" height="1372" alt="image" src="https://github.com/user-attachments/assets/9805180b-4781-4737-9234-4b54c8446bce" />
-**[Скачать последнюю версию](https://github.com/Miha1ych/MovePicker/releases/latest)** (Windows 10/11)
+**[Скачать последнюю версию](https://miha1ych.github.io/MovePicker)** (Windows 10/11)
 
 ## Что умеет
 
